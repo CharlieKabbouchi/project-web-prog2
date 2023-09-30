@@ -15,18 +15,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-    Route::get('/', function () {
-        return view('welcome');
-    });
 
-    Route::get('/home', function () {
-        return view('home');
-    })->name('home');
-
-    Route::get('/login-signup/register', [AuthController::class, 'register'])->name('register');
-    Route::post('/login-signup/register', [AuthController::class, 'registerPost'])->name('register');
-    Route::get('/login-signup/login', [AuthController::class, 'login'])->name('login');
-    Route::post('/login-signup/login', [AuthController::class, 'loginPost'])->name('login');
-    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/', function () {
+    return view('welcome');
 });
+
+Route::get('/home', function () {
+    return view('home');
+})->name('home');
+
+Route::get('/login-signup/register', [AuthController::class, 'register'])->name('register');
+Route::post('/login-signup/register', [AuthController::class, 'registerPost'])->name('register');
+Route::get('/login-signup/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login-signup/login', [AuthController::class, 'loginPost'])->name('login');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
