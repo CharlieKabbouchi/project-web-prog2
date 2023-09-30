@@ -10,10 +10,19 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('web');
+    }
 
     public function register()
     {
         return view('/login-signup/register');
+    }
+
+    public function login()
+    {
+        return view('/login-signup/login');
     }
 
     public function registerPost(Request $request)
@@ -29,10 +38,7 @@ class AuthController extends Controller
         return back()->with('success', 'Register successfully');
     }
 
-    public function login()
-    {
-        return view('/login-signup/login');
-    }
+
 
     public function loginPost(Request $request)
     {
@@ -43,9 +49,24 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            return redirect()->route('home')->with('success', 'Login successful')->with('user', $user);
+
+            // Store the authenticated user in the session
+            $request->session()->put('user', $user);
+
+            return redirect()->route('home')->with('success', 'Login successful');
         }
 
         return redirect()->route('login')->with('error', 'Something is wrong with your inputs');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/home');
     }
 }
