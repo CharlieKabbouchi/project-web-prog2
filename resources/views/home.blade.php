@@ -3,7 +3,7 @@
 
 
 @section('content')
-    <h1>Welcome to the homepage TESTING</h1>
+    <h1>Welcome to the homepage TEST</h1>
     @if (Session::has('success'))
         <div class="alert alert-success" role="alert">
             {{ Session::get('success') }}
