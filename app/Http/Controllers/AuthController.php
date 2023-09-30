@@ -10,11 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('web');
-    }
-
+   
     public function register()
     {
         return view('/login-signup/register');
