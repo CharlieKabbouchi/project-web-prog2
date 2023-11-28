@@ -37,4 +37,9 @@ class ClassT extends Model
         return $this->hasMany(Calendar::class);
     }
 
+    public function getSemester(){
+        return $this->belongsTo(Semester::class);
+    }
+
+
 }

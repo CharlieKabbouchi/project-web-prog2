@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->DateTime('startingDate');
             $table->DateTime('endingDate');
-            $table->unsignedBigInteger('course_id')->nullable();
+            $table->unsignedBigInteger('course_id');
+            $table->unsignedBigInteger('semester_id');
             $table->string('teacher_id')->nullable();
+            $table->foreign('semester_id')->references('id')->on('semesters')->onDelete('cascade');
             $table->foreign('teacher_id')
             ->references('id')
             ->on('teachers')
