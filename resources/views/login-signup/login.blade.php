@@ -10,7 +10,7 @@
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-header">
-                    <h1 class="card-title">Login124</h1>
+                    <h1 class="card-title">Login</h1>
                 </div>
                 <div class="card-body">
                     <form action="{{ route('login') }}" method="POST">
