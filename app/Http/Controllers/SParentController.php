@@ -16,16 +16,30 @@ class SParentController extends Controller
         return view('auth.parent-login');
     }
 
+    
+    public function showDashboard(Request $request) {
+         
+        $parentId = $request->session()->get('parent_id');
+        // $parentId = session('parent_id');
+        // $parent = Auth::guard('parent')->user();
+        // dd($alumni);
+        return view('parent.dashboard', compact('parentId'));
+    }
+
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('parent')->attempt($credentials)) {
+            $parent = Auth::guard('parent')->user();
+            $request->session()->put('parent_id', $parent->id);
             return redirect()->intended('/parent/dashboard');
         }
 
-        return back()->withErrors(['email' => 'Invalid login credentials']);
+        return back()->withErrors(['error' => 'Invalid login credentials']);
     }
+
+    
     public function index()
     {
         //

@@ -1,3 +1,8 @@
-<div>
-    <!-- Happiness is not something readymade. It comes from your own actions. - Dalai Lama -->
-</div>
+@extends('layout.layout')
+<title>Student Dashboard</title>
+@section('content')
+    <div class="container">
+        <h1>Welcome to Admin Dashboard</h1>
+        <p>Your Student ID: {{ $studentId }}</p>
+    </div>
+@endsection

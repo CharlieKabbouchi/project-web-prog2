@@ -42,10 +42,12 @@ Route::prefix('admin')->group(function () {
     Route::post('/login', [AdminController::class, 'login']);
     
     Route::middleware(['auth.admin'])->group(function () {
-        Route::get('/dashboard', function () {
-            return 'Admin Dashboard';
-        })->name('admin.dashboard');
+        // Route::get('/dashboard', function () {
+        //     return 'Admin Dashboard';
+        // })->name('admin.dashboard');
+        Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
 
+        // Route::get('/dashboard/{id}', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
         // Add other admin routes here
     });
 });
@@ -56,10 +58,10 @@ Route::prefix('student')->group(function () {
     Route::post('/login', [StudentController::class, 'login']);
     
     Route::middleware(['auth.student'])->group(function () {
-        Route::get('/dashboard', function () {
-            return 'Student Dashboard';
-        })->name('student.dashboard');
-
+        // Route::get('/dashboard', function () {
+        //     return 'Student Dashboard';
+        // })->name('student.dashboard');
+        Route::get('/dashboard', [StudentController::class, 'showDashboard'])->name('student.dashboard');
         // Add other student routes here
     });
 });
@@ -70,9 +72,11 @@ Route::prefix('parent')->group(function () {
     Route::post('/login', [SParentController::class, 'login']);
     
     Route::middleware(['auth.parent'])->group(function () {
-        Route::get('/dashboard', function () {
-            return 'Parent Dashboard';
-        })->name('parent.dashboard');
+        // Route::get('/dashboard', function () {
+        //     return 'Parent Dashboard';
+        // })->name('parent.dashboard');
+
+        Route::get('/dashboard', [SParentController::class, 'showDashboard'])->name('parent.dashboard');
 
         // Add other parent routes here
     });
@@ -84,10 +88,10 @@ Route::prefix('alumni')->group(function () {
     Route::post('/login', [AlumniController::class, 'login']);
     
     Route::middleware(['auth.alumni'])->group(function () {
-        Route::get('/dashboard', function () {
-            return 'Alumni Dashboard';
-        })->name('alumni.dashboard');
-
+        // Route::get('/dashboard', function () {
+        //     return 'Alumni Dashboard';
+        // })->name('alumni.dashboard');
+        Route::get('/dashboard', [AlumniController::class, 'showDashboard'])->name('alumni.dashboard');
         // Add other alumni routes here
     });
 });
@@ -98,10 +102,10 @@ Route::prefix('teacher')->group(function () {
     Route::post('/login', [TeacherController::class, 'login']);
     
     Route::middleware(['auth.teacher'])->group(function () {
-        Route::get('/dashboard', function () {
-            return 'Teacher Dashboard';
-        })->name('teacher.dashboard');
-
+        // Route::get('/dashboard', function () {
+        //     return 'Teacher Dashboard';
+        // })->name('teacher.dashboard');
+        Route::get('/dashboard', [TeacherController::class, 'showDashboard'])->name('teacher.dashboard');
         // Add other teacher routes here
     });
 });

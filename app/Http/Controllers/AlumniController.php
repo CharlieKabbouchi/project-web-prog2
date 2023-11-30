@@ -16,15 +16,26 @@ class AlumniController extends Controller
         return view('auth.alumni-login');
     }
 
+    public function showDashboard(Request $request) {
+         
+        $alumniId = $request->session()->get('alumni_id');
+        // $alumniId = session('alumni_id');
+        // $alumni = Auth::guard('alumni')->user();
+        // dd($alumni);
+        return view('alumni.dashboard', compact('alumniId'));
+    }
+
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('alumni')->attempt($credentials)) {
+            $alumni = Auth::guard('alumni')->user();
+            $request->session()->put('alumni_id', $alumni->id);
             return redirect()->intended('/alumni/dashboard');
         }
 
-        return back()->withErrors(['email' => 'Invalid login credentials']);
+        return back()->withErrors(['error' => 'Invalid login credentials']);
     }
     public function index()
     {

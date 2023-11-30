@@ -1,3 +1,8 @@
-<div>
-    <!-- It is not the man who has too little, but the man who craves more, that is poor. - Seneca -->
-</div>
+@extends('layout.layout')
+<title>Parent Dashboard</title>
+@section('content')
+    <div class="container">
+        <h1>Welcome to Admin Dashboard</h1>
+        <p>Your Parent ID: {{ $parentId }}</p>
+    </div>
+@endsection
