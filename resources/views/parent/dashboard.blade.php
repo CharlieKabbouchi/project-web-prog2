@@ -3,6 +3,6 @@
 @section('content')
     <div class="container">
         <h1>Welcome to Admin Dashboard</h1>
-        <p>Your Parent ID: {{ $parentId }}</p>
+        <p>Your Parent ID: {{ $parent->id }}</p>
     </div>
 @endsection

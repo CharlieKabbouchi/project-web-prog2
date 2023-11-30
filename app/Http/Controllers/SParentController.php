@@ -19,11 +19,11 @@ class SParentController extends Controller
     
     public function showDashboard(Request $request) {
          
-        $parentId = $request->session()->get('parent_id');
+        $parent = SParent::find(session('parent_id'));
         // $parentId = session('parent_id');
         // $parent = Auth::guard('parent')->user();
         // dd($alumni);
-        return view('parent.dashboard', compact('parentId'));
+        return view('parent.dashboard', compact('parent'));
     }
 
     public function login(Request $request)

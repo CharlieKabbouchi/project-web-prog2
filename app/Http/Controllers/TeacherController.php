@@ -16,11 +16,12 @@ class TeacherController extends Controller {
 
     public function showDashboard(Request $request) {
 
-        $teacherId = $request->session()->get('teacher_id');
+        $teacher = Teacher::find(session('teacher_id'));
+        // $teacherId = $request->session()->get('teacher_id');
         // $teacherId = session('teacher_id');
         // $teacher = Auth::guard('teacher')->user();
         // dd($alumni);
-        return view('teacher.dashboard', compact('teacherId'));
+        return view('teacher.dashboard', compact('teacher'));
     }
 
     public function login(Request $request) {

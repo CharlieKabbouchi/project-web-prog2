@@ -15,7 +15,7 @@ class ParentSeeder extends Seeder
     public function run(): void
     {
         DB::table('s_parents')->insert([
-            'id' => 'p001',
+            'id' => 'p2023001',
             'firstName' => 'Parent',
             'lastName' => 'User',
             'Gender' => 'Female',

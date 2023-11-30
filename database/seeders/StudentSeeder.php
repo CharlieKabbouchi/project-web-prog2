@@ -16,7 +16,7 @@ class StudentSeeder extends Seeder
     {
         //
         DB::table('students')->insert([
-            'id' => 's001',
+            'id' => 's2023001',
             'firstName' => 'Student',
             'lastName' => 'User',
             'Gender' => 'Male',

@@ -5,6 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+
 class Student extends Authenticatable
 {
     use HasFactory;
@@ -12,11 +16,21 @@ class Student extends Authenticatable
     protected $keyType = 'string';
     public $incrementing = false; 
 
+    protected $fillable = ['id', 'firstName', 'lastName', 'gender', 'department_id', 'sparent_id', 'email', 'password',];
+
     public static function boot() {
         parent::boot();
+        static::creating(function ($student) {
+            return DB::transaction(function () use ($student) {
+                $currentYear = date('Y');
+                $nextId = self::where('id', 'like', 's' . $currentYear . '%')->count() + 1;
+                $student->id = 's' . $currentYear . str_pad($nextId, 3, '0', STR_PAD_LEFT);
+                $student->email = $student->id . '@gmail.com';
 
-        static::creating(function ($admin) {
-            $admin->id = 's' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
+                $rawPassword = Str::random(8);
+                info("Raw Password for {$student->email}: {$rawPassword}");
+                $student->password = Hash::make($rawPassword);
+            });
         });
     }
 
