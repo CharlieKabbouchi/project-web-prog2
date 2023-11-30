@@ -68,5 +68,6 @@ class Kernel extends HttpKernel {
         'auth.parent' => \App\Http\Middleware\RedirectIfNotParent::class,
         'auth.alumni' => \App\Http\Middleware\RedirectIfNotAlumni::class,
         'auth.teacher' => \App\Http\Middleware\RedirectIfNotTeacher::class,
+        'admin' => \App\Http\Middleware\AdminMiddleware::class,
     ];
 }

@@ -46,7 +46,7 @@ Route::prefix('admin')->group(function () {
         //     return 'Admin Dashboard';
         // })->name('admin.dashboard');
         Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
-
+        Route::resource('teachers', TeacherController::class);
         // Route::get('/dashboard/{id}', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
         // Add other admin routes here
     });
@@ -106,7 +106,7 @@ Route::prefix('teacher')->group(function () {
         //     return 'Teacher Dashboard';
         // })->name('teacher.dashboard');
         Route::get('/dashboard', [TeacherController::class, 'showDashboard'])->name('teacher.dashboard');
-        // Add other teacher routes here
+        Route::resource('teachers', TeacherController::class);
     });
 });
 

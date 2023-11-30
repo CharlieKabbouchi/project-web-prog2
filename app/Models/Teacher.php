@@ -16,8 +16,8 @@ class Teacher extends Authenticatable
     public static function boot() {
         parent::boot();
 
-        static::creating(function ($admin) {
-            $admin->id = 't' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
+        static::creating(function ($teacher) {
+            $teacher->id = 't' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
         });
     }
 
