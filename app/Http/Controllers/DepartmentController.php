@@ -12,7 +12,9 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        //
+       
+        $deps=Department::all();
+        return redirect()->intended('/department/alldepartments')->with('deps', $deps);
     }
 
     /**
@@ -20,7 +22,7 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        //
+        return redirect()->intended('/department/add-department');
     }
 
     /**
@@ -28,38 +30,56 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(['name'=>'required|min:2|max:40','location'=>'required|min:10','totalCredits'=>'required',]);
+        $ndep=new Department();
+        $ndep->name=$request->name;
+        $ndep->location=$request->location;
+        $ndep->totalCredits=$request->totalCredits;   
+        $ndep->save();  
+        return redirect(route("department.index")); 
+
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Department $department)
+    public function show($department)
     {
-        //
+        $vdep=Department::findOrFail($department);
+        return redirect()->intended('/department/editdepartment')->with('vdep',$vdep);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Department $department)
+    public function edit( $department)
     {
-        //
+        $edep=Department::findOrFail($department);
+        return redirect()->intended('/department/viewdepartment')->with('edep',$edep);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Department $department)
+    public function update(Request $request,$department)
     {
-        //
+        $request->validate(['name'=>'required|min:2|max:40','location'=>'required|min:10','totalCredits'=>'required',]);
+        $edep=Department::findOrFail($departmentID);
+        $ndep->name=$request->name;
+        $ndep->location=$request->location;
+        $ndep->totalCredits=$request->totalCredits;   
+        $ndep->save();  
+        return redirect(route("department.index")); 
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Department $department)
+    public function destroy($department)
     {
-        //
+        $ddep=Department::findOrFail($department);
+        $ddep->delete();
+        return redirect(route("department.index")); 
     }
 }

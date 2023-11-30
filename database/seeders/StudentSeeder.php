@@ -20,6 +20,8 @@ class StudentSeeder extends Seeder
             'firstName' => 'Student',
             'lastName' => 'User',
             'Gender' => 'Male',
+            'totalCreditsTaken'=>0,
+            'isGraduated'=>false,
             'email' => 'student@example.com',
             'password' => Hash::make('password'),
         ]);
