@@ -17,10 +17,10 @@ return new class extends Migration
             $table->longText('description');
             $table->string('type');
             $table->DateTime('time');
-            $table->string('alumuni_id')->nullable();
-            $table->foreign('alumuni_id')
+            $table->string('alumni_id')->nullable();
+            $table->foreign('alumni_id')
             ->references('id')
-            ->on('alumunis')
+            ->on('alumnis')
             ->onDelete('cascade');
             $table->timestamps();
         });

@@ -4,12 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function showLoginForm()
+    {
+        return view('auth.student-login');
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::guard('student')->attempt($credentials)) {
+            return redirect()->intended('/student/dashboard');
+        }
+
+        return back()->withErrors(['email' => 'Invalid login credentials']);
+    }
     public function index()
     {
         //

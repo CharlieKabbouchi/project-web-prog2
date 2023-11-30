@@ -26,6 +26,8 @@ return new class extends Migration
             ->references('id')
             ->on('s_parents')
             ->onDelete('cascade');
+            $table->string('email')->unique();
+            $table->string('password');
             $table->timestamps();
         });
     }

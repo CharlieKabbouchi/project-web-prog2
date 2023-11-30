@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('alumunis', function (Blueprint $table) {
+        Schema::create('alumnis', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->integer('graduationYear');
             $table->string('student_id')->nullable();
@@ -19,6 +19,8 @@ return new class extends Migration
             ->references('id')
             ->on('students')
             ->onDelete('cascade');
+            $table->string('email')->unique();
+            $table->string('password');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('alumunis');
+        Schema::dropIfExists('alumnis');
     }
 };

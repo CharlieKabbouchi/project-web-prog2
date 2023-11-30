@@ -4,12 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Models\SParent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SParentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function showLoginForm()
+    {
+        return view('auth.parent-login');
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::guard('parent')->attempt($credentials)) {
+            return redirect()->intended('/parent/dashboard');
+        }
+
+        return back()->withErrors(['email' => 'Invalid login credentials']);
+    }
     public function index()
     {
         //

@@ -2,14 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Alumuni;
+use App\Models\Alumni;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class AlumuniController extends Controller
+class AlumniController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function showLoginForm()
+    {
+        return view('auth.alumni-login');
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::guard('alumni')->attempt($credentials)) {
+            return redirect()->intended('/alumni/dashboard');
+        }
+
+        return back()->withErrors(['email' => 'Invalid login credentials']);
+    }
     public function index()
     {
         //
@@ -34,7 +50,7 @@ class AlumuniController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Alumuni $alumuni)
+    public function show(Alumni $alumuni)
     {
         //
     }
@@ -42,7 +58,7 @@ class AlumuniController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Alumuni $alumuni)
+    public function edit(Alumni $alumuni)
     {
         //
     }
@@ -50,7 +66,7 @@ class AlumuniController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Alumuni $alumuni)
+    public function update(Request $request, Alumni $alumuni)
     {
         //
     }
@@ -58,7 +74,7 @@ class AlumuniController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Alumuni $alumuni)
+    public function destroy(Alumni $alumuni)
     {
         //
     }

@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Alumuni extends Model
+use Illuminate\Foundation\Auth\User as Authenticatable;
+class Alumni extends Authenticatable
 {
     use HasFactory;
     

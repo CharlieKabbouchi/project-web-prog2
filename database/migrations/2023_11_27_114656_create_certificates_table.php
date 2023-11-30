@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('graduationCertificateImage');
             $table->longText('description');
-            $table->string('alumuni_id')->nullable();
+            $table->string('alumni_id')->nullable();
             $table->string('teacher_id')->nullable();
-            $table->foreign('alumuni_id')
+            $table->foreign('alumni_id')
             ->nullable()
             ->references('id')
-            ->on('alumunis')
+            ->on('alumnis')
             ->onDelete('cascade');
             $table->foreign('teacher_id')
             ->nullable()

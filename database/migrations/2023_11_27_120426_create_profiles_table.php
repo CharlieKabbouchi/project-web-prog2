@@ -17,15 +17,15 @@ return new class extends Migration
             $table->string('email');
             $table->string('image');
             $table->DateTime('dateOfBirth');
-            $table->string('alumuni_id')->nullable();
+            $table->string('alumni_id')->nullable();
             $table->string('teacher_id')->nullable();
             $table->string('student_id')->nullable();
             $table->string('sparent_id')->nullable();
             $table->string('admin_id')->nullable();
-            $table->foreign('alumuni_id')
+            $table->foreign('alumni_id')
             ->nullable()
             ->references('id')
-            ->on('alumunis')
+            ->on('alumnis')
             ->onDelete('cascade');
             $table->foreign('teacher_id')
             ->nullable()
