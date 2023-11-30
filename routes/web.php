@@ -40,7 +40,9 @@ Route::get('/home', function () {
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
     Route::post('/login', [AdminController::class, 'login']);
-    
+    Route::get('/register', [AdminController::class, 'showRegistrationForm'])->name('admin.register');
+    Route::post('/register', [AdminController::class, 'register']);
+
     Route::middleware(['auth.admin'])->group(function () {
         // Route::get('/dashboard', function () {
         //     return 'Admin Dashboard';
@@ -56,7 +58,7 @@ Route::prefix('admin')->group(function () {
 Route::prefix('student')->group(function () {
     Route::get('/login', [StudentController::class, 'showLoginForm'])->name('student.login');
     Route::post('/login', [StudentController::class, 'login']);
-    
+
     Route::middleware(['auth.student'])->group(function () {
         // Route::get('/dashboard', function () {
         //     return 'Student Dashboard';
@@ -70,7 +72,7 @@ Route::prefix('student')->group(function () {
 Route::prefix('parent')->group(function () {
     Route::get('/login', [SParentController::class, 'showLoginForm'])->name('parent.login');
     Route::post('/login', [SParentController::class, 'login']);
-    
+
     Route::middleware(['auth.parent'])->group(function () {
         // Route::get('/dashboard', function () {
         //     return 'Parent Dashboard';
@@ -86,7 +88,7 @@ Route::prefix('parent')->group(function () {
 Route::prefix('alumni')->group(function () {
     Route::get('/login', [AlumniController::class, 'showLoginForm'])->name('alumni.login');
     Route::post('/login', [AlumniController::class, 'login']);
-    
+
     Route::middleware(['auth.alumni'])->group(function () {
         // Route::get('/dashboard', function () {
         //     return 'Alumni Dashboard';
@@ -100,7 +102,7 @@ Route::prefix('alumni')->group(function () {
 Route::prefix('teacher')->group(function () {
     Route::get('/login', [TeacherController::class, 'showLoginForm'])->name('teacher.login');
     Route::post('/login', [TeacherController::class, 'login']);
-    
+
     Route::middleware(['auth.teacher'])->group(function () {
         // Route::get('/dashboard', function () {
         //     return 'Teacher Dashboard';

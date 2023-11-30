@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller {
     /**
@@ -29,12 +30,40 @@ class AdminController extends Controller {
     }
 
     public function showDashboard(Request $request) {
+        $admin = Admin::find(session('admin_id'));
 
-        $adminId = $request->session()->get('admin_id');
+        // $adminId = $request->session()->get('admin_id');
         // $adminId = session('admin_id');
         // $admin = Auth::guard('admin')->user();
         // dd($admin);
-        return view('admin.dashboard', compact('adminId'));
+        return view('admin.dashboard', compact('admin'));
+    }
+
+
+    public function showRegistrationForm() {
+        return view('auth.admin-register');
+    }
+
+    public function register(Request $request) {
+        $request->validate([
+            'firstName' => 'required|string|max:255',
+            'lastName' => 'required|string|max:255',
+            'gender' => 'required|in:Male,Female',
+            'salary' => 'required|integer',
+            // 'email' => 'required|string|email|max:255|unique:admins',
+            // 'password' => 'required|string|min:8',
+        ]);
+
+        $admin = Admin::create([
+            'firstName' => $request->input('firstName'),
+            'lastName' => $request->input('lastName'),
+            'gender' => $request->input('gender'),
+            'salary' => $request->input('salary'),
+            // 'email' => $request->input('email'),
+            // 'password' => Hash::make($request->input('password')),
+
+        ]);
+        return redirect()->route('admin.dashboard');
     }
 
     public function index() {

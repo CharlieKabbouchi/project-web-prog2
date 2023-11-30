@@ -18,11 +18,12 @@ class StudentController extends Controller
 
     public function showDashboard(Request $request) {
          
-        $studentId = $request->session()->get('student_id');
+        $student = Student::find(session('student_id'));
+        // $studentId = $request->session()->get('student_id');
         // $studentId = session('student_id');
         // $student = Auth::guard('student')->user();
         // dd($alumni);
-        return view('student.dashboard', compact('studentId'));
+        return view('student.dashboard', compact('student'));
     }
 
     public function login(Request $request)

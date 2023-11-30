@@ -15,7 +15,7 @@ class TeacherSeeder extends Seeder
     public function run(): void
     {
         DB::table('teachers')->insert([
-            'id' => 't001',
+            'id' => 't2023001',
             'firstName' => 'Teacher',
             'lastName' => 'User',
             'Gender' => 'Female',

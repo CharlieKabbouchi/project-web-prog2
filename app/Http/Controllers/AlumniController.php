@@ -18,11 +18,11 @@ class AlumniController extends Controller
 
     public function showDashboard(Request $request) {
          
-        $alumniId = $request->session()->get('alumni_id');
+        $alumni = Alumni::find(session('alumni_id'));
         // $alumniId = session('alumni_id');
         // $alumni = Auth::guard('alumni')->user();
         // dd($alumni);
-        return view('alumni.dashboard', compact('alumniId'));
+        return view('alumni.dashboard', compact('alumni'));
     }
 
     public function login(Request $request)
