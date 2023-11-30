@@ -16,15 +16,26 @@ class StudentController extends Controller
         return view('auth.student-login');
     }
 
+    public function showDashboard(Request $request) {
+         
+        $studentId = $request->session()->get('student_id');
+        // $studentId = session('student_id');
+        // $student = Auth::guard('student')->user();
+        // dd($alumni);
+        return view('student.dashboard', compact('studentId'));
+    }
+
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('student')->attempt($credentials)) {
+            $student = Auth::guard('student')->user();
+            $request->session()->put('student_id', $student->id);
             return redirect()->intended('/student/dashboard');
         }
 
-        return back()->withErrors(['email' => 'Invalid login credentials']);
+        return back()->withErrors(['error' => 'Invalid login credentials']);
     }
     public function index()
     {

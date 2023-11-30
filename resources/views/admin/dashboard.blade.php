@@ -1,3 +1,8 @@
-<div>
-    <!-- I have not failed. I've just found 10,000 ways that won't work. - Thomas Edison -->
-</div>
+@extends('layout.layout')
+<title>Admin Dashboard</title>
+@section('content')
+    <div class="container">
+        <h1>Welcome to Admin Dashboard</h1>
+        <p>Your Admin ID: {{ $adminId }}</p>
+    </div>
+@endsection
