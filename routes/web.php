@@ -40,15 +40,15 @@ Route::get('/home', function () {
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
     Route::post('/login', [AdminController::class, 'login']);
-    Route::get('/register', [AdminController::class, 'showRegistrationForm'])->name('admin.register');
-    Route::post('/register', [AdminController::class, 'register']);
+  
 
     Route::middleware(['auth.admin'])->group(function () {
         // Route::get('/dashboard', function () {
         //     return 'Admin Dashboard';
         // })->name('admin.dashboard');
         Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
-
+        Route::get('/register', [AdminController::class, 'create'])->name('admin.register');
+        Route::post('/register', [AdminController::class, 'register']);
         // Route::get('/dashboard/{id}', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
         // Add other admin routes here
     });

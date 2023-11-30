@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\SParent;
+use App\Models\Department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,9 +40,13 @@ class StudentController extends Controller
 
         return back()->withErrors(['error' => 'Invalid login credentials']);
     }
+
+
+    //Management
     public function index()
     {
-        //
+        $stds=Student::all();
+        return redirect()->intended('/student/allstudents')->with('stds', $stds);
     }
 
     /**
@@ -48,7 +54,9 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        $parents=SParent::all();
+        $deps=Department::all();
+        return redirect()->intended('/student/addstudent')->with('deps', $deps)->with('parents',$parents);
     }
 
     /**
@@ -56,23 +64,34 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(['firstname'=>'required|min:2|max:15','lastname'=>'required|min:2|max:15','Gender'=>'required','sparent_id'=> 'required','department_id'=> 'required',]);
+
+        
+        $nstd=new Student();
+        $nstd->firstname=$request->firstname;
+        $nstd->lastname=$request->lastname;
+        $nstd->Gender=$request->Gender;
+        $nstd->$sparent_id=$request->sparent_id;
+        $nstd->department_id=$request->department_id;
+        $nstd->save();  
+        return redirect(route("student.index")); 
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Student $student)
+    public function show($student)
     {
-        //
+       
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Student $student)
+    public function edit( $student)
     {
-        //
+        $estd=Student::findOrFail($student);
+        return redirect()->intended('/student/editstudent'); 
     }
 
     /**
@@ -80,7 +99,17 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-        //
+        $request->validate(['firstname'=>'required|min:2|max:15','lastname'=>'required|min:2|max:15','Gender'=>'required','sparent_id'=> 'required','department_id'=> 'required',]);
+
+        
+        $estd=Student::findOrFail($student);
+        $estd->firstname=$request->firstname;
+        $estd->lastname=$request->lastname;
+        $estd->Gender=$request->Gender;
+        $estd->$sparent_id=$request->sparent_id;
+        $estd->department_id=$request->department_id;
+        $estd->save();  
+        return redirect(route("student.index")); 
     }
 
     /**
@@ -88,6 +117,8 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        //
+        $dstd=Student::findOrFail($student);
+        $dstd->delete($dstd);
+        return redirect(route("student.index")); 
     }
 }

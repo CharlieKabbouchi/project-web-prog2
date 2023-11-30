@@ -39,7 +39,9 @@ class AlumniController extends Controller
     }
     public function index()
     {
-        //
+        $alumnis=Alumni::all();
+        return redirect()->intended('/alumni/allalumnis');
+        
     }
 
     /**
@@ -47,15 +49,27 @@ class AlumniController extends Controller
      */
     public function create()
     {
-        //
+       
     }
 
     /**
      * Store a newly created resource in storage.
      */
+
+    public function insertAlumni($studentId)
+    {
+        $nalumni=new Alumni();
+        $nalumni->graduationYear=date('Y');
+        $student=Student::findOrFail($studentId);
+        $nalumni->student_id=$student->id;
+        $nalumni->password=$student->password;
+        $nalumni->email=$student->email;
+        $nalumni->save();  
+        return redirect(route("alumni.index")); 
+    } 
     public function store(Request $request)
     {
-        //
+         
     }
 
     /**
@@ -85,8 +99,9 @@ class AlumniController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Alumni $alumuni)
+    public function destroy($alumuni)
     {
-        //
+        $dalumni=Alumni::findOrFail($alumuni);
+        $dalumni->delete();
     }
 }
