@@ -49,7 +49,8 @@ class AlumniController extends Controller
      */
     public function create()
     {
-       
+        $student=Student::all();
+        return redirect()->intended('/alumni/addalumni')->with('student', $student);
     }
 
     /**
@@ -69,7 +70,15 @@ class AlumniController extends Controller
     } 
     public function store(Request $request)
     {
-         
+        $request->validate(['graduationYear'=>'required','email'=>'required|unique','student_id'=> 'required','password'=> 'required',]);
+        
+        $nalumni=new Alumni();
+        $nalumni->graduationYear=$request->graduationYear;
+        $nalumni->email=$request->email;
+        $nalumni->student_id=$request->student_id;
+        $nalumni->password=$request->password;
+        $nalumni->save();  
+        return redirect(route("alumni.index"));
     }
 
     /**
@@ -85,7 +94,8 @@ class AlumniController extends Controller
      */
     public function edit(Alumni $alumuni)
     {
-        //
+        $ealumni=Alumni::findOrFail($alumni);
+        return redirect()->intended('/alumni/editalumni'); 
     }
 
     /**
@@ -93,7 +103,15 @@ class AlumniController extends Controller
      */
     public function update(Request $request, Alumni $alumuni)
     {
-        //
+        $request->validate(['graduationYear'=>'required','email'=>'required|unique','student_id'=> 'required','password'=> 'required',]);
+        
+        $ealumni=ReviewE::findOrFail($reviewE);
+        $ealumni->graduationYear=$request->graduationYear;
+        $ealumni->email=$request->email;
+        $ealumni->student_id=$request->student_id;
+        $ealumni->password=$request->password;
+        $ealumni->save();  
+        return redirect(route("alumni.index")); 
     }
 
     /**
@@ -102,6 +120,7 @@ class AlumniController extends Controller
     public function destroy($alumuni)
     {
         $dalumni=Alumni::findOrFail($alumuni);
-        $dalumni->delete();
+        $dalumni->delete($dalumni);
+        return redirect(route("alumni.index"));
     }
 }
