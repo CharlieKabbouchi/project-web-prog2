@@ -71,7 +71,7 @@ class StudentController extends Controller
         $nstd->firstname=$request->firstname;
         $nstd->lastname=$request->lastname;
         $nstd->Gender=$request->Gender;
-        $nstd->$sparent_id=$request->sparent_id;
+        $nstd->sparent_id=$request->sparent_id;
         $nstd->department_id=$request->department_id;
         $nstd->save();  
         return redirect(route("student.index")); 
@@ -101,12 +101,11 @@ class StudentController extends Controller
     {
         $request->validate(['firstname'=>'required|min:2|max:15','lastname'=>'required|min:2|max:15','Gender'=>'required','sparent_id'=> 'required','department_id'=> 'required',]);
 
-        
         $estd=Student::findOrFail($student);
         $estd->firstname=$request->firstname;
         $estd->lastname=$request->lastname;
         $estd->Gender=$request->Gender;
-        $estd->$sparent_id=$request->sparent_id;
+        $estd->sparent_id=$request->sparent_id;
         $estd->department_id=$request->department_id;
         $estd->save();  
         return redirect(route("student.index")); 

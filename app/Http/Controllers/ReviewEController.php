@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\ReviewE;
+use App\Models\Student;
+use App\Models\Event;
 use Illuminate\Http\Request;
 
 class ReviewEController extends Controller
@@ -12,7 +14,8 @@ class ReviewEController extends Controller
      */
     public function index()
     {
-        //
+        $review=ReviewE::all();
+        return redirect()->intended('/reviewE/allreviews')->with('review', $review);
     }
 
     /**
@@ -20,7 +23,9 @@ class ReviewEController extends Controller
      */
     public function create()
     {
-        //
+        $student=Student::all();
+        $event=Event::all();
+        return redirect()->intended('/reviewE/addreview')->with('student', $student)->with('event',$event);
     }
 
     /**
@@ -28,7 +33,15 @@ class ReviewEController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(['description'=>'required|min:4|max:100','rating'=>'required|numeric|between:1,10','student_id'=> 'required','event_id'=> 'required',]);
+
+        $nreview=new ReviewE();
+        $nreview->description=$request->description;
+        $nreview->rating=$request->rating;
+        $nreview->student_id=$request->student_id;
+        $nreview->event_id=$request->event_id;
+        $nreview->save();  
+        return redirect(route("reviewE.index"));
     }
 
     /**
@@ -44,7 +57,8 @@ class ReviewEController extends Controller
      */
     public function edit(ReviewE $reviewE)
     {
-        //
+        $ereview=ReviewE::findOrFail($reviewE);
+        return redirect()->intended('/reviewE/editreview'); 
     }
 
     /**
@@ -52,7 +66,15 @@ class ReviewEController extends Controller
      */
     public function update(Request $request, ReviewE $reviewE)
     {
-        //
+        $request->validate(['description'=>'required|min:4|max:100','rating'=>'required|numeric|between:1,10','student_id'=> 'required','classt_id'=> 'required',]);
+
+        $ereview=ReviewE::findOrFail($reviewE);
+        $ereview->description=$request->description;
+        $ereview->rating=$request->rating;
+        $ereview->student_id=$request->student_id;
+        $ereview->event_id=$request->event_id;
+        $ereview->save();  
+        return redirect(route("reviewE.index")); 
     }
 
     /**
@@ -60,6 +82,8 @@ class ReviewEController extends Controller
      */
     public function destroy(ReviewE $reviewE)
     {
-        //
+        $dreview=ReviewE::findOrFail($reviewE);
+        $dreview->delete($dreview);
+        return redirect(route("reviewE.index")); 
     }
 }
