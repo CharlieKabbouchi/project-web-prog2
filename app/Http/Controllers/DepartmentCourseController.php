@@ -12,7 +12,8 @@ class DepartmentCourseController extends Controller
      */
     public function index()
     {
-        //
+        
+
     }
 
     /**
@@ -20,7 +21,7 @@ class DepartmentCourseController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -62,4 +63,24 @@ class DepartmentCourseController extends Controller
     {
         //
     }
+
+    public function storeRecord($courseID,$departID)
+    {
+       
+        $ncd=new DepartmentCourse();
+        $ncd->department_id=$departID;
+        $ncd->course_id=$courseID;
+        $ncd->save();
+
+    }
+
+    public function deleteRecord($courseID,$departID)
+    {
+        
+        $dcd=DepartmentCourse::where('department_id',$departID)->where('course_id',$courseID)->firstOrFail();
+        $dcd->delete();
+
+    }
+
+    
 }

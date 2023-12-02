@@ -62,4 +62,22 @@ class SemesterCourseController extends Controller
     {
         //
     }
+
+    public function storeRecord($courseID,$semesterID)
+    {
+       
+        $ncs=new SemesterCourse();
+        $ncs->semester_id=$semesterID;
+        $ncs->course_id=$courseID;
+        $ncs->save();
+
+    }
+
+    public function deleteRecord($courseID,$semesterID)
+    {
+        
+        $dcs=DepartmentCourse::where('semester_id',$semesterID)->where('course_id',$courseID)->firstOrFail();
+        $dcs->delete();
+
+    }
 }

@@ -62,4 +62,19 @@ class StudentEventController extends Controller
     {
         //
     }
+
+    public function unregisterEventStudent($studentId,$eventId)
+    {
+        $ures=StudentEvent::where('event_id',$eventId)->where('student_id',$studentId)->firstOrFail();
+        $ures->delete();
+    }   
+
+    public function registerEventStudent($studentId,$eventId)
+    {
+        $res=new StudentEvent();
+        $res->event_id=$eventId;
+        $res->student_id=$studentId;
+        $res->save();
+
+        }
 }
