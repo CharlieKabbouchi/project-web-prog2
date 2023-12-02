@@ -1,5 +1,5 @@
 @extends('layout.layout')
-<title>Student Class Timetables</title>
+<title>INDEX PAGE FOR ADMIN TO EDIT</title>
 @section('content')
     <h2>Class Timetables</h2>
 
