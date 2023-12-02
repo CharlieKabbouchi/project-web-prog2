@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AlumniController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClassTController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SParentController;
 use App\Http\Controllers\StudentController;
@@ -35,6 +36,14 @@ Route::get('/home', function () {
 // Route::get('/login-signup/login', [AuthController::class, 'login'])->name('login');
 // Route::post('/login-signup/login', [AuthController::class, 'loginPost'])->name('login');
 // Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::get('/class_ts/create', [ClassTController::class, 'create'])->name('class_ts.create');
+Route::post('/class_ts', [ClassTController::class, 'store'])->name('class_ts.store');
+Route::get('/class_ts', [ClassTController::class, 'index'])->name('class_ts.index');
+Route::get('/class_ts/show', [ClassTController::class, 'show'])->name('class_ts.show');
+Route::get('/class_ts/{class_t}/edit', [ClassTController::class, 'edit'])->name('class_ts.edit');
+Route::put('/class_ts/{class_t}', [ClassTController::class, 'update'])->name('class_ts.update');
+Route::delete('/class_ts/{class_t}', [ClassTController::class, 'destroy'])->name('class_ts.destroy');
 
 // Admin Routes
 Route::prefix('admin')->group(function () {

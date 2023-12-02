@@ -34,7 +34,7 @@ class CourseController extends Controller
         $ncourse=new Course();
         $ncourse->name=$request->name;
         $ncourse->credits=$request->credits;
-        $nreview->save();  
+        $ncourse->save();  
         return redirect(route("course.index"));
     }
 
@@ -52,7 +52,7 @@ class CourseController extends Controller
     public function edit(Course $course)
     {
         $ecourse=Course::findOrFail($course);
-        return redirect()->intended('/course/editcourse');
+        return redirect()->intended('/course/editcourse')->with('course', $ecourse);;
     }
 
     /**
@@ -65,7 +65,7 @@ class CourseController extends Controller
         $ecourse=Course::findOrFail($course);
         $ecourse->name=$request->name;
         $ecourse->credits=$request->credits;
-        $ereviecourseew->save();  
+        $ecourse->save();  
         return redirect(route("course.index")); 
     }
 
