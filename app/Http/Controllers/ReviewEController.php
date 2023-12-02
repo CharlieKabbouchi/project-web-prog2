@@ -58,7 +58,7 @@ class ReviewEController extends Controller
     public function edit(ReviewE $reviewE)
     {
         $ereview=ReviewE::findOrFail($reviewE);
-        return redirect()->intended('/reviewE/editreview'); 
+        return redirect()->intended('/reviewE/editreview')->with('review', $ereview);
     }
 
     /**

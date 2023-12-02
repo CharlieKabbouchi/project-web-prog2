@@ -58,7 +58,7 @@ class ReviewCController extends Controller
     public function edit(ReviewC $reviewC)
     {
         $ereview=ReviewC::findOrFail($reviewC);
-        return redirect()->intended('/reviewC/editreview'); 
+        return redirect()->intended('/reviewC/editreview')->with('review', $ereview);; 
     }
 
     /**

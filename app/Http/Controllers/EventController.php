@@ -58,7 +58,7 @@ class EventController extends Controller
     public function edit(Event $event)
     {
         $eevent=Event::findOrFail($event);
-        return redirect()->intended('/event/editevent'); 
+        return redirect()->intended('/event/editevent')->with('event', $eevent);
     }
 
     /**
@@ -84,7 +84,7 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         $devent=Event::findOrFail($event);
-        $devent>delete($devent);
+        $devent->delete($devent);
         return redirect(route("event.index")); 
     }
 }
