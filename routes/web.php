@@ -58,6 +58,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
         Route::get('/register', [AdminController::class, 'create'])->name('admin.register');
         Route::post('/register', [AdminController::class, 'register']);
+        Route::get('/alumni/register', [AlumniController::class, 'create'])->name('alumni.create');
+        Route::post('/alumni/register', [AlumniController::class, 'store']);
         // Route::get('/dashboard/{id}', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
         // Add other admin routes here
     });
