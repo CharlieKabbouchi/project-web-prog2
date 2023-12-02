@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
+use App\Models\Alumni;
 use App\Models\Profile;
+use App\Models\SParent;
+use App\Models\Student;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
@@ -24,7 +29,7 @@ class ProfileController extends Controller
         $admins=Admin::all();
         $teachers=Teacher::all();
         $students=Student::all();
-        $parents=Sparent::all();
+        $parents=SParent::all();
         $alumnis=Alumni::all();
 
         return redirect()->intended('/profile/addprofile')
