@@ -42,7 +42,8 @@ class SParentController extends Controller
     
     public function index()
     {
-        //
+        $parent=SParent::all();
+        return redirect()->intended('/parent/allparent')->with('parent', $parent);
     }
 
     /**
@@ -50,7 +51,7 @@ class SParentController extends Controller
      */
     public function create()
     {
-        //
+        return redirect()->intended('/parent/addparent');
     }
 
     /**
@@ -58,7 +59,19 @@ class SParentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'firstName' => 'required|string',
+            'lastName' => 'required|string',
+            'Gender' => 'required|string',
+        ]);
+
+        $sparent = new SParent();
+        $sparent->firstName = $request->firstName;
+        $sparent->lastName = $request->lastName;
+        $sparent->Gender = $request->Gender;
+        $sparent->save();
+
+        return redirect(route('sparent.index'));
     }
 
     /**
@@ -74,7 +87,8 @@ class SParentController extends Controller
      */
     public function edit(SParent $sParent)
     {
-        //
+        $sp=SParent::findOrFail($sparent);
+        return redirect()->intended('/parent/editparent')->with('parent', $sp);
     }
 
     /**
@@ -82,7 +96,18 @@ class SParentController extends Controller
      */
     public function update(Request $request, SParent $sParent)
     {
-        //
+        $request->validate([
+            'firstName' => 'required|string',
+            'lastName' => 'required|string',
+            'Gender' => 'required|string',
+        ]);
+
+        $sp=SParent::findOrFail($sparent);
+        $sp->firstName = $request->firstName;
+        $sp->lastName = $request->lastName;
+        $sp->Gender = $request->Gender;
+        $sp->save();
+        return redirect(route('sparent.index'));
     }
 
     /**
@@ -90,6 +115,7 @@ class SParentController extends Controller
      */
     public function destroy(SParent $sParent)
     {
-        //
+        $sParent->delete();
+        return redirect(route("sparent.index"));
     }
 }
