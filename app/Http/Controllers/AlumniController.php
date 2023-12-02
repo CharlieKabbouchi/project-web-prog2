@@ -45,33 +45,30 @@ class AlumniController extends Controller {
      * Show the form for creating a new resource.
      */
     public function create() {
-        $student = Student::all();
-        return redirect()->intended('/alumni/addalumni')->with('student', $student);
+        $students = Student::all();
+        return view('auth.alumni-register', compact('students'));
+        // return redirect()->intended('/admin/alumni/register')->with('student', $student);
     }
 
     /**
      * Store a newly created resource in storage.
      */
 
-    public function insertAlumni($studentId) {
+    public function store(Request $request) {
+        $request->validate([
+            'student_id' => 'required|exists:students,id',
+        ]);
+    
         $nalumni = new Alumni();
         $nalumni->graduationYear = date('Y');
-        $student = Student::findOrFail($studentId);
-        $nalumni->student_id = $student->id;
-        $nalumni->password = $student->password;
-        $nalumni->email = $student->email;
+        $nalumni->student_id = $request->input('student_id');
+        
+        // $students = Student::findOrFail($request->input('student_id'));
+        // $nalumni->password = $student->password;
+        // $nalumni->email = $student->email;
+    
         $nalumni->save();
-        return redirect(route("alumni.index"));
-    }
-    public function store(Request $request) {
-        $request->validate(['graduationYear' => 'required', 'email' => 'required|unique', 'student_id' => 'required', 'password' => 'required',]);
-
-        $nalumni = new Alumni();
-        $nalumni->graduationYear = $request->graduationYear;
-        $nalumni->email = $request->email;
-        $nalumni->student_id = $request->student_id;
-        $nalumni->password = $request->password;
-        $nalumni->save();
+    
         return redirect(route("alumni.index"));
     }
 
@@ -94,13 +91,13 @@ class AlumniController extends Controller {
      * Update the specified resource in storage.
      */
     public function update(Request $request, Alumni $alumuni) {
-        $request->validate(['graduationYear' => 'required', 'email' => 'required|unique', 'student_id' => 'required', 'password' => 'required',]);
+        $request->validate(['graduationYear' => 'required', 'student_id' => 'required',]);
 
         $ealumni = ReviewE::findOrFail($alumuni);
-        $ealumni->graduationYear = $request->graduationYear;
-        $ealumni->email = $request->email;
+        $ealumni->graduationYear = date('Y');
+        // $ealumni->email = $request->email;
         $ealumni->student_id = $request->student_id;
-        $ealumni->password = $request->password;
+        // $ealumni->password = $request->password;
         $ealumni->save();
         return redirect(route("alumni.index"));
     }
@@ -108,9 +105,10 @@ class AlumniController extends Controller {
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($alumni) {
-        $dalumni = Alumni::findOrFail($alumni);
-        $dalumni->delete($dalumni);
+    public function destroy(Alumni $alumni, $alumniId) {
+        $dalumni = Alumni::findOrFail($alumniId);
+        $dalumni->delete();
+        $alumni->delete();
         return redirect(route("alumni.index"));
     }
 }
