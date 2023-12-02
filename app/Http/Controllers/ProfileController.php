@@ -42,7 +42,6 @@ class ProfileController extends Controller
     {
         $request->validate([
             'phone' => 'nullable|string',
-            'email' => 'required|email',
             'image' => 'required|string',
             'dateOfBirth' => 'required|date',
             'alumni_id' => 'required',
@@ -54,7 +53,6 @@ class ProfileController extends Controller
 
         $profile = new Profile();
         $profile->phone = $request->phone;
-        $profile->email = $request->email;
         $profile->image = $request->image;
         $profile->dateOfBirth = $request->dateOfBirth;
         $profile->alumni_id = $request->alumni_id;
@@ -91,7 +89,6 @@ class ProfileController extends Controller
     {
         $request->validate([
             'phone' => 'nullable|string',
-            'email' => 'required|email',
             'image' => 'required|string',
             'dateOfBirth' => 'required|date',
             'alumni_id' => 'required',
@@ -103,7 +100,6 @@ class ProfileController extends Controller
 
         $pf=Profile::findOrFail($profile);
         $pf->phone = $request->phone;
-        $pf->email = $request->email;
         $pf->image = $request->image;
         $pf->dateOfBirth = $request->dateOfBirth;
         $pf->alumni_id = $request->alumni_id;
@@ -121,8 +117,7 @@ class ProfileController extends Controller
      */
     public function destroy(Profile $profile)
     {
-        $dpf=Profile::findOrFail($profile);
-        $dpf->delete($dpf);
+        $profile->delete();
         return redirect(route("profile.index"));
     }
 }

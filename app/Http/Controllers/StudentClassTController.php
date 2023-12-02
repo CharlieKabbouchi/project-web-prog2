@@ -108,8 +108,7 @@ class StudentClassTController extends Controller
      */
     public function destroy(StudentClassT $studentClassT)
     {
-        $dstct=Profile::findOrFail($studentClassT);
-        $dstct->delete($dstct);
+        $studentClassT->delete();
         return redirect(route("student_class_ts.index"));
     }
 }

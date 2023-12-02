@@ -63,16 +63,12 @@ class SParentController extends Controller
             'firstName' => 'required|string',
             'lastName' => 'required|string',
             'Gender' => 'required|string',
-            'email' => 'required|email|unique:s_parents',
-            'password' => 'required|string',
         ]);
 
         $sparent = new SParent();
         $sparent->firstName = $request->firstName;
         $sparent->lastName = $request->lastName;
         $sparent->Gender = $request->Gender;
-        $sparent->email = $request->email;
-        $sparent->password = bcrypt($request->password);
         $sparent->save();
 
         return redirect(route('sparent.index'));
@@ -104,18 +100,12 @@ class SParentController extends Controller
             'firstName' => 'required|string',
             'lastName' => 'required|string',
             'Gender' => 'required|string',
-            'email' => 'required|email|unique:s_parents,email,' . $sparent->id,
-            'password' => 'nullable|string',
         ]);
 
         $sp=SParent::findOrFail($sparent);
         $sp->firstName = $request->firstName;
         $sp->lastName = $request->lastName;
         $sp->Gender = $request->Gender;
-        $sp->email = $request->email;
-        if ($request->has('password')) {
-            $sparent->password = bcrypt($request->password);
-        }
         $sp->save();
         return redirect(route('sparent.index'));
     }
@@ -125,8 +115,7 @@ class SParentController extends Controller
      */
     public function destroy(SParent $sParent)
     {
-        $sp=SParent::findOrFail($sparent);
-        $sp->delete($sp);
+        $sParent->delete();
         return redirect(route("sparent.index"));
     }
 }

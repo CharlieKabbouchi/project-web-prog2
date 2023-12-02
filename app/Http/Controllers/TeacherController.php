@@ -57,9 +57,6 @@ class TeacherController extends Controller {
             'lastName' => 'required|string',
             'Gender' => 'required|string',
             'salary' => 'required|integer',
-            'email' => 'required|email|unique:teachers',
-            'password' => 'required|string',
-            'status' => 'required|in:pending,approved',
         ]);
 
         $te = new Teacher();
@@ -67,9 +64,6 @@ class TeacherController extends Controller {
         $te->lastName = $request->lastName;
         $te->Gender = $request->Gender;
         $te->salary = $request->salary;
-        $te->email = $request->email;
-        $te->password = bcrypt($request->password);
-        $te->status = $request->status;
         $te->save();
 
         return redirect(route('teacher.index'));
@@ -99,9 +93,6 @@ class TeacherController extends Controller {
             'lastName' => 'required|string',
             'Gender' => 'required|string',
             'salary' => 'required|integer',
-            'email' => 'required|email|unique:teachers,email,'.$teacher->id,
-            'password' => 'nullable|string',
-            'status' => 'required|in:pending,approved',
         ]);
     
         $te=Teacher::findOrFail($teacher);
@@ -109,11 +100,6 @@ class TeacherController extends Controller {
         $te->lastName = $request->lastName;
         $te->Gender = $request->Gender;
         $te->salary = $request->salary;
-        $te->email = $request->email;
-        if ($request->has('password')) {
-            $te->password = bcrypt($request->password);
-        }
-        $te->status = $request->status;
         $te->save();
 
         return redirect(route('teacher.index'));
@@ -123,8 +109,7 @@ class TeacherController extends Controller {
      * Remove the specified resource from storage.
      */
     public function destroy(Teacher $teacher) {
-        $te=Teacher::findOrFail($teacher);
-        $te->delete($te);
+        $teacher->delete();
         return redirect(route("teacher.index")); 
     }
 }
