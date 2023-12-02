@@ -11,8 +11,8 @@
                 <th>Course</th>
                 <th>Semester</th>
                 <th>Teacher</th>
-                <th>Abscence</th>
                 <th>Max Available Abscence</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
