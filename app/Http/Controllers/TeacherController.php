@@ -37,21 +37,42 @@ class TeacherController extends Controller {
     }
 
     public function index() {
-        //
+        $teacher = Teacher::all();
+        return redirect()->intended('/teacher/allteachers')->with('teacher', $teacher);
     }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create() {
-        //
+        return redirect()->intended('/teacher/addteacher');
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request) {
-        //
+         $request->validate([
+            'firstName' => 'required|string',
+            'lastName' => 'required|string',
+            'Gender' => 'required|string',
+            'salary' => 'required|integer',
+            'email' => 'required|email|unique:teachers',
+            'password' => 'required|string',
+            'status' => 'required|in:pending,approved',
+        ]);
+
+        $te = new Teacher();
+        $te->firstName = $request->firstName;
+        $te->lastName = $request->lastName;
+        $te->Gender = $request->Gender;
+        $te->salary = $request->salary;
+        $te->email = $request->email;
+        $te->password = bcrypt($request->password);
+        $te->status = $request->status;
+        $te->save();
+
+        return redirect(route('teacher.index'));
     }
 
     /**
@@ -65,20 +86,45 @@ class TeacherController extends Controller {
      * Show the form for editing the specified resource.
      */
     public function edit(Teacher $teacher) {
-        //
+        $te=Teacher::findOrFail($teacher);
+        return redirect()->intended('/teacher/editteacher')->with('teacher', $te);
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Teacher $teacher) {
-        //
+        $request->validate([
+            'firstName' => 'required|string',
+            'lastName' => 'required|string',
+            'Gender' => 'required|string',
+            'salary' => 'required|integer',
+            'email' => 'required|email|unique:teachers,email,'.$teacher->id,
+            'password' => 'nullable|string',
+            'status' => 'required|in:pending,approved',
+        ]);
+    
+        $te=Teacher::findOrFail($teacher);
+        $te->firstName = $request->firstName;
+        $te->lastName = $request->lastName;
+        $te->Gender = $request->Gender;
+        $te->salary = $request->salary;
+        $te->email = $request->email;
+        if ($request->has('password')) {
+            $te->password = bcrypt($request->password);
+        }
+        $te->status = $request->status;
+        $te->save();
+
+        return redirect(route('teacher.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Teacher $teacher) {
-        //
+        $te=Teacher::findOrFail($teacher);
+        $te->delete($te);
+        return redirect(route("teacher.index")); 
     }
 }

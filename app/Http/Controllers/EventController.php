@@ -75,7 +75,7 @@ class EventController extends Controller
         $eevent->time=$request->time;
         $eevent->alumni_id=$request->alumni_id;
         $eevent->save();  
-        return redirect(route("event.index")); 
+        return redirect(route("event.index"));
     }
 
     /**
