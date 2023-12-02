@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('answers', function (Blueprint $table) {
             $table->id();
             $table->longText('correction');
-            $table->unsignedBigInteger('question_id')->nullable();
+            $table->unsignedBigInteger('question_id');
             $table->foreign('question_id')
             ->references('id')
             ->on('questions')
