@@ -13,8 +13,11 @@ return new class extends Migration
     {
         Schema::create('class_t_s', function (Blueprint $table) {
             $table->id();
-            $table->DateTime('startingDate');
-            $table->DateTime('endingDate');
+            $table->Date('startingDate');
+            $table->Date('endingDate');
+            $table->time('starttime');
+            $table->time('endtime');
+            $table->DateTime('DayofWeek');
             $table->unsignedBigInteger('course_id');
             $table->unsignedBigInteger('semester_id');
             $table->string('teacher_id')->nullable();

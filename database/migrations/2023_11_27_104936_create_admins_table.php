@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('id')->primary();
             $table->string('firstName');
             $table->string('lastName');
+            $table->boolean('isSuper')->default(false);
             $table->string('Gender');
             $table->integer('salary');
             $table->string('email')->unique();
