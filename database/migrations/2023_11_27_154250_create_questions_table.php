@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
             $table->longText('description');
-            $table->string('student_id')->nullable();
+            $table->string('student_id');
             $table->foreign('student_id')
                 ->references('id')
                 ->on('students')

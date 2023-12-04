@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('upload_resources', function (Blueprint $table) {
             $table->id();
             $table->string('attachement');
-            $table->unsignedBigInteger('classt_id')->nullable();
-            $table->string('teacher_id')->nullable();
+            $table->unsignedBigInteger('classt_id');
+            $table->string('teacher_id');
             $table->foreign('teacher_id')
             ->references('id')
             ->on('teachers')

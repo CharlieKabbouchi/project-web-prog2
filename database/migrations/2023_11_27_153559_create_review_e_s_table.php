@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->longText('description');
             $table->float('rating');
-            $table->unsignedBigInteger('event_id')->nullable();
-            $table->string('student_id')->nullable();
+            $table->unsignedBigInteger('event_id');
+            $table->string('student_id');
             $table->foreign('student_id')
             ->references('id')
             ->on('students')

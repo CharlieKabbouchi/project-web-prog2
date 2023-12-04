@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('alumnis', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->integer('graduationYear');
-            $table->string('student_id')->nullable();
+            $table->string('student_id');
             $table->foreign('student_id')
             ->references('id')
             ->on('students')

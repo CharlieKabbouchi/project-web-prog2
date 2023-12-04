@@ -16,8 +16,10 @@ return new class extends Migration
             $table->string('title');
             $table->longText('description');
             $table->string('type');
-            $table->DateTime('time');
-            $table->string('alumni_id')->nullable();
+            $table->Date('time');
+            $table->time('startingtime');
+            $table->time('endingtime');
+            $table->string('alumni_id');
             $table->foreign('alumni_id')
             ->references('id')
             ->on('alumnis')
