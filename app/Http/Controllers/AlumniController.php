@@ -12,10 +12,7 @@ class AlumniController extends Controller {
     /**
      * Display a listing of the resource.
      */
-    public function showLoginForm() {
-        return view('auth.alumni-login');
-    }
-
+    
     public function showDashboard(Request $request) {
 
         $alumni = Alumni::find(session('alumni_id'));
@@ -25,17 +22,7 @@ class AlumniController extends Controller {
         return view('alumni.dashboard', compact('alumni'));
     }
 
-    public function login(Request $request) {
-        $credentials = $request->only('email', 'password');
-
-        if (Auth::guard('alumni')->attempt($credentials)) {
-            $alumni = Auth::guard('alumni')->user();
-            $request->session()->put('alumni_id', $alumni->id);
-            return redirect()->intended('/alumni/dashboard');
-        }
-
-        return back()->withErrors(['error' => 'Invalid login credentials']);
-    }
+    
     public function index() {
         $alumnis = Alumni::all();
         return redirect()->intended('/alumni/allalumnis')->with('alumni', $alumnis);;

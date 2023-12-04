@@ -11,10 +11,7 @@ class SParentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function showLoginForm()
-    {
-        return view('auth.parent-login');
-    }
+   
 
     
     public function showDashboard(Request $request) {
@@ -26,18 +23,7 @@ class SParentController extends Controller
         return view('parent.dashboard', compact('parent'));
     }
 
-    public function login(Request $request)
-    {
-        $credentials = $request->only('email', 'password');
-
-        if (Auth::guard('parent')->attempt($credentials)) {
-            $parent = Auth::guard('parent')->user();
-            $request->session()->put('parent_id', $parent->id);
-            return redirect()->intended('/parent/dashboard');
-        }
-
-        return back()->withErrors(['error' => 'Invalid login credentials']);
-    }
+    
 
     
     public function index()
