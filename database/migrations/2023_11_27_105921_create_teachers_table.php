@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('salary');
             $table->string('email')->unique();
             $table->string('password');
+            // $table->enum('status', ['pending', 'approved'])->default('pending');
             $table->timestamps();
         });
     }

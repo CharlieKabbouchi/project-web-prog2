@@ -16,8 +16,10 @@ return new class extends Migration
             $table->string('firstName');
             $table->string('lastName');
             $table->string('Gender');
-            $table->unsignedBigInteger('department_id')->nullable();
-            $table->string('sparent_id')->nullable();
+            $table->boolean('isGraduated')->default(false);
+            $table->Integer('totalCreditsTaken')->default(0);
+            $table->unsignedBigInteger('department_id');
+            $table->string('sparent_id');
             $table->foreign('department_id')
             ->references('id')
             ->on('departments')

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AlumniController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClassTController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SParentController;
 use App\Http\Controllers\StudentController;
@@ -36,19 +37,29 @@ Route::get('/home', function () {
 // Route::post('/login-signup/login', [AuthController::class, 'loginPost'])->name('login');
 // Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::get('/class_ts/create', [ClassTController::class, 'create'])->name('class_ts.create');
+Route::post('/class_ts', [ClassTController::class, 'store'])->name('class_ts.store');
+Route::get('/class_ts', [ClassTController::class, 'index'])->name('class_ts.index');
+Route::get('/class_ts/show', [ClassTController::class, 'show'])->name('class_ts.show');
+Route::get('/class_ts/{class_t}/edit', [ClassTController::class, 'edit'])->name('class_ts.edit');
+Route::put('/class_ts/{class_t}', [ClassTController::class, 'update'])->name('class_ts.update');
+Route::delete('/class_ts/{class_t}', [ClassTController::class, 'destroy'])->name('class_ts.destroy');
+
 // Admin Routes
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
     Route::post('/login', [AdminController::class, 'login']);
-    Route::get('/register', [AdminController::class, 'showRegistrationForm'])->name('admin.register');
-    Route::post('/register', [AdminController::class, 'register']);
+  
 
     Route::middleware(['auth.admin'])->group(function () {
         // Route::get('/dashboard', function () {
         //     return 'Admin Dashboard';
         // })->name('admin.dashboard');
         Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
-
+        Route::get('/register', [AdminController::class, 'create'])->name('admin.register');
+        Route::post('/register', [AdminController::class, 'register']);
+        Route::get('/alumni/register', [AlumniController::class, 'create'])->name('alumni.create');
+        Route::post('/alumni/register', [AlumniController::class, 'store']);
         // Route::get('/dashboard/{id}', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
         // Add other admin routes here
     });

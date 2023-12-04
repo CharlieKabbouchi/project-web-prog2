@@ -12,7 +12,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+        $course=Course::all();
+        return redirect()->intended('/course/allcourses')->with('course', $course);
     }
 
     /**
@@ -20,7 +21,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        return redirect()->intended('/course/addcourse');
     }
 
     /**
@@ -28,7 +29,13 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(['name'=>'required|min:5|max:50','credits'=>'required|in:1,3',]);
+
+        $ncourse=new Course();
+        $ncourse->name=$request->name;
+        $ncourse->credits=$request->credits;
+        $ncourse->save();  
+        return redirect(route("course.index"));
     }
 
     /**
@@ -44,7 +51,8 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        //
+        $ecourse=Course::findOrFail($course);
+        return redirect()->intended('/course/editcourse')->with('course', $ecourse);;
     }
 
     /**
@@ -52,7 +60,13 @@ class CourseController extends Controller
      */
     public function update(Request $request, Course $course)
     {
-        //
+        $request->validate(['name'=>'required|min:5|max:50','credits'=>'required|in:1,3',]);
+
+        $ecourse=Course::findOrFail($course);
+        $ecourse->name=$request->name;
+        $ecourse->credits=$request->credits;
+        $ecourse->save();  
+        return redirect(route("course.index")); 
     }
 
     /**
@@ -60,6 +74,8 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        //
+        $dcourse=Course::findOrFail($course);
+        $dcourse->delete($dcourse);
+        return redirect(route("course.index")); 
     }
 }
