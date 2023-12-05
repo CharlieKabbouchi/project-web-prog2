@@ -81,7 +81,7 @@ class SParentController extends Controller {
      * Show the form for editing the specified resource.
      */
     public function edit(SParent $sParent) {
-        $sp = SParent::findOrFail($sparent);
+        $sp = SParent::findOrFail($sParent);
         return redirect()->intended('/parent/editparent')->with('parent', $sp);
     }
 
@@ -95,7 +95,7 @@ class SParentController extends Controller {
             'Gender' => 'required|string',
         ]);
 
-        $sp = SParent::findOrFail($sparent);
+        $sp = SParent::findOrFail($sParent);
         $sp->firstName = $request->firstName;
         $sp->lastName = $request->lastName;
         $sp->Gender = $request->Gender;
