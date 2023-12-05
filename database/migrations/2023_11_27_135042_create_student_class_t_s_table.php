@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('student_class_t_s', function (Blueprint $table) {
-            $table->string('student_id')->nullable();
-            $table->unsignedBigInteger('classt_id')->nullable();
+            $table->string('student_id');
+            $table->unsignedBigInteger('classt_id');
             $table->foreign('student_id')
             ->references('id')
             ->on('students')
@@ -24,7 +24,7 @@ return new class extends Migration
             ->onDelete('cascade');
             $table->timestamps();
             $table->integer('attendence');
-            $table->float('averageGrade');
+            $table->float('averageGrade')->nuallable();
             $table->float('quizGrade')->nuallable();
             $table->float('projectGrade')->nuallable();
             $table->float('assignmentGrade')->nuallable();

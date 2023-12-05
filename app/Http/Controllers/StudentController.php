@@ -13,11 +13,7 @@ class StudentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function showLoginForm()
-    {
-        return view('auth.student-login');
-    }
-
+  
     public function showDashboard(Request $request) {
          
         $student = Student::find(session('student_id'));
@@ -28,19 +24,7 @@ class StudentController extends Controller
         return view('student.dashboard', compact('student'));
     }
 
-    public function login(Request $request)
-    {
-        $credentials = $request->only('email', 'password');
-
-        if (Auth::guard('student')->attempt($credentials)) {
-            $student = Auth::guard('student')->user();
-            $request->session()->put('student_id', $student->id);
-            return redirect()->intended('/student/dashboard');
-        }
-
-        return back()->withErrors(['error' => 'Invalid login credentials']);
-    }
-
+  
 
     //Management
     public function index()

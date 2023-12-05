@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('admins', function (Blueprint $table) {
-            $table->string('id')->primary();
+        Schema::create('pendings', function (Blueprint $table) {
+            $table->id();
             $table->string('firstName');
             $table->string('lastName');
-            $table->boolean('isSuper')->default(false);
             $table->string('Gender');
-            $table->integer('salary');
-            $table->string('email')->unique();
-            $table->string('password');
+            $table->string('type');
+            $table->string('email')->nullable()->unique();
+            $table->string('image')->nullable();
+            $table->string('phone')->nullable();
+            $table->Date('DOB')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('admins');
+        Schema::dropIfExists('pendings');
     }
 };

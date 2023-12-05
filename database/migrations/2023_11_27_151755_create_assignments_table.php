@@ -16,8 +16,9 @@ return new class extends Migration
             $table->DateTime('startingDate');
             $table->DateTime('endingDate');
             $table->longText('description');
-            $table->unsignedBigInteger('classt_id')->nullable();
-            $table->string('teacher_id')->nullable();
+            $table->string('title');
+            $table->unsignedBigInteger('classt_id');
+            $table->string('teacher_id');
             $table->foreign('teacher_id')
             ->references('id')
             ->on('teachers')
