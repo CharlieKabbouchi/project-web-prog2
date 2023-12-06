@@ -17,6 +17,7 @@ class AlumniSeeder extends Seeder
         DB::table('alumnis')->insert([
             'id' => 'al2023001',
             'graduationYear' => 2020,
+            'student_id' => 's2023002',
             'email' => 'alumni@example.com',
             'password' => Hash::make('password'),
         ]);

@@ -10,6 +10,20 @@ class TeacherController extends Controller {
     /**
      * Display a listing of the resource.
      */
+    // public function showLoginForm() {
+    //     return view('auth.teacher-login');
+    // }
+    // public function login(Request $request) {
+    //     $credentials = $request->only('email', 'password');
+
+    //     if (Auth::guard('teacher')->attempt($credentials)) {
+    //         $teacher = Auth::guard('teacher')->user();
+    //         $request->session()->put('teacher_id', $teacher->id);
+    //         return redirect()->intended('/teacher/dashboard');
+    //     }
+
+    //     return back()->withErrors(['error' => 'Invalid login credentials']);
+    // }
    
 
     public function showDashboard(Request $request) {

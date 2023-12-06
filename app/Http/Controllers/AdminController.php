@@ -13,7 +13,23 @@ class AdminController extends Controller {
      */
 
   
+    //  public function showLoginForm() {
+    //     return view('auth.admin-login');
+    // }
 
+
+
+    // public function login(Request $request) {
+    //     $credentials = $request->only('email', 'password');
+
+    //     if (Auth::guard('admin')->attempt($credentials)) {
+    //         $admin = Auth::guard('admin')->user();
+    //         $request->session()->put('admin_id', $admin->id);
+    //         return redirect()->intended('/admin/dashboard');
+    //     }
+
+    //     return back()->withErrors(['error' => 'Invalid login credentials']);
+    // }
 
 
     public function showDashboard(Request $request) {

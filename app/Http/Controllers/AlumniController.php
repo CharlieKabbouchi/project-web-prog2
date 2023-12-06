@@ -12,7 +12,23 @@ class AlumniController extends Controller {
     /**
      * Display a listing of the resource.
      */
-    
+
+    // public function showLoginForm() {
+    //     return view('auth.alumni-login');
+    // }
+    // public function login(Request $request) {
+    //     $credentials = $request->only('email', 'password');
+
+    //     if (Auth::guard('alumni')->attempt($credentials)) {
+    //         $alumni = Auth::guard('alumni')->user();
+    //         $request->session()->put('alumni_id', $alumni->id);
+    //         return redirect()->intended('/alumni/dashboard');
+    //     }
+
+    //     return back()->withErrors(['error' => 'Invalid login credentials']);
+    // }
+
+
     public function showDashboard(Request $request) {
 
         $alumni = Alumni::find(session('alumni_id'));
@@ -22,7 +38,7 @@ class AlumniController extends Controller {
         return view('alumni.dashboard', compact('alumni'));
     }
 
-    
+
     public function index() {
         $alumnis = Alumni::all();
         return redirect()->intended('/alumni/allalumnis')->with('alumni', $alumnis);;
@@ -45,17 +61,17 @@ class AlumniController extends Controller {
         $request->validate([
             'student_id' => 'required|exists:students,id',
         ]);
-    
+
         $nalumni = new Alumni();
         $nalumni->graduationYear = date('Y');
         $nalumni->student_id = $request->input('student_id');
-        
+
         // $students = Student::findOrFail($request->input('student_id'));
         // $nalumni->password = $student->password;
         // $nalumni->email = $student->email;
-    
+
         $nalumni->save();
-    
+
         return redirect(route("alumni.index"));
     }
 
