@@ -11,7 +11,11 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\LoginSignUp;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FirebaseManagement;
 
+Route::get('upload', [FirebaseManagement::class, 'showForm']);
+Route::post('/uploadd', [FirebaseManagement::class, 'upload']);
+Route::get('/download/{filename}', [FirebaseManagement::class, 'download']);
 /*
 |--------------------------------------------------------------------------
 | Web Routes
