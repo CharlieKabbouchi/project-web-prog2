@@ -11,7 +11,11 @@
 	<script>
 		WebFont.load({
 			google: {"families":["Montserrat:100,200,300,400,500,600,700,800,900"]},
+
 			custom: {"families":["Flaticon", "LineAwesome"], urls: ["{{asset('assets/css/fonts.css')}}"]},
+
+			custom: {"families":["Flaticon", "LineAwesome"], urls: [{{asset('assets/css/fonts.css')}}]},
+
 			active: function() {
 				sessionStorage.fonts = true;
 			}
@@ -33,10 +37,19 @@
 				<!--
 					Tip 1: You can change the background color of the logo header using: data-background-color="black | dark | blue | purple | light-blue | green | orange | red"
 				-->
+
 				<a href="{{route('admin.dashboard')}}" class="big-logo">
 					<img src="{{asset('assets/img/logoresponsive.png')}}" alt="logo img" class="logo-img">
 				</a>
 				
+
+				<a href="index.html" class="big-logo">
+					<img src="{{asset('assets/img/logoresponsive.png')}}" alt="logo img" class="logo-img">
+				</a>
+				<a href="index.html" class="logo">
+					<img src="{{asset('assets/img/logoheader.png')}}" alt="navbar brand" class="navbar-brand">
+				</a>
+
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon">
 						<i class="la la-bars"></i>
@@ -57,14 +70,39 @@
 							<i class="la la-navicon"></i>
 						</button>
 					</div>
-					
+
+					<div class="collapse" id="search-nav">
+						<form class="navbar-left navbar-form nav-search ml-md-3 mr-md-3">
+							<div class="input-group">
+								<input type="text" placeholder="Search ..." class="form-control">
+								<div class="input-group-append">
+									<button type="submit" class="btn btn-search">
+										<i class="la la-search search-icon"></i>
+									</button>
+								</div>
+							</div>
+						</form>
+					</div>
+
 					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
 						<li class="nav-item toggle-nav-search hidden-caret">
 							<a class="nav-link" data-toggle="collapse" href="#search-nav" role="button" aria-expanded="false" aria-controls="search-nav">
 								<i class="flaticon-search-1"></i>
 							</a>
 						</li>
-						
+
+						<li class="nav-item dropdown hidden-caret">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<i class="flaticon-envelope-1"></i>
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<a class="dropdown-item" href="#">Action</a>
+								<a class="dropdown-item" href="#">Another action</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="#">Something else here</a>
+							</div>
+						</li>
+
 						<li class="nav-item dropdown hidden-caret">
 							<a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<i class="flaticon-alarm"></i>
@@ -129,6 +167,7 @@
 										<div class="u-img"><img src="{{asset('assets/img/profile.jpg')}}" alt="image profile"></div>
 										<div class="u-text">
 											<h4>$admin->firstname</h4>
+
 										</div>
 									</div>
 								</li>
@@ -136,6 +175,29 @@
 							</ul>
 						</li>
 						
+
+											<p class="text-muted">hello@themekita.com</p><a href="{{route('admin.viewprofile')}}" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="#">My Profile</a>
+									<a class="dropdown-item" href="#">My Balance</a>
+									<a class="dropdown-item" href="#">Inbox</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="#">Account Setting</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="#">Logout</a>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a href="#" class="nav-link quick-sidebar-toggler">
+								<i class="flaticon-shapes-1"></i>
+							</a>
+						</li>
+
 					</ul>
 				</div>
 			</nav>
@@ -168,12 +230,21 @@
 							<div class="collapse in" id="collapseExample">
 								<ul class="nav">
 									<li>
+
 										<a href="{{route('viewprofile',['id'=>1])}}">
+
+                                       
+										<a href="{{route('admin.viewprofile')}}">
+
 											<span class="link-collapse">My Profile</span>
 										</a>
 									</li>
 									<li>
+
 										<a href="{{route('editprofile',['id'=>1])}}">
+
+										<a href="{{route('admin.editprofile')}}">
+
 											<span class="link-collapse">Edit Profile</span>
 										</a>
 									</li>
@@ -197,6 +268,7 @@
 							<h4 class="text-section">Manage Assets</h4>
 						</li>
 						<li class="nav-item">
+
 							<a data-toggle="collapse" href="{{route('admin.manageDepartments')}}">
 								<i class="flaticon-layers"></i>
 								<p>Departments</p>
@@ -221,12 +293,48 @@
 								<p>Classes</p>
 							</a>
 						</li>
+
+							<a data-toggle="collapse" href="{{route('admin.managedepartments')}}">
+								<i class="flaticon-layers"></i>
+								<p>Departments</p>
+								<span class="caret"></span>
+							</a>
+                            
+                        </li>	
+						<li class="nav-item">
+							<a data-toggle="collapse" href="{{route('admin.managesemesters')}}">
+								<i class="flaticon-agenda-1"></i>
+								<p>Semesters</p>
+								<span class="caret"></span>
+							</a>
+							
+						</li>
+                   
+						<li class="nav-item">
+							<a data-toggle="collapse" href="{{route('admin.managecourses')}}">
+								<i class="flaticon-box"></i>
+								<p>Courses</p>
+								<span class="caret"></span>
+							</a>
+							
+						</li>
+						<li class="nav-item">
+							<a data-toggle="collapse" href="{{route('admin.manageclasses')}}">
+								<i class="flaticon-placeholder"></i>
+								<p>Classes</p>
+								<span class="caret"></span>
+							</a>
+							
+						</li>
+
+
                         <li class="nav-section">
 							<span class="sidebar-mini-icon">
 								<i class="la la-ellipsis-h"></i>
 							</span>
 							<h4 class="text-section">Manage Users</h4>
 						</li>
+
 						<li class="nav-item">
 							<a data-toggle="collapse" href="{{route('admin.manageTeachers')}}">
 								<i class="flaticon-agenda-1"></i>
@@ -270,17 +378,113 @@
 						</li>
 					
 
+
+                        <li class="nav-item">
+							<a data-toggle="collapse" href="{{route('admin.manageteachers')}}">
+								<i class="flaticon-placeholder"></i>
+								<p>Teachers</p>
+								<span class="caret"></span>
+							</a>
+							
+						</li>
+                        <li class="nav-item">
+							<a data-toggle="collapse" href="{{route('admin.managestudents')}}">
+								<i class="flaticon-placeholder"></i>
+								<p>Students</p>
+								<span class="caret"></span>
+							</a>
+							
+						</li>
+                        <li class="nav-item">
+							<a data-toggle="collapse" href="{{route('admin.manageAlumnis')}}">
+								<i class="flaticon-placeholder"></i>
+								<p>Alumnis</p>
+								<span class="caret"></span>
+							</a>
+							
+						</li>
+                        <li class="nav-item">
+							<a data-toggle="collapse" href="{{route('admin.manageParent')}}">
+								<i class="flaticon-placeholder"></i>
+								<p>Parents</p>
+								<span class="caret"></span>
+							</a>
+							
+						</li>
+					
+						<li class="nav-item">
+							<a data-toggle="collapse" href="#submenu">
+								<i class="flaticon-mailbox"></i>
+								<p>Menu Levels</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="submenu">
+								<ul class="nav nav-collapse">
+									<li>
+										<a data-toggle="collapse" href="#subnav1">
+											<span class="sub-item">Level 1</span>
+											<span class="caret"></span>
+										</a>
+										<div class="collapse" id="subnav1">
+											<ul class="nav nav-collapse subnav">
+												<li>
+													<a href="#">
+														<span class="sub-item">Level 2</span>
+													</a>
+												</li>
+												<li>
+													<a href="#">
+														<span class="sub-item">Level 2</span>
+													</a>
+												</li>
+											</ul>
+										</div>
+									</li>
+									<li>
+										<a data-toggle="collapse" href="#subnav2">
+											<span class="sub-item">Level 1</span>
+											<span class="caret"></span>
+										</a>
+										<div class="collapse" id="subnav2">
+											<ul class="nav nav-collapse subnav">
+												<li>
+													<a href="#">
+														<span class="sub-item">Level 2</span>
+													</a>
+												</li>
+											</ul>
+										</div>
+									</li>
+									<li>
+										<a href="#">
+											<span class="sub-item">Level 1</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+
 					</ul>
 				</div>
 			</div>
 		</div>
 		<!-- End Sidebar -->
 
+
 		<div class="main-panel">
 			<div class="content">
                 @yield('content')
 				<!-- <div class="container-fluid">
 					<div class="page-header">
+
+  
+		<div class="main-panel">
+			<div class="content">
+				<div class="container-fluid">
+                     @yield('content')
+					<!--<div class="page-header">
+
+
 						<h4 class="page-title">Dashboard</h4>
 						<div class="btn-group btn-group-page-header ml-auto">
 							<button type="button" class="btn btn-light btn-round btn-page-header-dropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -849,18 +1053,29 @@
 									</div>
 								</div>
 							</div>
+
 					</div>
 					</div>
 				</div>
     -->
+
+						</div>
+					</div>
+				</div>
+
 			</div>
 			<footer class="footer">
 				<div class="container-fluid">
 					<nav class="pull-left">
 						<ul class="nav">
 							<li class="nav-item">
+
 								<a class="nav-link" >
 									Instituation Name
+
+								<a class="nav-link" href="http://www.themekita.com">
+									ThemeKita
+
 								</a>
 							</li>
 							<li class="nav-item">
@@ -876,14 +1091,16 @@
 						</ul>
 					</nav>
 					<div class="copyright ml-auto">
+
 						2023, made with <i class="la la-heart heart text-danger"></i> by Instituation Name
+
+						2018, made with <i class="la la-heart heart text-danger"></i> by <a href="http://www.themekita.com">ThemeKita</a>
+
 					</div>				
 				</div>
 			</footer>
 		</div>
-		
-	
-		
+
 		
 	</div>
 	<!--   Core JS Files   -->
@@ -956,5 +1173,444 @@
 	<!-- Ready Pro DEMO methods, don't include it in your project! -->
 	<script src="{{asset('assets/js/setting-demo.js')}}"></script>
 	<script src="{{asset('assets/js/demo.js')}}"></script>
+
+		<div class="quick-sidebar">
+			<a href="#" class="close-quick-sidebar">
+				<i class="flaticon-cross"></i>
+			</a>
+			<div class="quick-sidebar-wrapper">
+				<ul class="nav nav-tabs nav-line nav-color-primary" role="tablist">
+					<li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#messages" role="tab" aria-selected="true">Messages</a> </li>
+					<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tasks" role="tab" aria-selected="false">Tasks</a> </li>
+					<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#settings" role="tab" aria-selected="false">Settings</a> </li>
+				</ul>
+				<div class="tab-content mt-3">
+					<div class="tab-chat tab-pane fade show active" id="messages" role="tabpanel">
+						<div class="messages-contact">
+							<div class="quick-wrapper">
+								<div class="quick-scroll scrollbar-outer">
+									<div class="quick-content contact-content">
+										<span class="category-title mt-0">Recent</span>
+										<div class="contact-list contact-list-recent">
+											<div class="user">
+												<a href="#">
+													<div class="user-image">
+														<img src="../assets/img/jm_denis.jpg" alt="denis">
+														<span class="status online"></span>
+													</div>
+													<div class="user-data">
+														<span class="name">Jimmy Denis</span>
+														<span class="message">How are you ?</span>
+													</div>
+												</a>
+											</div>
+											<div class="user">
+												<a href="#">
+													<div class="user-image">
+														<img src="../assets/img/chadengle.jpg" alt="chad">
+														<span class="status away"></span>
+													</div>
+													<div class="user-data">
+														<span class="name">Chad</span>
+														<span class="message">Ok, Thanks !</span>
+													</div>
+												</a>
+											</div>
+											<div class="user">
+												<a href="#">
+													<div class="user-image">
+														<img src="../assets/img/mlane.jpg" alt="john doe">
+														<span class="status offline"></span>
+													</div>
+													<div class="user-data">
+														<span class="name">John Doe</span>
+														<span class="message">Ready for the meeting today with...</span>
+													</div>
+												</a>
+											</div>
+										</div>
+										<span class="category-title">Contacts</span>
+										<div class="contact-list">
+											<div class="user">
+												<a href="#">
+													<div class="user-image">
+														<img src="../assets/img/jm_denis.jpg" alt="denis">
+														<span class="status"></span>
+													</div>
+													<div class="user-data2">
+														<span class="name">Jimmy Denis</span>
+													</div>
+												</a>
+											</div>
+											<div class="user">
+												<a href="#">
+													<div class="user-image">
+														<img src="../assets/img/chadengle.jpg" alt="chad">
+														<span class="status away"></span>
+													</div>
+													<div class="user-data2">
+														<span class="name">Chad</span>
+													</div>
+												</a>
+											</div>
+											<div class="user">
+												<a href="#">
+													<div class="user-image">
+														<img src="../assets/img/talha.jpg" alt="talha">
+														<span class="status offline"></span>
+													</div>
+													<div class="user-data2">
+														<span class="name">Talha</span>
+													</div>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="messages-wrapper">
+							<div class="messages-title">
+								<div class="user">
+									<img src="../assets/img/chadengle.jpg" alt="chad">
+									<span class="name">Chad</span>
+									<span class="last-active">Active 2h ago</span>
+								</div>
+								<button class="return">
+									<i class="flaticon-left-arrow-3"></i>
+								</button>
+							</div>
+							<div class="messages-body messages-scroll scrollbar-outer">
+								<div class="message-content-wrapper">
+									<div class="message message-in">
+										<div class="message-pic">
+											<img src="../assets/img/chadengle.jpg" alt="chad">
+										</div>
+										<div class="message-body">
+											<div class="message-content">
+												<div class="name">Chad</div>
+												<div class="content">Hello, Rian</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="message-content-wrapper">
+									<div class="message message-out">
+										<div class="message-body">
+											<div class="message-content">
+												<div class="content">
+													Hello, Chad
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="message-content-wrapper">
+									<div class="message message-in">
+										<div class="message-pic">
+											<img src="../assets/img/chadengle.jpg" alt="chad">
+										</div>
+										<div class="message-body">
+											<div class="message-content">
+												<div class="name">Chad</div>
+												<div class="content">
+													When is the deadline of the project we are working on ?
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="message-content-wrapper">
+									<div class="message message-out">
+										<div class="message-body">
+											<div class="message-content">
+												<div class="content">
+													The deadline is about 2 months away
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="message-content-wrapper">
+									<div class="message message-in">
+										<div class="message-pic">
+											<img src="../assets/img/chadengle.jpg" alt="chad">
+										</div>
+										<div class="message-body">
+											<div class="message-content">
+												<div class="name">Chad</div>
+												<div class="content">
+													Ok, Thanks !
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="messages-form">
+								<div class="messages-form-control">
+									<input type="text" placeholder="Type here" class="form-control input-pill input-solid message-input">
+								</div>
+								<div class="messages-form-tool">
+									<a href="#" class="attachment">
+										<i class="flaticon-file"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane fade" id="tasks" role="tabpanel">
+						<div class="tasks-wrapper">
+							<div class="tasks-scroll scrollbar-outer">
+								<div class="tasks-content">
+									<span class="category-title mt-0">Today</span>
+									<ul class="tasks-list">
+										<li>
+											<label class="custom-checkbox custom-control checkbox-secondary">
+												<input type="checkbox" checked="" class="custom-control-input"><span class="custom-control-label">Planning new project structure</span>
+												<span class="task-action">
+													<a href="#" class="link text-danger">
+														<i class="flaticon-interface-5"></i>
+													</a>
+												</span>
+											</label>
+										</li>
+										<li>
+											<label class="custom-checkbox custom-control checkbox-secondary">
+												<input type="checkbox" class="custom-control-input"><span class="custom-control-label">Create the main structure							</span>
+												<span class="task-action">
+													<a href="#" class="link text-danger">
+														<i class="flaticon-interface-5"></i>
+													</a>
+												</span>
+											</label>
+										</li>
+										<li>
+											<label class="custom-checkbox custom-control checkbox-secondary">
+												<input type="checkbox" class="custom-control-input"><span class="custom-control-label">Add new Post</span>
+												<span class="task-action">
+													<a href="#" class="link text-danger">
+														<i class="flaticon-interface-5"></i>
+													</a>
+												</span>
+											</label>
+										</li>
+										<li>
+											<label class="custom-checkbox custom-control checkbox-secondary">
+												<input type="checkbox" class="custom-control-input"><span class="custom-control-label">Finalise the design proposal</span>
+												<span class="task-action">
+													<a href="#" class="link text-danger">
+														<i class="flaticon-interface-5"></i>
+													</a>
+												</span>
+											</label>
+										</li>
+									</ul>
+
+									<span class="category-title">Tomorrow</span>
+									<ul class="tasks-list">
+										<li>
+											<label class="custom-checkbox custom-control checkbox-secondary">
+												<input type="checkbox" class="custom-control-input"><span class="custom-control-label">Initialize the project							</span>
+												<span class="task-action">
+													<a href="#" class="link text-danger">
+														<i class="flaticon-interface-5"></i>
+													</a>
+												</span>
+											</label>
+										</li>
+										<li>
+											<label class="custom-checkbox custom-control checkbox-secondary">
+												<input type="checkbox" class="custom-control-input"><span class="custom-control-label">Create the main structure							</span>
+												<span class="task-action">
+													<a href="#" class="link text-danger">
+														<i class="flaticon-interface-5"></i>
+													</a>
+												</span>
+											</label>
+										</li>
+										<li>
+											<label class="custom-checkbox custom-control checkbox-secondary">
+												<input type="checkbox" class="custom-control-input"><span class="custom-control-label">Updates changes to GitHub							</span>
+												<span class="task-action">
+													<a href="#" class="link text-danger">
+														<i class="flaticon-interface-5"></i>
+													</a>
+												</span>
+											</label>
+										</li>
+										<li>
+											<label class="custom-checkbox custom-control checkbox-secondary">
+												<input type="checkbox" class="custom-control-input"><span title="This task is too long to be displayed in a normal space!" class="custom-control-label">This task is too long to be displayed in a normal space!				</span>
+												<span class="task-action">
+													<a href="#" class="link text-danger">
+														<i class="flaticon-interface-5"></i>
+													</a>
+												</span>
+											</label>
+										</li>
+									</ul>
+
+									<div class="mt-3">
+										<div class="btn btn-primary btn-rounded btn-sm">
+											<span class="btn-label">
+												<i class="la la-plus"></i>
+											</span>
+											Add Task
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane fade" id="settings" role="tabpanel">
+						<div class="quick-wrapper settings-wrapper">
+							<div class="quick-scroll scrollbar-outer">
+								<div class="quick-content settings-content">
+
+									<span class="category-title mt-0">General Settings</span>
+									<ul class="settings-list">
+										<li>
+											<span class="item-label">Enable Notifications</span>
+											<div class="item-control">
+												<input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" data-style="btn-round">
+											</div>
+										</li>
+										<li>
+											<span class="item-label">Signin with social media</span>
+											<div class="item-control">
+												<input type="checkbox" data-toggle="toggle" data-onstyle="primary" data-style="btn-round">
+											</div>
+										</li>
+										<li>
+											<span class="item-label">Backup storage</span>
+											<div class="item-control">
+												<input type="checkbox" data-toggle="toggle" data-onstyle="primary" data-style="btn-round">
+											</div>
+										</li>
+										<li>
+											<span class="item-label">SMS Alert</span>
+											<div class="item-control">
+												<input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" data-style="btn-round">
+											</div>
+										</li>
+									</ul>
+
+									<span class="category-title mt-0">Notifications</span>
+									<ul class="settings-list">
+										<li>
+											<span class="item-label">Email Notifications</span>
+											<div class="item-control">
+												<input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" data-style="btn-round">
+											</div>
+										</li>
+										<li>
+											<span class="item-label">New Comments</span>
+											<div class="item-control">
+												<input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" data-style="btn-round">
+											</div>
+										</li>
+										<li>
+											<span class="item-label">Chat Messages</span>
+											<div class="item-control">
+												<input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" data-style="btn-round">
+											</div>
+										</li>
+										<li>
+											<span class="item-label">Project Updates</span>
+											<div class="item-control">
+												<input type="checkbox" data-toggle="toggle" data-onstyle="primary" data-style="btn-round">
+											</div>
+										</li>
+										<li>
+											<span class="item-label">New Tasks</span>
+											<div class="item-control">
+												<input type="checkbox" checked data-toggle="toggle" data-onstyle="primary" data-style="btn-round">
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>-->
+				</div>
+			</div>
+		</div>
+    
+		<!-- Custom template | don't include it in your project! -->
+		
+		<!-- End Custom template -->
+	</div>
+	<!--   Core JS Files   -->
+	<script src="../assets/js/core/jquery.3.2.1.min.js"></script>
+	<script src="../assets/js/core/popper.min.js"></script>
+	<script src="../assets/js/core/bootstrap.min.js"></script>
+
+	<!-- jQuery UI -->
+	<script src="../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+	<script src="../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+
+	<!-- jQuery Scrollbar -->
+	<script src="../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+	<!-- Moment JS -->
+	<script src="../assets/js/plugin/moment/moment.min.js"></script>
+
+	<!-- Chart JS -->
+	<script src="../assets/js/plugin/chart.js/chart.min.js"></script>
+
+	<!-- Chart Circle -->
+	<script src="../assets/js/plugin/chart-circle/circles.min.js"></script>
+
+	<!-- Datatables -->
+	<script src="../assets/js/plugin/datatables/datatables.min.js"></script>
+
+	<!-- Bootstrap Notify -->
+	<script src="../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+	<!-- Bootstrap Toggle -->
+	<script src="../assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js"></script>
+
+	<!-- jQuery Vector Maps -->
+	<script src="../assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
+	<script src="../assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
+
+	<!-- Google Maps Plugin -->
+	<script src="../assets/js/plugin/gmaps/gmaps.js"></script>
+
+	<!-- Dropzone -->
+	<script src="../assets/js/plugin/dropzone/dropzone.min.js"></script>
+
+	<!-- Fullcalendar -->
+	<script src="../assets/js/plugin/fullcalendar/fullcalendar.min.js"></script>
+
+	<!-- DateTimePicker -->
+	<script src="../assets/js/plugin/datepicker/bootstrap-datetimepicker.min.js"></script>
+
+	<!-- Bootstrap Tagsinput -->
+	<script src="../assets/js/plugin/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
+
+	<!-- Bootstrap Wizard -->
+	<script src="../assets/js/plugin/bootstrap-wizard/bootstrapwizard.js"></script>
+
+	<!-- jQuery Validation -->
+	<script src="../assets/js/plugin/jquery.validate/jquery.validate.min.js"></script>
+
+	<!-- Summernote -->
+	<script src="../assets/js/plugin/summernote/summernote-bs4.min.js"></script>
+
+	<!-- Select2 -->
+	<script src="../assets/js/plugin/select2/select2.full.min.js"></script>
+
+	<!-- Sweet Alert -->
+	<script src="../assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+
+	<!-- Ready Pro JS -->
+	<script src="../assets/js/ready.min.js"></script>
+
+	<!-- Ready Pro DEMO methods, don't include it in your project! -->
+	<script src="../assets/js/setting-demo.js"></script>
+	<script src="../assets/js/demo.js"></script>
+
 </body>
 </html>
