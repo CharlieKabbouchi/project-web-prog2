@@ -33,19 +33,51 @@ class AdminController extends Controller {
 
 
     public function showDashboard(Request $request) {
-        $admin = Admin::find(session('admin_id'));
+       // $admin = Admin::find(session('admin_id'));
 
         // $adminId = $request->session()->get('admin_id');
         // $adminId = session('admin_id');
         // $admin = Auth::guard('admin')->user();
         // dd($admin);
+        $admin=1;
         return view('admin.dashboard', compact('admin'));
     }
 
 
+    public function EditProfile() {
+        //return view('auth.admin-register');
+    }
+    public function ViewProfile() {
+        //return view('auth.admin-register');
+    }
+    public function ManageDepartments() {
+        //return view('auth.admin-register');
+    }
+    public function ManageSemesters() {
+        //return view('auth.admin-register');
+    }
+    public function ManageCourses() {
+        //return view('auth.admin-register');
+    }
+    public function ManageClasses() {
+        //return view('auth.admin-register');
+    }
+    public function ManageTeachers() {
+        //return view('auth.admin-register');
+    }
+    public function ManageStudents() {
+        //return view('auth.admin-register');
+    }
+    public function ManageParents() {
+        //return view('auth.admin-register');
+    }
+    public function ManageAlumnis() {
+        //return view('auth.admin-register');
+    }
     public function showRegistrationForm() {
         return view('auth.admin-register');
     }
+  
 
     public function register(Request $request) {
         $request->validate([
