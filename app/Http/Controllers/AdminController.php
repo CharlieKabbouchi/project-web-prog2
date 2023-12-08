@@ -1,8 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use ConsoleTVs\Charts\Facades\Charts;
 use App\Models\Admin;
+use App\Models\Student;
+use App\Models\Alumni;
+use App\Models\Course;
+use App\Models\Teacher;
+use App\Models\Department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -45,12 +50,37 @@ class AdminController extends Controller {
 
     public function showDashboard(Request $request) {
        // $admin = Admin::find(session('admin_id'));
+
+       $departmentCount = Department::count();
+       $studentCount = Student::count();
+       $teacherCount = Teacher::count();
+       $alumniCount = Alumni::count();
+        // Fetch data from the databasi
+        $enrollmentData = Student::selectRaw('SUBSTRING(id, 2, 4) as enrollment_year, COUNT(*) as total')
+            ->groupBy('enrollment_year')
+            ->orderBy('enrollment_year')
+            ->get();
+
+        // Extract labels and values from the fetched data
+        $labels = $enrollmentData->pluck('enrollment_year')->toArray();
+        $values = $enrollmentData->pluck('total')->toArray();
+
+        // Create a chart instance
+        $chart = Charts::create('bar', 'highcharts')
+            ->title('Number of Students Enrolled Over the Years')
+            ->elementLabel('Total Students')
+            ->labels($labels)
+            ->values($values);
+
+
+
+   
        $admin=null;
         // $adminId = $request->session()->get('admin_id');
         // $adminId = session('admin_id');
         // $admin = Auth::guard('admin')->user();
         // dd($admin);
-        return view('admin.dashboard', compact('admin'));
+        return view('admin.dashboard', compact('admin', 'departmentCount', 'studentCount', 'teacherCount', 'alumniCount', 'chart'));
     }
 
  
