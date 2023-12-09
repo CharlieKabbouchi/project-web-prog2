@@ -31,10 +31,10 @@ class AdminController extends Controller {
     //     return back()->withErrors(['error' => 'Invalid login credentials']);
     // }
 
-    public function viewprofile($id) {
+    public function viewprofile1($id) {
 //
     }
-    public function editprofile($id) {
+    public function editprofile1($id) {
         //
            
     }
@@ -45,11 +45,7 @@ class AdminController extends Controller {
 
     public function showDashboard(Request $request) {
        // $admin = Admin::find(session('admin_id'));
- ViewTemplateIntegration
        $admin=null;
-
-
- master
         // $adminId = $request->session()->get('admin_id');
         // $adminId = session('admin_id');
         // $admin = Auth::guard('admin')->user();
@@ -57,9 +53,6 @@ class AdminController extends Controller {
     
         return view('admin.dashboard', compact('admin'));
     }
-
- ViewTemplateIntegration
- 
 
 
     public function EditProfile() {
