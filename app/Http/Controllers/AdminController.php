@@ -18,23 +18,23 @@ class AdminController extends Controller {
      */
 
   
-    //  public function showLoginForm() {
-    //     return view('auth.admin-login');
-    // }
+    public function showLoginForm() {
+        return view('auth.admin-login');
+    }
 
 
 
-    // public function login(Request $request) {
-    //     $credentials = $request->only('email', 'password');
+    public function login(Request $request) {
+        $credentials = $request->only('email', 'password');
 
-    //     if (Auth::guard('admin')->attempt($credentials)) {
-    //         $admin = Auth::guard('admin')->user();
-    //         $request->session()->put('admin_id', $admin->id);
-    //         return redirect()->intended('/admin/dashboard');
-    //     }
+        if (Auth::guard('admin')->attempt($credentials)) {
+            $admin = Auth::guard('admin')->user();
+            $request->session()->put('admin_id', $admin->id);
+            return redirect()->intended('/admin/dashboard');
+        }
 
-    //     return back()->withErrors(['error' => 'Invalid login credentials']);
-    // }
+        return back()->withErrors(['error' => 'Invalid login credentials']);
+    }
 
     public function viewprofile($id) {
 //
@@ -64,23 +64,24 @@ class AdminController extends Controller {
         // Extract labels and values from the fetched data
         $labels = $enrollmentData->pluck('enrollment_year')->toArray();
         $values = $enrollmentData->pluck('total')->toArray();
+      
+ 
+    $studentsByDepartment = Student::join('departments', 'students.department_id', '=', 'departments.id')
+    ->select('departments.name as department_name')
+    ->selectRaw('COUNT(*) as total_students')
+    ->groupBy('departments.name')
+    ->get();
 
+    $deps = $studentsByDepartment->pluck('department_name')->toArray();
+    $stdnumber = $studentsByDepartment->pluck('total_students')->toArray();
         // Create a chart instance
-        $chart = Charts::create('bar', 'highcharts')
-            ->title('Number of Students Enrolled Over the Years')
-            ->elementLabel('Total Students')
-            ->labels($labels)
-            ->values($values);
-
-
-
    
        $admin=null;
         // $adminId = $request->session()->get('admin_id');
         // $adminId = session('admin_id');
         // $admin = Auth::guard('admin')->user();
         // dd($admin);
-        return view('admin.dashboard', compact('admin', 'departmentCount', 'studentCount', 'teacherCount', 'alumniCount', 'chart'));
+        return view('admin.dashboard', compact('admin', 'departmentCount', 'studentCount', 'teacherCount', 'alumniCount', 'labels','values','deps','stdnumber'));
     }
 
  
