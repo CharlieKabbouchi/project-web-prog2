@@ -137,12 +137,7 @@ class AdminController extends Controller {
     public function ViewProfile() {
         //return view('auth.admin-register');
     }
-    public function ManageDepartments() {
-        //return view('auth.admin-register');
-    }
-    public function ManageSemesters() {
-        //return view('auth.admin-register');
-    }
+
     public function ManageCourses() {
         //return view('auth.admin-register');
     }
