@@ -6,7 +6,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClassTController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SParentController;
+use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ProfileManagement;
 use App\Http\Controllers\LoginSignUp;
@@ -59,30 +61,10 @@ Route::delete('/class_ts/{class_t}', [ClassTController::class, 'destroy'])->name
 
 
 
-Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
-Route::get('/admin/view/profile/{id}', [AdminController::class, 'viewprofile'])->name('viewprofile');
-Route::get('/admin/edit/profile/{id}', [AdminController::class, 'editprofile'])->name('editprofile');
-Route::get('/admin/manage/departments', [AdminController::class, 'manageDepartments'])->name('admin.manageDepartments');
-Route::get('/admin/manage/semesters', [AdminController::class, 'manageSemesters'])->name('admin.manageSemesters');
-Route::get('/admin/manage/classes', [AdminController::class, 'manageClasses'])->name('admin.manageClasses');
-Route::get('/admin/manage/courses', [AdminController::class, 'manageCourses'])->name('admin.manageCourses');
-Route::get('/admin/manage/students', [AdminController::class, 'manageStudents'])->name('admin.manageStudents');
-Route::get('/admin/manage/teachers', [AdminController::class, 'manageTeachers'])->name('admin.manageTeachers');
-Route::get('/admin/manage/parents', [AdminController::class, 'manageParents'])->name('admin.manageParents');
-Route::get('/admin/manage/alumnis', [AdminController::class, 'manageAlumnis'])->name('admin.manageAlumnis');
-Route::get('/admin/manage/admins', [AdminController::class, 'manageAdmins'])->name('admin.manageAdmins');
+//Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
 
-Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('admin.dashboard1');
-Route::get('/dashboard/manage/departments', [AdminController::class, 'ManageDepartments'])->name('admin.managedepartments');
-Route::get('/dashboard/manage/semesters', [AdminController::class, 'ManageSemesters'])->name('admin.managesemesters');
-Route::get('/dashboard/manage/courses', [AdminController::class, 'ManageCourses'])->name('admin.managecourses');
-Route::get('/dashboard/manage/classes', [AdminController::class, 'ManageClasses'])->name('admin.manageclasses');
-Route::get('/dashboard/manage/teachers', [AdminController::class, 'ManageTeachers'])->name('admin.manageteachers');
-Route::get('/dashboard/manage/students', [AdminController::class, 'ManageStudents'])->name('admin.managestudents');
-Route::get('/dashboard/manage/alumnis', [AdminController::class, 'ManageAlumnis'])->name('admin.manageAlumnis');
-Route::get('/dashboard/manage/parents', [AdminController::class, 'ManageParents'])->name('admin.manageParent');
-Route::get('/dashboard/view/profile', [AdminController::class, 'ViewProfile'])->name('admin.viewprofile');
-Route::get('/dashboard/edit/profile', [AdminController::class, 'EditProfile'])->name('admin.editprofile');
+
+Route::post('/logout',[AdminController::class, 'Logout'])->name('logout');
 
 // Admin Routes
 Route::prefix('admin')->group(function () {
@@ -94,7 +76,36 @@ Route::prefix('admin')->group(function () {
         // Route::get('/dashboard', function () {
         //     return 'Admin Dashboard';
         // })->name('admin.dashboard');
-        //Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
+       
+        Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
+        Route::get('/view/profile/{id}', [AdminController::class, 'viewprofile'])->name('viewprofile');
+        Route::get('/add/department}', [AdminController::class, 'addDepartment'])->name('addDepartment');
+        Route::get('/add/Semester}', [AdminController::class, 'addSemester'])->name('addSemester');
+        Route::get('/edit/profile/{id}', [AdminController::class, 'editprofile'])->name('editprofile');
+       
+        Route::get('/manage/departments', [AdminController::class, 'manageDepartments'])->name('admin.manageDepartments');
+        Route::get('/manage/department/admin/edit/{id}', [AdminController::class, 'editDepartment'])->name('admin.editdepartment');
+        Route::get('/manage/department/view/{department}', [DepartmentController::class, 'show'])->name('department.show');
+        Route::get('/manage/department/edit/{department}', [DepartmentController::class, 'edit'])->name('department.edit');
+        Route::put('/manage/department/update/{department}', [DepartmentController::class, 'update'])->name('department.update');
+        Route::get('/manage/department/admin/view/{id}', [AdminController::class, 'viewDepartment'])->name('admin.viewdepartment');
+       
+        Route::get('/manage/semesters', [AdminController::class, 'manageSemesters'])->name('admin.manageSemesters');
+        Route::get('/manage/semester/admin/edit/{id}', [AdminController::class, 'editsemester'])->name('admin.editsemester');
+        Route::get('/manage/semester/view/{semester}', [SemesterController::class, 'show'])->name('semester.show');
+        Route::get('/manage/semester/edit/{semester}', [SemesterController::class, 'edit'])->name('semester.edit');
+        Route::put('/manage/semester/update/{semester}', [SemesterController::class, 'update'])->name('semester.update');
+        Route::get('/manage/semester/admin/view/{id}', [AdminController::class, 'viewSemester'])->name('admin.viewsemester');
+        
+
+
+        Route::get('/manage/classes', [AdminController::class, 'manageClasses'])->name('admin.manageClasses');
+        Route::get('/manage/courses', [AdminController::class, 'manageCourses'])->name('admin.manageCourses');
+        Route::get('/manage/students', [AdminController::class, 'manageStudents'])->name('admin.manageStudents');
+        Route::get('/manage/teachers', [AdminController::class, 'manageTeachers'])->name('admin.manageTeachers');
+        Route::get('/manage/parents', [AdminController::class, 'manageParents'])->name('admin.manageParents');
+        Route::get('/manage/alumnis', [AdminController::class, 'manageAlumnis'])->name('admin.manageAlumnis');
+        Route::get('/manage/admins', [AdminController::class, 'manageAdmins'])->name('admin.manageAdmins');
         Route::get('/register', [AdminController::class, 'create'])->name('admin.register');
         Route::post('/register', [AdminController::class, 'register']);
         Route::get('/alumni/register', [AlumniController::class, 'create'])->name('alumni.create');
@@ -163,9 +174,3 @@ Route::prefix('teacher')->group(function () {
         // Add other teacher routes here
     });
 });
-
-// Logout route
-Route::post('/logout', function () {
-    auth()->logout();
-    return redirect('/');
-})->name('logout');

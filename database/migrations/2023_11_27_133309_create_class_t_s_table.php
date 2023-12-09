@@ -17,7 +17,7 @@ return new class extends Migration
             $table->Date('endingDate');
             $table->time('starttime');
             $table->time('endtime');
-            $table->DateTime('DayofWeek');
+            $table->string('DayofWeek');
             $table->unsignedBigInteger('course_id');
             $table->unsignedBigInteger('semester_id');
             $table->string('teacher_id')->nullable();

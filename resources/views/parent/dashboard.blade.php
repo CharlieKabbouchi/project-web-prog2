@@ -1,4 +1,4 @@
-@extends('layout.layout')
+@extends('layout.parent')
 <title>Parent Dashboard</title>
 @section('content')
     <div class="container">
