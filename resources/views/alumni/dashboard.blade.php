@@ -1,4 +1,4 @@
-@extends('layout.layout')
+@extends('layout.alumni')
 <title>Alumni Dashboard</title>
 @section('content')
     <div class="container">
