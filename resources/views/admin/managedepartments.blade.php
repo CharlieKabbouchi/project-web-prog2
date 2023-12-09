@@ -6,6 +6,21 @@
         flex-direction: row;
         gap: 5px;
     }
+
+    .table-bordered {
+        border: 2px solid #00688B; /* Darker blue color code */
+    }
+
+    .table-bordered th,
+    .table-bordered td {
+        border: 1px solid #00688B; /* Darker blue color code */
+    }
+
+    .table-bordered thead th {
+        background-color: #87CEEB; /* Lighter blue color code for header background */
+    }
+
+
 </style>
 
 @section('content')
@@ -22,7 +37,9 @@
                         <th>Name</th>
                         <th>Location</th>
                         <th>Total Credits</th>
-                        <th colspan="2">Actions</th>
+
+                        <th rowspan="2">Actions</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -31,10 +48,23 @@
                             <td>{{ $dep->name }}</td>
                             <td>{{ $dep->location }}</td>
                             <td>{{ $dep->totalCredits }}</td>
-                           <td class="actions-column"> 
-                            <form  method="get" action="{{route('admin.editdepartment',['id'=>$dep->id])}}" >@csrf<input type='submit'class="btn btn-primary btn-rounded btn-login" value='Edit'></form>
-                            <form  method="get" action="{{route('admin.viewdepartment',['id'=>$dep->id])}}" >@csrf<input type='submit'class="btn btn-primary btn-rounded btn-login" value='Detail'></form></td>
-                         
+
+                            <td class="actions-column"><form method="get" action="{{ route('admin.viewDepartment', ['department' => $dep->id]) }}">
+                                @csrf
+                                <input type="submit" class="btn btn-primary btn-rounded btn-login" value="View">
+                            </form>
+                        
+                            <form method="get" action="{{ route('admin.editDepartment', ['department' => $dep->id]) }}">
+                                @csrf
+                                <input type="submit" class="btn btn-primary btn-rounded btn-login" value="Edit">
+                            </form>
+                            <form method="post" action="{{ route('admin.deleteDepartment', ['department' => $dep->id]) }}">
+                                @csrf
+                                 @method('POST')
+                                <input type="submit" class="btn btn-primary btn-rounded btn-login" value="Delete">
+                            </form>
+                            </td>
+
                         </tr>
                     @endforeach
                 </tbody>
