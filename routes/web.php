@@ -58,9 +58,12 @@ Route::put('/class_ts/{class_t}', [ClassTController::class, 'update'])->name('cl
 Route::delete('/class_ts/{class_t}', [ClassTController::class, 'destroy'])->name('class_ts.destroy');
 
 
+
 //Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
 
+
 Route::post('/logout',[AdminController::class, 'Logout'])->name('logout');
+
 // Admin Routes
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
@@ -150,6 +153,3 @@ Route::prefix('teacher')->group(function () {
         // Add other teacher routes here
     });
 });
-
-// Logout route
-
