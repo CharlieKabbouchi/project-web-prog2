@@ -1,4 +1,3 @@
-
 @extends('layout.admin')
 <title>Admin Departments</title>
 
