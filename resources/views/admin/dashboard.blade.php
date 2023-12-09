@@ -159,7 +159,7 @@
     </script>
 					
 						
-						<script>
+	<script>
     var deps = {!! json_encode($deps) !!};
     var stds = {!! json_encode($stdnumber) !!};
 

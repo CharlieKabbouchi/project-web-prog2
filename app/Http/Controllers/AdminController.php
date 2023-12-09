@@ -17,12 +17,23 @@ class AdminController extends Controller {
      * Display a listing of the resource.
      */
 
-  
+     public function manageDepartments(Request $request)
+     {
+        $deps=Department::all();
+        $adminId = $request->session()->get('admin_id');
+        $adminId = session('admin_id');
+        $admin = Auth::guard('admin')->user();
+        return view('/admin/managedepartments',compact('deps','admin'));
+     }
     public function showLoginForm() {
         return view('auth.admin-login');
     }
 
-
+    public function Logout() {
+        auth()->guard('admin')->logout();
+        return redirect('/');
+    }
+    
 
     public function login(Request $request) {
         $credentials = $request->only('email', 'password');
@@ -76,11 +87,11 @@ class AdminController extends Controller {
     $stdnumber = $studentsByDepartment->pluck('total_students')->toArray();
         // Create a chart instance
    
-       $admin=null;
-        // $adminId = $request->session()->get('admin_id');
-        // $adminId = session('admin_id');
-        // $admin = Auth::guard('admin')->user();
-        // dd($admin);
+    
+         $adminId = $request->session()->get('admin_id');
+         $adminId = session('admin_id');
+         $admin = Auth::guard('admin')->user();
+      
         return view('admin.dashboard', compact('admin', 'departmentCount', 'studentCount', 'teacherCount', 'alumniCount', 'labels','values','deps','stdnumber'));
     }
 
