@@ -32,7 +32,7 @@ $(document).ready(function () {
     });
 
     var events = {!! json_encode($events) !!};
-    console.log(events);
+    // console.log(events);
 
     var calendar = $('#calendar').fullCalendar({
         editable:true,
