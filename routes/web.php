@@ -58,7 +58,7 @@ Route::put('/class_ts/{class_t}', [ClassTController::class, 'update'])->name('cl
 Route::delete('/class_ts/{class_t}', [ClassTController::class, 'destroy'])->name('class_ts.destroy');
 
 
-Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
+//Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
 Route::get('/admin/view/profile/{id}', [AdminController::class, 'viewprofile'])->name('viewprofile');
 Route::get('/admin/edit/profile/{id}', [AdminController::class, 'editprofile'])->name('editprofile');
 Route::get('/admin/manage/departments', [AdminController::class, 'manageDepartments'])->name('admin.manageDepartments');
@@ -73,14 +73,14 @@ Route::get('/admin/manage/admins', [AdminController::class, 'manageAdmins'])->na
 // Admin Routes
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('/login', [AdminController::class, 'login']);
+    Route::post('/login', [AdminController::class, 'login'])->name('admin.verify');
   
 
     Route::middleware(['auth.admin'])->group(function () {
         // Route::get('/dashboard', function () {
         //     return 'Admin Dashboard';
         // })->name('admin.dashboard');
-        //Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
+        Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
         Route::get('/register', [AdminController::class, 'create'])->name('admin.register');
         Route::post('/register', [AdminController::class, 'register']);
         Route::get('/alumni/register', [AlumniController::class, 'create'])->name('alumni.create');

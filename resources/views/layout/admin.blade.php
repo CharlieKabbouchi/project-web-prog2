@@ -7,6 +7,7 @@
 	<link rel="icon" href="{{asset('assets/img/favicon.ico')}}" type="image/x-icon"/>
 
 	<!-- Fonts and icons -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script src="{{asset('assets/js/plugin/webfont/webfont.min.js')}}"></script>
 	<script>
 		WebFont.load({
