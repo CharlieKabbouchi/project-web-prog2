@@ -8,7 +8,9 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SParentController;
+use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ProfileManagement;
 use App\Http\Controllers\LoginSignUp;
@@ -42,10 +44,10 @@ Route::get('/home', function () {
 
 
 
-Route::get('/login',[LoginSignUp::class,'showLoginForm'])->name('login');
-Route::post('/login/validate',[LoginSignUp::class,'login'])->name('loginValidation');
-Route::get('/signup',[LoginSignUp::class,'showSignUpForm'])->name('signup');
-Route::post('/signup/create',[LoginSignUp::class,'signup'])->name('signupCreation');
+Route::get('/login', [LoginSignUp::class, 'showLoginForm'])->name('login');
+Route::post('/login/validate', [LoginSignUp::class, 'login'])->name('loginValidation');
+Route::get('/signup', [LoginSignUp::class, 'showSignUpForm'])->name('signup');
+Route::post('/signup/create', [LoginSignUp::class, 'signup'])->name('signupCreation');
 // Route::get('/login-signup/register', [AuthController::class, 'register'])->name('register');
 // Route::post('/login-signup/register', [AuthController::class, 'registerPost'])->name('register');
 // Route::get('/login-signup/login', [AuthController::class, 'login'])->name('login');
@@ -65,21 +67,23 @@ Route::delete('/class_ts/{class_t}', [ClassTController::class, 'destroy'])->name
 //Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
 
 
-Route::post('/logout',[AdminController::class, 'Logout'])->name('logout');
+Route::post('/logout', [AdminController::class, 'Logout'])->name('logout');
 
 // Admin Routes
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
     Route::post('/login', [AdminController::class, 'login']);
-  
+
 
     Route::middleware(['auth.admin'])->group(function () {
         // Route::get('/dashboard', function () {
         //     return 'Admin Dashboard';
         // })->name('admin.dashboard');
+
         Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
         Route::get('/view/profile/{id}', [AdminController::class, 'viewprofile'])->name('viewprofile');
         Route::get('/add/department}', [AdminController::class, 'addDepartment'])->name('addDepartment');
+
         Route::get('/edit/profile/{id}', [AdminController::class, 'editprofile'])->name('editprofile');
         
         //Departments
@@ -110,14 +114,16 @@ Route::prefix('admin')->group(function () {
 
 
         Route::get('/manage/departments/store', [DepartmentController::class, 'store'])->name('admin.storeDepartment');
-      
+
         Route::get('/manage/classes', [AdminController::class, 'manageClasses'])->name('admin.manageClasses');
         Route::get('/manage/courses', [AdminController::class, 'manageCourses'])->name('admin.manageCourses');
         Route::get('/manage/students', [AdminController::class, 'manageStudents'])->name('admin.manageStudents');
         Route::get('/manage/teachers', [AdminController::class, 'manageTeachers'])->name('admin.manageTeachers');
         Route::get('/manage/parents', [AdminController::class, 'manageParents'])->name('admin.manageParents');
         Route::get('/manage/alumnis', [AdminController::class, 'manageAlumnis'])->name('admin.manageAlumnis');
+
         Route::get('/manages', [AdminController::class, 'manageAdmins'])->name('admin.manageAdmins');
+
         Route::get('/register', [AdminController::class, 'create'])->name('admin.register');
         Route::post('/register', [AdminController::class, 'register']);
         Route::get('/alumni/register', [AlumniController::class, 'create'])->name('alumni.create');
@@ -157,6 +163,7 @@ Route::prefix('parent')->group(function () {
     });
 });
 
+
 // Alumni Routes
 Route::prefix('alumni')->group(function () {
     Route::get('/login', [AlumniController::class, 'showLoginForm'])->name('alumni.login');
@@ -168,10 +175,24 @@ Route::prefix('alumni')->group(function () {
         // })->name('alumni.dashboard');
         Route::get('/dashboard', [AlumniController::class, 'showDashboard'])->name('alumni.dashboard');
         // Add other alumni routes here
+        Route::post('/logout', [AlumniController::class, 'LogoutAlumni'])->name('alumni.logout');
+
+        Route::get('/manage/Events', [AlumniController::class, 'manageEvents'])->name('alumni.manageEvents');
+        Route::get('/manage/Events/edit/{event}', [AlumniController::class, 'showEdit'])->name('alumni.editEvent');
+        Route::get('/manage/Events/create', [AlumniController::class, 'createEvent'])->name('alumni.createEvent');
+        Route::post('/manage/Events/create', [AlumniController::class, 'storeEvent'])->name('alumni.storeEvent');
+        Route::post('/manage/Events/edit/{event}', [AlumniController::class, 'updateEvent'])->name('alumni.updateEvent');
+        Route::post('/manage/Events/{event}', [AlumniController::class, 'deleteEvent'])->name('alumni.deleteEvent');
+        Route::get('/manage/Q&A', [AlumniController::class, 'manageQA'])->name('alumni.manageQ&A');
+        Route::post('/submitAnswer/{questionId}', [AlumniController::class, 'submitAnswer'])->name('alumni.submitAnswer');
+        Route::get('/manage/Calendar', [AlumniController::class, 'viewCalendar'])->name('alumni.viewCalendar');
+
     });
 });
 
 // Teacher Routes
+Route::resource('teacher', TeacherController::class);
+Route::get('/teacherDashboard', [TeacherController::class, 'showDashboard'])->name('teacherDashboard');
 Route::prefix('teacher')->group(function () {
     Route::get('/login', [TeacherController::class, 'showLoginForm'])->name('teacher.login');
     Route::post('/login', [TeacherController::class, 'login']);
@@ -184,3 +205,12 @@ Route::prefix('teacher')->group(function () {
         // Add other teacher routes here
     });
 });
+
+// Route::post('/logout', function(){
+//     auth()->guard('admin')->logout();
+//     auth()->guard('alumni')->logout();
+//     auth()->guard('student')->logout();
+//     auth()->guard('teacher')->logout();
+//     auth()->guard('parent')->logout();
+//     return redirect('/');
+// });

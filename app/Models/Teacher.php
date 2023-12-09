@@ -58,5 +58,4 @@ class Teacher extends Authenticatable
     public function getCalendar(){
         return $this->hasMany(Calendar::class);
     }
-    
 }

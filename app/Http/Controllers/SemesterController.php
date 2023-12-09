@@ -1,12 +1,12 @@
 <?php
-
+ 
 namespace App\Http\Controllers;
-
+ 
 use App\Models\Semester;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
-
+ 
 class SemesterController extends Controller
 {
     /**
@@ -17,7 +17,7 @@ class SemesterController extends Controller
         $sems=Semester::all();
         return redirect()->intended('/semester/allsemesters')->with('sems', $sems);
     }
-
+ 
     /**
      * Show the form for creating a new resource.
      */
@@ -28,13 +28,13 @@ class SemesterController extends Controller
         $admin = Auth::guard('admin')->user();
         return view('semester.addSemester',compact('admin'));
     }
-
+ 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        
+       
         $request->validate([
             'yearBelongsTo' => [
                 'required',
@@ -46,24 +46,24 @@ class SemesterController extends Controller
             'endingDate' => 'required|date|after:startingDate',
             'type' => 'required',
         ], ['endingDate.after' => 'The Ending Date must be a date after the Starting Date.']);
-        
+       
         $nsem = new Semester();
         $nsem->type = $request->type;
         $nsem->startingDate = $request->startingDate;
         $nsem->endingDate = $request->endingDate;
         $nsem->yearBelongsTo = $request->yearBelongsTo;
         $nsem->save();
-        return redirect(route("admin.manageSemesters")); 
+        return redirect(route("admin.manageSemesters"));
     }
-
+ 
     /**
      * Display the specified resource.
      */
     public function show(Request $request,$semester)
     {
-
+ 
         $semester=Semester::findOrFail($semester);
-        
+       
         $adminId = $request->session()->get('admin_id');
         $adminId = session('admin_id');
         $admin = Auth::guard('admin')->user();
@@ -73,10 +73,10 @@ class SemesterController extends Controller
         ->join('student_class_t_s', 'class_t_s.id', '=', 'student_class_t_s.classt_id')
         ->distinct('student_class_t_s.student_id')
         ->count();
-    
+   
         return view('semester.viewSemester', compact('semester', 'classNumbers', 'courseNumbers', 'studentNumbers','admin'));
     }
-
+ 
     /**
      * Show the form for editing the specified resource.
      */
@@ -88,7 +88,7 @@ class SemesterController extends Controller
         $admin = Auth::guard('admin')->user();
         return view('semester.editSemester', compact('semester','admin'));
     }
-
+ 
     /**
      * Update the specified resource in storage.
      */
@@ -111,9 +111,9 @@ class SemesterController extends Controller
         $esem->endingDate = $request->endingDate;
         $esem->yearBelongsTo = $request->yearBelongsTo;
         $esem->save();
-        return redirect(route("admin.manageSemesters")); 
+        return redirect(route("admin.manageSemesters"));
     }
-
+ 
     /**
      * Remove the specified resource from storage.
      */
@@ -121,6 +121,6 @@ class SemesterController extends Controller
     {
         $dsem=Semester::findOrFail($semester);
         $dsem->delete();
-        return redirect(route("admin.manageSemesters")); 
+        return redirect(route("admin.manageSemesters"));
     }
 }

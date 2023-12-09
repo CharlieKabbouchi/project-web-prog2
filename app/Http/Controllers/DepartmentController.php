@@ -1,7 +1,7 @@
 <?php
-
+ 
 namespace App\Http\Controllers;
-
+ 
 use App\Models\Department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +14,7 @@ class DepartmentController extends Controller
     {
        
     }
-
+ 
     /**
      * Show the form for creating a new resource.
      */
@@ -24,9 +24,9 @@ class DepartmentController extends Controller
         $adminId = session('admin_id');
         $admin = Auth::guard('admin')->user();
         return view('department.addDepartment', compact('admin'));
-
+ 
     }
-
+ 
     /**
      * Store a newly created resource in storage.
      */
@@ -36,12 +36,12 @@ class DepartmentController extends Controller
         $ndep=new Department();
         $ndep->name=$request->name;
         $ndep->location=$request->location;
-        $ndep->totalCredits=$request->totalCredits;   
+        $ndep->totalCredits=$request->totalCredits;  
         $ndep->save();  
-        return redirect(route("admin.manageDepartments")); 
+        return redirect(route("admin.manageDepartments"));
        
     }
-
+ 
     /**
      * Display the specified resource.
      */
@@ -57,21 +57,21 @@ class DepartmentController extends Controller
         $adminId = $request->session()->get('admin_id');
         $adminId = session('admin_id');
         $admin = Auth::guard('admin')->user();
-    
+   
     return view('department.viewDepartment', compact('department', 'teacherNumbers', 'courseNumbers', 'studentNumbers','admin'));
 }
-
+ 
 public function update(Request $request,$department)
      {
-        
+       
          $request->validate(['name'=>'required|min:2|max:40','location'=>'required','totalCredits'=>'required',]);
          $edep=Department::findOrFail($department);
          $edep->name=$request->name;
          $edep->location=$request->location;
-         $edep->totalCredits=$request->totalCredits;   
+         $edep->totalCredits=$request->totalCredits;  
          $edep->save();  
          return redirect(route("admin.manageDepartments"));
-     } 
+     }
     /**
      * Show the form for editing the specified resource.
      */
@@ -82,14 +82,14 @@ public function update(Request $request,$department)
         $adminId = session('admin_id');
         $admin = Auth::guard('admin')->user();
         return view('department.editDepartment', compact('department','admin'));
-      
+     
     }
-
+ 
     /**
      * Update the specified resource in storage.
      */
-    
-
+   
+ 
     /**
      * Remove the specified resource from storage.
      */
@@ -97,6 +97,6 @@ public function update(Request $request,$department)
     {
         $ddep=Department::findOrFail($department);
         $ddep->delete();
-        return redirect(route("admin.manageDepartments")); 
+        return redirect(route("admin.manageDepartments"));
     }
 }
