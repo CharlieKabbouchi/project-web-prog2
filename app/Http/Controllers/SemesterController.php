@@ -48,10 +48,21 @@ class SemesterController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Semester $semester)
+    public function show(Request $request,$semester)
     {
-
-        //
+        $adminId = $request->session()->get('admin_id');
+        $adminId = session('admin_id');
+        $admin = Auth::guard('admin')->user();
+        $department = Department::findOrFail($department);
+        $StudentCount = $department->getStudent()->count();
+        $CourseCount = $department->getCourse()->count();
+        $TeacherCount = $department->getCourse()->join('class_t_s', 'class_t_s.course_id', '=', 'courses.id')
+            ->join('teachers', 'teachers.id', '=', 'class_t_s.teacher_id')
+            ->distinct('teachers.id')
+            ->count();
+            return view('department.viewdepartment', compact('admin','department', 'TeacherCount', 'CourseCount', 'StudentCount'));
+ 
+        
     }
 
     /**
