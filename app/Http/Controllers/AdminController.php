@@ -82,10 +82,10 @@ class AdminController extends Controller {
         return back()->withErrors(['error' => 'Invalid login credentials']);
     }
 
-    public function viewprofile($id) {
+    public function viewprofile1($id) {
 //
     }
-    public function editprofile($id) {
+    public function editprofile1($id) {
         //
            
     }
@@ -96,6 +96,7 @@ class AdminController extends Controller {
 
     public function showDashboard(Request $request) {
        // $admin = Admin::find(session('admin_id'));
+
 
        $departmentCount = Department::count();
        $studentCount = Student::count();
@@ -130,7 +131,37 @@ class AdminController extends Controller {
         return view('admin.dashboard', compact('admin', 'departmentCount', 'studentCount', 'teacherCount', 'alumniCount', 'labels','values','deps','stdnumber'));
     }
 
- 
+    public function EditProfile() {
+        //return view('auth.admin-register');
+    }
+    public function ViewProfile() {
+        //return view('auth.admin-register');
+    }
+    public function ManageDepartments() {
+        //return view('auth.admin-register');
+    }
+    public function ManageSemesters() {
+        //return view('auth.admin-register');
+    }
+    public function ManageCourses() {
+        //return view('auth.admin-register');
+    }
+    public function ManageClasses() {
+        //return view('auth.admin-register');
+    }
+    public function ManageTeachers() {
+        //return view('auth.admin-register');
+    }
+    public function ManageStudents() {
+        //return view('auth.admin-register');
+    }
+    public function ManageParents() {
+        //return view('auth.admin-register');
+    }
+    public function ManageAlumnis() {
+        //return view('auth.admin-register');
+    }
+
     public function showRegistrationForm() {
         return view('auth.admin-register');
     }

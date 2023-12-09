@@ -160,6 +160,8 @@ Route::prefix('alumni')->group(function () {
 });
 
 // Teacher Routes
+Route::resource('teacher', TeacherController::class);
+Route::get('/teacherDashboard', [TeacherController::class, 'showDashboard'])->name('teacherDashboard');
 Route::prefix('teacher')->group(function () {
     Route::get('/login', [TeacherController::class, 'showLoginForm'])->name('teacher.login');
     Route::post('/login', [TeacherController::class, 'login']);

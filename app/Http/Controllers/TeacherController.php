@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Teacher;
+use App\Models\Department;
+use App\Models\DepartmentCourse;
+use App\Models\ClassT;
+use App\Models\Course;
+use App\Models\Semester;
+use App\Models\SemesterCourse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,12 +34,26 @@ class TeacherController extends Controller {
 
     public function showDashboard(Request $request) {
 
-        $teacher = Teacher::find(session('teacher_id'));
+        //$teacher = Teacher::find(session('teacher_id'));
         // $teacherId = $request->session()->get('teacher_id');
         // $teacherId = session('teacher_id');
         // $teacher = Auth::guard('teacher')->user();
         // dd($alumni);
-        return view('teacher.dashboard', compact('teacher'));
+        $teacher = Teacher::find('t20230001');
+        $totalClasses = $teacher->getClassT()->count();
+
+        $courses = $teacher->getClassT()->pluck('course_id')->unique();
+        $departments = Department::whereIn('id', function ($query) use ($courses) {
+        $query->select('department_id')
+            ->from('department_courses')
+            ->whereIn('course_id', $courses);
+        })->get();
+        $totalDepartments = $departments->count();
+
+        $totalUploadedResources = $teacher->getUploadResource()->count();
+
+        return view('teacher.dashboard', compact('teacher','totalClasses','totalDepartments',
+        'totalUploadedResources'));
     }
 
     
