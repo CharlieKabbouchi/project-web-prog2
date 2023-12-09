@@ -8,6 +8,7 @@ use App\Models\Alumni;
 use App\Models\Course;
 use App\Models\Teacher;
 use App\Models\Department;
+use App\Models\Semester;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -25,6 +26,58 @@ class AdminController extends Controller {
         $admin = Auth::guard('admin')->user();
         return view('/admin/managedepartments',compact('deps','admin'));
      }
+
+     public function viewDepartments($department)
+     {
+        
+      
+        return redirect(route("admin.showDepartment",['department'=>$department])); 
+        
+     }
+     public function editDepartments($department)
+     {
+       
+       
+        return redirect(route("admin.editdepartment",['department'=>$department])); 
+
+       
+     }
+     public function addDepartment()
+     {
+       
+       
+        return redirect(route("admin.createdepartment")); 
+
+       
+     }
+     public function viewSemesters ($semester)
+     {
+        return redirect(route("admin.showSemester",['semester'=>$semester])); 
+     }
+     public function editSemesters($semester)
+     {
+       
+       
+        return redirect(route("admin.editsemester",['semester'=>$semester])); 
+       
+     }
+     public function addSemesters()
+     {
+       
+       
+        return redirect(route("admin.createsemester")); 
+
+       
+     }
+     public function manageSemesters(Request $request)
+     {
+        $sems=Semester::all();
+        $adminId = $request->session()->get('admin_id');
+        $adminId = session('admin_id');
+        $admin = Auth::guard('admin')->user();
+        return view('/admin/managesemesters',compact('sems','admin'));
+     }
+    
     public function showLoginForm() {
         return view('auth.admin-login');
     }

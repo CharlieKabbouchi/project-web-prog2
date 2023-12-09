@@ -24,37 +24,40 @@
 
 @section('content')
     <div class="row">
-        <h4 class="page-title">Departments</h4>
+        <h4 class="page-title">Semesters</h4>
     </div>
-    <a href='{{ route('addDepartment') }}'>Add New Department</a>
+    <a href='{{ route('admin.addSemesters') }}'>Add New Semester</a>
 
     <div class="row">
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr class="bg-primary">
-                        <th>Name</th>
-                        <th>Location</th>
-                        <th>Total Credits</th>
-                        <th rowspan="2">Actions</th>
+
+                        <th>Academic Year</th>
+                        <th>Starting Date</th>
+                        <th>Ending Date</th>
+                        <th>Term</th>
+                        <th rowspan="2">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($deps as $dep)
+                    @foreach ($sems as $sem)
                         <tr >
-                            <td>{{ $dep->name }}</td>
-                            <td>{{ $dep->location }}</td>
-                            <td>{{ $dep->totalCredits }}</td>
-                            <td class="actions-column"><form method="get" action="{{ route('admin.viewDepartment', ['department' => $dep->id]) }}">
+                            <td>{{ $sem->yearBelongsTo }}</td>
+                            <td>{{ $sem->startingDate }}</td>
+                            <td>{{ $sem->endingDate }}</td>
+                            <td>{{ $sem->type}}</td>
+                            <td class="actions-column"><form method="get" action="{{ route('admin.viewSemester', ['semester' => $sem->id]) }}">
                                 @csrf
                                 <input type="submit" class="btn btn-primary btn-rounded btn-login" value="View">
                             </form>
-                        
-                            <form method="get" action="{{ route('admin.editDepartment', ['department' => $dep->id]) }}">
+                            
+                            <form method="get" action="{{ route('admin.editSemester', ['semester' => $sem->id]) }}">
                                 @csrf
                                 <input type="submit" class="btn btn-primary btn-rounded btn-login" value="Edit">
                             </form>
-                            <form method="post" action="{{ route('admin.deleteDepartment', ['department' => $dep->id]) }}">
+                            <form method="post" action="{{ route('admin.deleteSemester',$sem->id) }}">
                                 @csrf
                                  @method('POST')
                                 <input type="submit" class="btn btn-primary btn-rounded btn-login" value="Delete">
