@@ -9,8 +9,9 @@ class Event extends Model
 {
     use HasFactory;
 
-    public function getAlumuni(){
-        return $this->belongsTo(Alumuni::class,"alumuni_id","id");
+    protected $fillable = ['title', 'description', 'type', 'time', 'startingtime', 'endingtime', 'alumni_id'];
+    public function getAlumni(){
+        return $this->belongsTo(Alumni::class,"alumni_id","id");
     }
 
     public function getStudent(){

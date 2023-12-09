@@ -11,6 +11,9 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
-        "firebase": "^10.7.1"
+        "@fullcalendar/core": "^6.1.10",
+        "@fullcalendar/daygrid": "^6.1.10",
+        "firebase": "^10.7.1",
+        "fullcalendar": "^6.1.10"
     }
 }
