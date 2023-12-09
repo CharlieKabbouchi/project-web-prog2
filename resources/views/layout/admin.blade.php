@@ -5,7 +5,8 @@
 	<title>Admin Dashboard</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
 	<link rel="icon" href="{{asset('assets/img/favicon.ico')}}" type="image/x-icon"/>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 	<!-- Fonts and icons -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script src="{{asset('assets/js/plugin/webfont/webfont.min.js')}}"></script>
@@ -71,56 +72,7 @@
 								<i class="flaticon-alarm"></i>
 								<span class="notification">3</span>
 							</a>
-							<ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
-								<li>
-									<div class="dropdown-title">You have 4 new notification</div>
-								</li>
-								<li>
-									<div class="notif-center">
-										<a href="#">
-											<div class="notif-icon notif-primary"> <i class="la la-user-plus"></i> </div>
-											<div class="notif-content">
-												<span class="block">
-													New user registered
-												</span>
-												<span class="time">5 minutes ago</span> 
-											</div>
-										</a>
-										<a href="#">
-											<div class="notif-icon notif-success"> <i class="la la-comment"></i> </div>
-											<div class="notif-content">
-												<span class="block">
-													Rahmad commented on Admin
-												</span>
-												<span class="time">12 minutes ago</span> 
-											</div>
-										</a>
-										<a href="#">
-											<div class="notif-img"> 
-												<img src="{{asset('assets/img/profile2.jpg')}}" alt="Img Profile">
-											</div>
-											<div class="notif-content">
-												<span class="block">
-													Reza send messages to you
-												</span>
-												<span class="time">12 minutes ago</span> 
-											</div>
-										</a>
-										<a href="#">
-											<div class="notif-icon notif-danger"> <i class="la la-heart"></i> </div>
-											<div class="notif-content">
-												<span class="block">
-													Farrah liked Admin
-												</span>
-												<span class="time">17 minutes ago</span> 
-											</div>
-										</a>
-									</div>
-								</li>
-								<li>
-									<a class="see-all" href="javascript:void(0);">See all notifications<i class="la la-angle-right"></i> </a>
-								</li>
-							</ul>
+							
 						</li>
 						<li class="nav-item dropdown hidden-caret">
 							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="{{asset('assets/img/profile.jpg')}}" alt="image profile" width="36" class="img-circle"></a>
@@ -129,7 +81,8 @@
 									<div class="user-box">
 										<div class="u-img"><img src="{{asset('assets/img/profile.jpg')}}" alt="image profile"></div>
 										<div class="u-text">
-											<h4>$admin->firstname</h4>
+											<h4>{{$admin->firstName}}</h4>
+                                            <form  method="post" action="{{route('logout')}}" >@csrf<input type='submit'class="btn btn-primary btn-rounded btn-login" value='Logout'></form>
 										</div>
 									</div>
 								</li>
@@ -159,7 +112,7 @@
 						<div class="info">
 							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
 								<span>
-									$admin->firstName
+									{{$admin->firstName}}
 									<span class="user-level">Administrator</span>
 									<span class="caret"></span>
 								</span>
@@ -169,12 +122,12 @@
 							<div class="collapse in" id="collapseExample">
 								<ul class="nav">
 									<li>
-										<a href="{{route('viewprofile',['id'=>1])}}">
+										<a href="{{route('viewprofile',['id'=>$admin->id])}}">
 											<span class="link-collapse">My Profile</span>
 										</a>
 									</li>
 									<li>
-										<a href="{{route('editprofile',['id'=>1])}}">
+										<a href="{{route('editprofile',['id'=>$admin->id])}}">
 											<span class="link-collapse">Edit Profile</span>
 										</a>
 									</li>
@@ -184,11 +137,11 @@
 						</div>
 					</div>
 					<ul class="nav">
-						<li class="nav-item active">
+						<li class="nav-item ">
 							<a href="{{route('admin.dashboard')}}">
 								<i class="flaticon-home"></i>
 								<p>Dashboard</p>
-								<span class="badge badge-count">5</span>
+								
 							</a>
 						</li>
 						<li class="nav-section">
@@ -198,26 +151,26 @@
 							<h4 class="text-section">Manage Assets</h4>
 						</li>
 						<li class="nav-item">
-							<a data-toggle="collapse" href="{{route('admin.manageDepartments')}}">
+							<a  href="{{route('admin.manageDepartments')}}">
 								<i class="flaticon-layers"></i>
 								<p>Departments</p>
-                                <span class="caret"></span>
+                                
 							</a>
 						</li>
                         <li class="nav-item">
-							<a data-toggle="collapse" href="{{route('admin.manageSemesters')}}">
+							<a  href="{{route('admin.manageSemesters')}}">
 								<i class="flaticon-layers"></i>
 								<p>Semesters</p>
 							</a>
 						</li>
                         <li class="nav-item">
-							<a data-toggle="collapse" href="{{route('admin.manageCourses')}}">
+							<a  href="{{route('admin.manageCourses')}}">
 								<i class="flaticon-layers"></i>
 								<p>Courses</p>
 							</a>
 						</li>
                         <li class="nav-item">
-							<a data-toggle="collapse" href="{{route('admin.manageClasses')}}">
+							<a  href="{{route('admin.manageClasses')}}">
 								<i class="flaticon-layers"></i>
 								<p>Classes</p>
 							</a>
@@ -229,47 +182,41 @@
 							<h4 class="text-section">Manage Users</h4>
 						</li>
 						<li class="nav-item">
-							<a data-toggle="collapse" href="{{route('admin.manageTeachers')}}">
+							<a href="{{route('admin.manageTeachers')}}">
 								<i class="flaticon-agenda-1"></i>
 								<p>Teachers</p>
 								
 							</a>
 						</li>
                         <li class="nav-item">
-							<a data-toggle="collapse" href="{{route('admin.manageStudents')}}">
+							<a  href="{{route('admin.manageStudents')}}">
 								<i class="flaticon-agenda-1"></i>
 								<p>Students</p>
 								
 							</a>
 						</li>
                         <li class="nav-item">
-							<a data-toggle="collapse" href="{{route('admin.manageAlumnis')}}">
+							<a  href="{{route('admin.manageAlumnis')}}">
 								<i class="flaticon-agenda-1"></i>
 								<p>Alumnis</p>
 								
 							</a>
 						</li>
                         <li class="nav-item">
-							<a data-toggle="collapse" href="{{route('admin.manageParents')}}">
+							<a  href="{{route('admin.manageParents')}}">
 								<i class="flaticon-agenda-1"></i>
 								<p>Parents</p>
 								
 							</a>
 						</li>
                         <li class="nav-item">
-							<a data-toggle="collapse" href="{{route('admin.manageAdmins')}}">
+							<a  href="{{route('admin.manageAdmins')}}">
 								<i class="flaticon-agenda-1"></i>
 								<p>Admins</p>
 								
 							</a>
 						</li>
-						<li class="nav-item">
-							<a data-toggle="collapse" href="{{route('logout')}}">
-								<i class="flaticon-agenda-1"></i>
-								<p>Logout</p>
-							</a>
-						</li>
-					
+						
 
 					</ul>
 				</div>
