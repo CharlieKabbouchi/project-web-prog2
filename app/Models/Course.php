@@ -10,11 +10,11 @@ class Course extends Model
     use HasFactory;
     
     public function getSemester(){
-        return $this->belongsToMany(Semester::class,"semester_course","course_id","semester_id");
+        return $this->belongsToMany(Semester::class,"semester_courses","course_id","semester_id");
     }
 
     public function getDepartment(){
-        return $this->belongsToMany(Department::class,"department_course","course_id","department_id");
+        return $this->belongsToMany(Department::class,"department_courses","course_id","department_id");
     }
 
     public function getClassT(){

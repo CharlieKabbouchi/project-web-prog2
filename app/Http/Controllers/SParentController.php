@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClassT;
 use App\Models\SParent;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,32 +12,70 @@ class SParentController extends Controller {
     /**
      * Display a listing of the resource.
      */
-    // public function showLoginForm() {
-    //     return view('auth.parent-login');
-    // }
-    // public function login(Request $request)
-    // {
-    //     $credentials = $request->only('email', 'password');
+    public function showLoginForm() {
+        return view('auth.parent-login');
+    }
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
 
-    //     if (Auth::guard('parent')->attempt($credentials)) {
-    //         $parent = Auth::guard('parent')->user();
-    //         $request->session()->put('parent_id', $parent->id);
-    //         return redirect()->intended('/parent/dashboard');
-    //     }
+        if (Auth::guard('parent')->attempt($credentials)) {
+            $parent = Auth::guard('parent')->user();
+            $request->session()->put('parent_id', $parent->id);
+            return redirect()->intended('/parent/dashboard');
+        }
 
-    //     return back()->withErrors(['error' => 'Invalid login credentials']);
-    // }
+        return back()->withErrors(['error' => 'Invalid login credentials']);
+    }
 
 
     public function showDashboard(Request $request) {
-
         $parent = SParent::find(session('parent_id'));
-        // $parentId = session('parent_id');
-        // $parent = Auth::guard('parent')->user();
-        // dd($alumni);
-        return view('parent.dashboard', compact('parent'));
+    
+        // Get all students associated with the parent
+        $students = $parent->getStudent;
+        $classes = [];
+    
+        foreach ($students as $student) {
+            $classes[$student->id] = $student->getClassT()->with(['getCourse', 'getCourse'])->withPivot('averageGrade')->get() ?? [];
+        }
+    
+        // Create an array to store student data
+        $studentData = [];
+    
+        // Loop through each student and retrieve their data
+        foreach ($students as $student) {
+            $totalClassesTaken = count($classes[$student->id]);
+            $totalWeightedGrade = 0;
+            $totalCredits = 0;
+    
+            foreach ($classes[$student->id] as $class) {
+                // Assuming you have a credits attribute in the Course model
+                $totalWeightedGrade += $class->pivot->averageGrade * $class->getCourse->credits;
+                $totalCredits += $class->getCourse->credits;
+            }
+    
+            // Calculate (totalWeightedGrade / totalCredits)
+            $gpa = ($totalCredits > 0) ? $totalWeightedGrade / $totalCredits : 0;
+    
+            $studentData[] = [
+                'name' => $student->firstName . ' ' . $student->lastName,
+                'totalCreditsTaken' => $student->totalCreditsTaken,
+                'totalCredits' => $student->getDepartment->totalCredits,
+                'totalClassesTaken' => $totalClassesTaken,
+                'gpa' => $gpa,
+                'classes' => $classes[$student->id],
+            ];
+        }
+    
+        // Other logic for retrieving additional data if needed
+    
+        return view('parent.dashboard', compact('parent', 'studentData', 'classes'));
     }
-
+    
+    
+    
+    
 
 
 
@@ -74,9 +114,18 @@ class SParentController extends Controller {
      * Display the specified resource.
      */
     public function show(SParent $sParent) {
-        //
+        $parent = SParent::find(session('parent_id'));
+        $students = $parent->getStudent;
+        $classes = [];
+    
+        foreach ($students as $student) {
+            $classes[$student->id] = $student->getClassT()->withPivot('averageGrade', 'quizGrade', 'projectGrade', 'assignmentGrade')->get() ?? [];
+        }
+    
+        return view('parent.ShowClasses', compact('parent', 'students', 'classes'));
     }
-
+    
+    
     /**
      * Show the form for editing the specified resource.
      */

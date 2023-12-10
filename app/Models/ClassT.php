@@ -21,7 +21,7 @@ class ClassT extends Model {
     }
 
     public function getStudent() {
-        return $this->belongsToMany(Event::class, "student_classt", "classt_id", "student_id");
+        return $this->belongsToMany(Event::class, "student_class_t_s", "classt_id", "student_id");
     }
 
     public function getTeacher() {
