@@ -139,7 +139,7 @@
 					<ul class="nav">
 
 						<li class="nav-item active">
-							<a href="{{route('admin.dashboard1')}}">
+							<a href="{{route('admin.dashboard')}}">
 
 								<i class="flaticon-home"></i>
 								<p>Dashboard</p>

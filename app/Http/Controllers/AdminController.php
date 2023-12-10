@@ -6,6 +6,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Models\Admin;
 use App\Models\Student;
 use App\Models\Alumni;
+use App\Models\ClassT;
 use App\Models\Course;
 use App\Models\Teacher;
 use App\Models\Department;
@@ -20,6 +21,7 @@ class AdminController extends Controller {
      * Display a listing of the resource.
      */
 
+
   public function manageDepartments(Request $request)
      {
         $deps=Department::all();
@@ -29,6 +31,14 @@ class AdminController extends Controller {
         return view('/admin/managedepartments',compact('deps','admin'));
      }
  
+     public function manageCourses(Request $request)
+{
+    $courses = Course::all();
+    $adminId = $request->session()->get('admin_id');
+    $adminId = session('admin_id');
+    $admin = Auth::guard('admin')->user();
+    return view('/admin/managecourses', compact('courses', 'admin'));
+}
      public function viewDepartments($department)
      {
        
@@ -44,6 +54,14 @@ class AdminController extends Controller {
  
        
      }
+     public function editCourses($course)
+     {
+       
+       
+        return redirect(route("admin.editcourse",['course'=>$course]));
+ 
+       
+     }
      public function addDepartment()
      {
        
@@ -56,6 +74,12 @@ class AdminController extends Controller {
      {
         return redirect(route("admin.showSemester",['semester'=>$semester]));
      }
+     public function   viewCourses($course)
+     {
+        return redirect(route("admin.showCourse",['course'=>$course]));
+     }
+
+   
      public function editSemesters($semester)
      {
        
@@ -70,6 +94,32 @@ class AdminController extends Controller {
         return redirect(route("admin.createsemester"));
  
        
+     }
+
+     public function addCourses()
+     {
+       
+       
+        return redirect(route("admin.createcourse"));
+ 
+       
+     }
+
+     public function addclasses()
+     {
+       
+       
+        return redirect(route("admin.createclass"));
+ 
+       
+     }
+     public function manageClasses(Request $request)
+     {
+        $classes=ClassT::all();
+        $adminId = $request->session()->get('admin_id');
+        $adminId = session('admin_id');
+        $admin = Auth::guard('admin')->user();
+        return view('/admin/manageclasses',compact('classes','admin'));
      }
      public function manageSemesters(Request $request)
      {
