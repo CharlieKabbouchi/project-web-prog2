@@ -165,7 +165,7 @@ class AdminController extends Controller {
     }
  
     public function showDashboard(Request $request) {
-       // $admin = Admin::find(session('admin_id'));
+       //$admin = Admin::find(session('admin_id'));
  
        $departmentCount = Department::count();
        $studentCount = Student::count();
