@@ -43,7 +43,7 @@ class Student extends Authenticatable
     }
 
     public function getClassT(){
-        return $this->belongsToMany(ClassT::class,"student_classt","student_id","classt_id");
+        return $this->belongsToMany(ClassT::class,"student_class_t_s","student_id","classt_id");
     }
 
     public function getReviewC(){
