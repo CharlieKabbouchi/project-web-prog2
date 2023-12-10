@@ -176,6 +176,7 @@ Route::prefix('parent')->group(function () {
         // })->name('parent.dashboard');
 
         Route::get('/dashboard', [SParentController::class, 'showDashboard'])->name('parent.dashboard');
+        Route::get('/ShowClasses', [SParentController::class, 'show'])->name('parent.ShowClasses');
 
         // Add other parent routes here
     });

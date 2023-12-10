@@ -79,14 +79,13 @@ class AlumniController extends Controller {
         return view('alumni.dashboard', compact('alumni', 'graduationYear', 'departmentName', 'eventsCount', 'nonEventsCount'));
     }
     public function manageEvents(Request $request) {
-        $events = Event::all();
-        $alumni = Alumni::find(session('alumni_id'));
         $alumniId = session('alumni_id');
         $alumni = Auth::guard('alumni')->user();
-
+        $events = $alumni->getEvent;
+    
         $alumniFirstName = $alumni->getStudent->firstName;
         $alumniLastName = $alumni->getStudent->lastName;
-
+    
         return view('alumni.manageEvents', compact('alumni', 'events', 'alumniFirstName', 'alumniLastName'));
     }
     public function viewCalendar(Request $request) {
@@ -113,7 +112,7 @@ class AlumniController extends Controller {
     }
     
 
-    public function  manageQA(Request $request) {
+    public function manageQA(Request $request) {
         // $events = Event::all();
         $questions = Question::all();
         $answers = Answer::all();
