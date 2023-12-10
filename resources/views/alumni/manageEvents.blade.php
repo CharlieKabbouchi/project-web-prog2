@@ -1,7 +1,7 @@
 @extends('layout.alumni')
 
 @section('content')
-    <h2>Manage Events</h2>
+    <h2>Manage Your Events</h2>
 
     <div class="row">
         <div class="col-md-12">

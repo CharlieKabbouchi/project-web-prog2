@@ -15,7 +15,7 @@
 <body>
   
 <div class="container">
-    <a href="{{route('alumni.dashboard')}}">go back</a>
+    <a href="{{route('alumni.dashboard')}}" class="btn btn-primary">go back</a>
     <div id="calendar"></div>
     
 
