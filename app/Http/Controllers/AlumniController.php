@@ -112,7 +112,7 @@ class AlumniController extends Controller {
     }
     
 
-    public function  manageQA(Request $request) {
+    public function manageQA(Request $request) {
         // $events = Event::all();
         $questions = Question::all();
         $answers = Answer::all();

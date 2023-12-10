@@ -35,9 +35,9 @@
 				<!--
 					Tip 1: You can change the background color of the logo header using: data-background-color="black | dark | blue | purple | light-blue | green | orange | red"
 				-->
-				<a href="{{route('admin.dashboard')}}" class="big-logo">
+				{{-- <a href="{{route('admin.dashboard')}}" class="big-logo">
 					<img src="{{asset('assets/img/logoresponsive.png')}}" alt="logo img" class="logo-img">
-				</a>
+				</a> --}}
 				
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon">
@@ -151,7 +151,7 @@
 							<h4 class="text-section">Manage</h4>
 						</li>
 						<li class="nav-item">
-							<a  href="{{route('parent.manageclasses')}}">
+							<a  href="{{route('parent.ShowClasses')}}">
 								<i class="flaticon-layers"></i>
 								<p>Classes</p>
                                 
