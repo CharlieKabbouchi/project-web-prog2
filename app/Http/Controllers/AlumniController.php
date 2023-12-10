@@ -145,7 +145,7 @@ class AlumniController extends Controller {
 
     public function index() {
         $alumnis = Alumni::all();
-        return redirect()->intended('/alumni/allalumnis')->with('alumni', $alumnis);;
+        return redirect()->intended('/alumni/allalumnis')->with('alumni', $alumnis);
     }
 
     public function storeEvent(Request $request) {

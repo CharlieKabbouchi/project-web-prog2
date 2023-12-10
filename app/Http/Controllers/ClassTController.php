@@ -30,6 +30,17 @@ class ClassTController extends Controller {
         return view('class.addClass', compact('admin', 'teachers', 'courses', 'semesters'));
     }
 
+    public function createT(Request $request)
+    {
+        $teacher = Auth::guard('teacher')->user();
+        $classes = $teacher->getClassT()
+        ->with('getCourse', 'getSemester')
+        ->get();
+        $semesters = $classes->pluck('getSemester')->unique();
+        $courses = $classes->pluck('getCourse')->unique(); 
+        return view('teacher.addClass', compact('teacher','courses','semesters'));
+    }
+
     public function store(Request $request)
     {
        
@@ -60,6 +71,42 @@ class ClassTController extends Controller {
         $class->save();
 
         return redirect(route('admin.manageClasses'));
+    }
+
+    public function storeT(Request $request)
+    {
+       
+        // $request->validate([
+
+        //     'startingDate'=>'required',
+        //     'endingDate'=>'required',
+        //     'dayOfWeek' => 'required',
+        //     'starttime' => 'required',
+        //     'endtime' => 'required',
+        //     'teacher' => 'required|exists:teachers,id',
+        //     'course' => 'required|exists:courses,id',
+        //     'semester' => 'required|exists:semesters,id',
+        // ]);
+        $class = new ClassT();
+        $class->startingDate = $request->startingDate;
+        $class->endingDate = $request->endingDate;
+        $class->DayofWeek = $request->DayofWeek;
+        $class->starttime = $request->starttime;
+        $class->endtime = $request->endtime;
+        $class->teacher_id= $request->teacher;
+        $class->semester_id= $request->semester;
+        $class->course_id= $request->course;
+        // $class->getCourse->attach($request->course);
+        // $class->getSemester->attach($request->semester);
+        $class->abscence=6;
+        $class->save();
+
+        return redirect(route('teacher.manageClasses'));
+    }
+
+    public function showT($class_id)
+    {
+    
     }
 
     public function edit(Request $request, $id)
