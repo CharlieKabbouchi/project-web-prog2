@@ -79,7 +79,7 @@ Route::prefix('admin')->group(function () {
         //     return 'Admin Dashboard';
         // })->name('admin.dashboard');
         Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
-<<<<<<< Updated upstream
+
         Route::get('/view/profile/{id}', [AdminController::class, 'viewprofile'])->name('viewprofile');
         Route::get('/add/department}', [AdminController::class, 'addDepartment'])->name('addDepartment');
         Route::get('/edit/profile/{id}', [AdminController::class, 'editprofile'])->name('editprofile');
@@ -143,8 +143,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/manage/parents', [AdminController::class, 'manageParents'])->name('admin.manageParents');
         Route::get('/manage/alumnis', [AdminController::class, 'manageAlumnis'])->name('admin.manageAlumnis');
         Route::get('/manages', [AdminController::class, 'manageAdmins'])->name('admin.manageAdmins');
-=======
->>>>>>> Stashed changes
+
         Route::get('/register', [AdminController::class, 'create'])->name('admin.register');
         Route::post('/register', [AdminController::class, 'register']);
         Route::get('/alumni/register', [AlumniController::class, 'create'])->name('alumni.create');
