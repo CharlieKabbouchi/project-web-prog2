@@ -32,30 +32,26 @@ class SParentController extends Controller {
     public function showDashboard(Request $request) {
         $parent = SParent::find(session('parent_id'));
     
-        // Get all students associated with the parent
+
         $students = $parent->getStudent;
         $classes = [];
     
         foreach ($students as $student) {
             $classes[$student->id] = $student->getClassT()->with(['getCourse', 'getCourse'])->withPivot('averageGrade')->get() ?? [];
         }
-    
-        // Create an array to store student data
+
         $studentData = [];
     
-        // Loop through each student and retrieve their data
         foreach ($students as $student) {
             $totalClassesTaken = count($classes[$student->id]);
             $totalWeightedGrade = 0;
             $totalCredits = 0;
     
             foreach ($classes[$student->id] as $class) {
-                // Assuming you have a credits attribute in the Course model
                 $totalWeightedGrade += $class->pivot->averageGrade * $class->getCourse->credits;
                 $totalCredits += $class->getCourse->credits;
             }
     
-            // Calculate (totalWeightedGrade / totalCredits)
             $gpa = ($totalCredits > 0) ? $totalWeightedGrade / $totalCredits : 0;
     
             $studentData[] = [
@@ -67,9 +63,7 @@ class SParentController extends Controller {
                 'classes' => $classes[$student->id],
             ];
         }
-    
-        // Other logic for retrieving additional data if needed
-    
+
         return view('parent.dashboard', compact('parent', 'studentData', 'classes'));
     }
     
