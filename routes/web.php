@@ -83,6 +83,7 @@ Route::prefix('admin')->group(function () {
         // })->name('admin.dashboard');
         Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
 
+
         Route::get('/view/profile/{id}', [AdminController::class, 'viewprofile'])->name('viewprofile');
         Route::get('/add/department}', [AdminController::class, 'addDepartment'])->name('addDepartment');
         Route::get('/edit/profile/{id}', [AdminController::class, 'editprofile'])->name('editprofile');
@@ -197,8 +198,18 @@ Route::prefix('student')->group(function () {
         Route::get('/manage/class', [StudentController::class, 'manageClass'])->name('student.manageclass');
         Route::get('/manage/Q&A', [StudentController::class, 'manageQandA'])->name('student.manageQ&A');
         Route::get('/manage/calendar', [StudentController::class, 'manageCalendar'])->name('student.viewCalendar');
-        Route::get('/view/profile/{id}', [StudentController::class, 'viewProfile'])->name('student.viewprofile');
-        Route::get('/edit/profile/{id}', [StudentController::class, 'editProfile'])->name('student.editprofile');
+        Route::get('/view/profile/{id}', [StudentController::class, 'viewProfile'])->name('viewprofile');
+        Route::get('/edit/profile/{id}', [StudentController::class, 'editProfile'])->name('editprofile');
+        Route::get('/view/class/{id}', [StudentController::class, 'viewClass'])->name('viewclass');
+        Route::get('/view/resource/{id}', [StudentController::class, 'viewResource'])->name('viewresource');
+        Route::get('/view/assignment/{id}', [StudentController::class, 'viewAssignment'])->name('viewassignment');
+        Route::get('/view/submission/{id}', [StudentController::class, 'viewSubmission'])->name('viewsubmission');
+        Route::get('/add/submission/{id}', [StudentController::class, 'addSubmission'])->name('addsubmission');
+        Route::get('/enroll/class/', [StudentController::class, 'enrollClass'])->name('enrollClass');
+        Route::get('/enroll/event/', [StudentController::class, 'enrollEvent'])->name('enrollEvent');
+        Route::get('/add/reviewc/', [StudentController::class, 'addReviewc'])->name('addReviewc');
+        Route::get('/view/event/', [StudentController::class, 'viewEvent'])->name('viewEvent');
+
         // Add other student routes here
     });
 
@@ -246,17 +257,6 @@ Route::prefix('teacher')->group(function () {
         //     return 'Teacher Dashboard';
         // })->name('teacher.dashboard');
         Route::get('/dashboard', [TeacherController::class, 'showDashboard'])->name('teacher.dashboard');
-        
-        //Classes
-        Route::get('/manage/classes', [TeacherController::class, 'manageClasses'])->name('teacher.manageClasses');
-        Route::get('/manage/classes/create', [ClassTController::class, 'createT'])->name('teacher.createClass');
-        Route::post('/manage/classes/store', [ClassTController::class, 'storeT'])->name('teacher.storeClass');
-        Route::get('/manage/classes/show/{class_id}', [ClassTController::class, 'showT'])->name('teacher.showClass');
-        Route::get('/manage/classes/edit/{class}', [ClassTController::class, 'edit'])->name('teacher.editclass');
-        Route::put('/manage/classes/update/{class}', [ClassTController::class, 'update'])->name('teacher.updateClass');
-        Route::post('/manage/classes/delete/{class}', [ClassTController::class, 'destroy'])->name('teacher.deleteClass');
-
-        //Certificates
-        Route::get('/manage/certificates', [CertificateController::class, 'manageCertificates'])->name('teacher.manageCertificates');
+        // Add other teacher routes here
     });
 });
