@@ -132,7 +132,7 @@ class StudentController extends Controller
         $nstd->firstname=$request->firstname;
         $nstd->lastname=$request->lastname;
         $nstd->Gender=$request->Gender;
-        $nstd->sparent_id=$request->sparent_id;
+        $nstd->s_parent_id=$request->sparent_id;
         $nstd->department_id=$request->department_id;
         $nstd->save();  
         return redirect(route("student.index")); 

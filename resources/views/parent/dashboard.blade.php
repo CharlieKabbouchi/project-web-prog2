@@ -2,11 +2,11 @@
 <title>Admin Dashboard</title>
 
 @section('content')
-    <h4 class="page-title">Dashboard</h4>
+    <h1 class="page-title">Dashboard</h1>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     @foreach ($studentData as $data)
-        {{ $data['name'] }}
+        <h5> {{ $data['name'] }} </h5>
         <div class="row">
             <div class="col-sm-6 col-md-3">
                 <div class="card card-stats card-primary card-round">

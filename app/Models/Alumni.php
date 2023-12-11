@@ -22,8 +22,8 @@ class Alumni extends Authenticatable {
         static::creating(function ($alumni) {
             return DB::transaction(function () use ($alumni) {
                 $currentYear = date('Y');
-                $nextId = self::where('id', 'like', 'al' . $currentYear . '%')->count() + 1;
-                $alumni->id = 'al' . $currentYear . str_pad($nextId, 3, '0', STR_PAD_LEFT);
+                $nextId = self::where('id', 'like', 'AL' . $currentYear . '%')->count() + 1;
+                $alumni->id = 'AL' . $currentYear . str_pad($nextId, 3, '0', STR_PAD_LEFT);
                 $alumni->email = $alumni->id . '@gmail.com';
 
                 $rawPassword = Str::random(8);
