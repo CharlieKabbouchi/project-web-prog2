@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DISK', 'local'),
+    'default' => env('FILESYSTEM_DISK', 'gcs'),
 
     /*
     |--------------------------------------------------------------------------
@@ -55,7 +55,19 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => false,
         ],
-
+        'gcs' => [
+            'driver' => 'gcs',
+            'key_file_path' => env('FIREBASE_CREDENTIALS', null),
+            'key_file' => [],
+            'project_id' =>env('FIREBASE_PROJECT_ID' ,'fir-test-8bd2c'),
+            'bucket' => env('FIREBASE_STORAGE_BUCKET', 'fir-test-8bd2c.appspot.com'),
+            'path_prefix' => env('GOOGLE_CLOUD_STORAGE_PATH_PREFIX', ''),
+            'storage_api_uri' => env('GOOGLE_CLOUD_STORAGE_API_URI', null),
+            'api_endpoint' => env('GOOGLE_CLOUD_STORAGE_API_ENDPOINT', null),
+            'visibility' => 'public',
+            'visibility_handler' => null,
+            'metadata' => ['cacheControl' => 'public,max-age=86400'],
+        ],
     ],
 
     /*
