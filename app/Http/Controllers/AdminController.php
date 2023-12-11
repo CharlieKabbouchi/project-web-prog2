@@ -86,10 +86,9 @@ class AdminController extends Controller
 
             $totalCreditsShouldTaken=0;
             $totalCreditsShouldTaken += $student->getDepartment->totalCredits;
-           var_dump ($totalCredits);
-           var_dump ($totalCreditsShouldTaken);
+            
             if ($totalCreditsShouldTaken == $totalCredits && $student->isGraduated == false) {
-                dd($student);
+                // dd($student);
                 $student->isGraduated = true;
                 $alumni = new Alumni();
                 $alumni->graduationYear = date('Y');
