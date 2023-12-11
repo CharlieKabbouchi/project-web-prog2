@@ -296,10 +296,11 @@ Route::prefix('teacher')->group(function () {
         Route::get('/manage/certificates', [TeacherController::class, 'manageCertificates'])->name('teacher.manageCertificates');
         Route::get('/manage/certificates/create', [TeacherController::class, 'createC'])->name('teacher.createCertificate');
         Route::post('/manage/certificates/store', [TeacherController::class, 'storeC'])->name('teacher.storeCertificate');
- 
+
+
         //Students
         Route::get('/teacher/classes/{class}/students/{student}/edit', [TeacherController::class, 'editStudentGrades'])->name('editStudentGrades');
         Route::post('/teacher/classes/{class}/students/{student}/update', [TeacherController::class, 'storeStudentGrades'])->name('storeStudentGrades');
-       
+
     });
 });

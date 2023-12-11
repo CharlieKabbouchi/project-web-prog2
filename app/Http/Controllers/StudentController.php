@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Assignment;
 use App\Models\Student;
+use App\Models\Teacher;
+use App\Models\ClassT;
 use App\Models\SParent;
 use App\Models\Pending;
 use App\Models\Department;

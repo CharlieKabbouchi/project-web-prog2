@@ -42,10 +42,10 @@ class Student extends Authenticatable {
         return $this->belongsTo(SParent::class, "sparent_id", "id");
     }
 
-    public function getClassT(){
-        return $this->belongsToMany(ClassT::class,"student_class_t_s","student_id","classt_id");
+    public function getClassT() {
+        return $this->belongsToMany(ClassT::class, "student_class_t_s", "student_id", "classt_id")
+            ->withPivot('attendence', 'averageGrade', 'quizGrade', 'projectGrade', 'assignmentGrade');
     }
-
 
     public function getReviewC() {
         return $this->hasMany(ReviewC::class);

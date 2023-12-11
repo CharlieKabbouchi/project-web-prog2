@@ -244,7 +244,7 @@
 							<a  href="{{route('teacher.manageCertificates')}}">
 								<i class="flaticon-layers"></i>
 								<p>My Certificates</p>
-							</a>	
+							</a>
 						</li>
                    
 						<li class="nav-item">
