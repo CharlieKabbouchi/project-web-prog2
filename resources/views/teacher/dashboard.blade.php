@@ -1,9 +1,5 @@
 @extends('layout.teacher')
 <title>Teacher Dashboard</title>
-@section('styles')
-    <style>
-    </style>
-@endsection
 @section('content')
     <div class="container">
         <h1>Welcome {{$teacher->firstName}} to Teacher Dashboard</h1>

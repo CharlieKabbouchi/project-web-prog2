@@ -16,30 +16,30 @@ class TeacherController extends Controller {
     /**
      * Display a listing of the resource.
      */
-    // public function showLoginForm() {
-    //     return view('auth.teacher-login');
-    // }
-    // public function login(Request $request) {
-    //     $credentials = $request->only('email', 'password');
+    public function showLoginForm() {
+        return view('auth.teacher-login');
+    }
 
-    //     if (Auth::guard('teacher')->attempt($credentials)) {
-    //         $teacher = Auth::guard('teacher')->user();
-    //         $request->session()->put('teacher_id', $teacher->id);
-    //         return redirect()->intended('/teacher/dashboard');
-    //     }
+    public function login(Request $request) {
+        $credentials = $request->only('email', 'password');
 
-    //     return back()->withErrors(['error' => 'Invalid login credentials']);
-    // }
+        if (Auth::guard('teacher')->attempt($credentials)) {
+            $teacher = Auth::guard('teacher')->user();
+            $request->session()->put('teacher_id', $teacher->id);
+            return redirect()->intended('/teacher/dashboard');
+        }
+
+        return back()->withErrors(['error' => 'Invalid login credentials']);
+    }
    
 
     public function showDashboard(Request $request) {
 
-        //$teacher = Teacher::find(session('teacher_id'));
+        $teacher = Teacher::find(session('teacher_id'));
         // $teacherId = $request->session()->get('teacher_id');
         // $teacherId = session('teacher_id');
         // $teacher = Auth::guard('teacher')->user();
         // dd($alumni);
-        $teacher = Teacher::find('t20230001');
         $totalClasses = $teacher->getClassT()->count();
 
         $courses = $teacher->getClassT()->pluck('course_id')->unique();
@@ -56,7 +56,13 @@ class TeacherController extends Controller {
         'totalUploadedResources'));
     }
 
-    
+    public function manageClasses(Request $request)
+    {
+       $teacherId = session('teacher_id');
+       $teacher = Auth::guard('teacher')->user();
+       $classes = $teacher->getClassT()->get();
+       return view('/teacher/manageclasses',compact('classes','teacher'));
+    }
 
     public function index() {
         $teacher = Teacher::all();
