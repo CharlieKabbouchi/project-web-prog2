@@ -16,7 +16,9 @@ use App\Http\Controllers\LoginSignUp;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FirebaseManagement;
+use App\Http\Controllers\PendingController;
 use App\Models\Semester;
+use App\Models\Teacher;
 
 Route::get('upload', [FirebaseManagement::class, 'showForm']);
 Route::post('/uploadd', [FirebaseManagement::class, 'upload']);
@@ -132,14 +134,38 @@ Route::prefix('admin')->group(function () {
         Route::put('/manage/classes/update/{class}', [ClassTController::class, 'update'])->name('admin.updateClass');
         Route::post('/manage/classes/delete/{class}', [ClassTController::class, 'destroy'])->name('admin.deleteClass');
 
-
-
-        Route::get('/manage/departments/store', [DepartmentController::class, 'store'])->name('admin.storeDepartment');
-      
-       
-        Route::get('/manage/courses', [AdminController::class, 'manageCourses'])->name('admin.manageCourses');
-        Route::get('/manage/students', [AdminController::class, 'manageStudents'])->name('admin.manageStudents');
+        //Teachers
         Route::get('/manage/teachers', [AdminController::class, 'manageTeachers'])->name('admin.manageTeachers');
+        Route::get('/manage/teachers/view/{teacher}', [AdminController::class, 'viewTeachers'])->name('admin.viewTeacher');
+        Route::get('/manage/teachers/modify/{teacher}', [AdminController::class, 'editTeachers'])->name('admin.editTeacher');
+        Route::get('/manage/teachers/add/{wteacher}', [AdminController::class, 'addteachers'])->name('admin.addTeacher');//
+        Route::get('/manage/teachers/create/{wteacher}', [TeacherController::class, 'create'])->name('admin.createteacher');
+        Route::post('/manage/teachers/store', [TeacherController::class, 'store'])->name('admin.storeteacher');
+        Route::get('/manage/teachers/show/{teacher}', [TeacherController::class, 'show'])->name('admin.showTeacher');
+        Route::get('/manage/teachers/edit/{teacher}', [TeacherController::class, 'edit'])->name('admin.editteacher');
+        Route::put('/manage/teachers/update/{teacher}', [TeacherController::class, 'update'])->name('admin.updateteacher');
+        Route::post('/manage/teachers/delete/{teacher}', [TeacherController::class, 'destroy'])->name('admin.deleteTeacher');
+        Route::get('/manaeg/register/pendingteachers',[AdminController::class, 'viewPendingTeachers'])->name('viewpendteacher');
+
+        //Students
+        Route::get('/manage/students', [AdminController::class, 'manageStudents'])->name('admin.manageStudents');
+        Route::get('/manage/students/view/{student}', [AdminController::class, 'viewStudents'])->name('admin.viewStudent');
+        Route::get('/manage/students/modify/{student}', [AdminController::class, 'editStudents'])->name('admin.editStudent');
+        Route::get('/manage/students/add/{wstudent}', [AdminController::class, 'addstudents'])->name('admin.addStudent');//
+        Route::get('/manage/students/create/{wstudent}', [StudentController::class, 'create'])->name('admin.createstudent');
+        Route::post('/manage/students/store', [StudentController::class, 'store'])->name('admin.storestudent');
+        Route::get('/manage/students/show/{student}', [StudentController::class, 'show'])->name('admin.showStudent');
+        Route::get('/manage/students/edit/{student}', [StudentController::class, 'edit'])->name('admin.editstudent');
+        Route::put('/manage/students/update/{student}', [StudentController::class, 'update'])->name('admin.updatestudent');
+        Route::post('/manage/students/delete/{student}', [StudentController::class, 'destroy'])->name('admin.deleteStudent');
+        Route::get('/manaeg/register/pendingstudents',[AdminController::class, 'viewPendingStudents'])->name('viewpendstudent');
+
+
+        //PendingUsers
+        Route::post('/manage/pending/delete/{pending}', [PendingController::class, 'destroy'])->name('admin.deletePUser');
+
+        //students
+        
         Route::get('/manage/parents', [AdminController::class, 'manageParents'])->name('admin.manageParents');
         Route::get('/manage/alumnis', [AdminController::class, 'manageAlumnis'])->name('admin.manageAlumnis');
         Route::get('/manages', [AdminController::class, 'manageAdmins'])->name('admin.manageAdmins');

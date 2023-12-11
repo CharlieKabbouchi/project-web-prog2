@@ -33,12 +33,13 @@ class Student extends Authenticatable {
         });
     }
 
+  
     public function getProfile() {
         return $this->hasOne(Profile::class);
     }
 
     public function getSParent() {
-        return $this->belongsTo(SParent::class, "s_parent_id", "id");
+        return $this->belongsTo(SParent::class, "sparent_id", "id");
     }
 
     public function getClassT(){
