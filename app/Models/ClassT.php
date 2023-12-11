@@ -17,31 +17,36 @@ class ClassT extends Model {
         'abscence',
     ];
     public function getCourse() {
-        return $this->belongsTo(Course::class, "course_id", "id");
+        return $this->belongsTo(Course::class, 'course_id');
     }
 
     public function getStudent() {
         return $this->belongsToMany(Event::class, "student_class_t_s", "classt_id", "student_id");
     }
 
+    public function getStudents() {
+        return $this->belongsToMany(Student::class, "student_class_t_s", "classt_id", "student_id")
+                ->withPivot('attendence', 'averageGrade', 'quizGrade', 'projectGrade', 'assignmentGrade');
+    }
+
     public function getTeacher() {
-        return $this->belongsTo(Teacher::class, "teacher_id", "id");
+        return $this->belongsTo(Teacher::class, 'teacher_id');
     }
 
     public function getUploadResource() {
-        return $this->hasMany(UploadResource::class);
+        return $this->hasMany(UploadResource::class, 'classt_id');
     }
 
     public function getReviewC() {
-        return $this->hasMany(ReviewC::class);
+        return $this->hasMany(ReviewC::class, 'classt_id');
     }
 
     public function getAssignment() {
-        return $this->hasMany(Assignment::class);
+        return $this->hasMany(Assignment::class, 'classt_id');
     }
 
     public function getCalendar() {
-        return $this->hasMany(Calendar::class);
+        return $this->hasMany(Calendar::class, 'classt_id');
     }
 
     public function getSemester() {

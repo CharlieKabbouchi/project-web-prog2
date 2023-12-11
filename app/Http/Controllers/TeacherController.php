@@ -8,8 +8,10 @@ use App\Models\DepartmentCourse;
 use App\Models\ClassT;
 use App\Models\Course;
 use App\Models\Semester;
+use App\Models\Student;
 use App\Models\SemesterCourse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class TeacherController extends Controller {
@@ -34,7 +36,6 @@ class TeacherController extends Controller {
    
 
     public function showDashboard(Request $request) {
-
         $teacher = Teacher::find(session('teacher_id'));
         // $teacherId = $request->session()->get('teacher_id');
         // $teacherId = session('teacher_id');
@@ -58,10 +59,82 @@ class TeacherController extends Controller {
 
     public function manageClasses(Request $request)
     {
-       $teacherId = session('teacher_id');
        $teacher = Auth::guard('teacher')->user();
        $classes = $teacher->getClassT()->get();
        return view('/teacher/manageclasses',compact('classes','teacher'));
+    }
+
+    public function manageCertificates(Request $request)
+    {
+       $teacher = Auth::guard('teacher')->user();
+       $certificates = $teacher->getCertificate()->get();
+       return view('/teacher/managecertifications',compact('certificates','teacher'));
+    }
+
+    public function editStudentGrades($class_id, $student_id)
+    {
+        $teacher = Teacher::find(session('teacher_id'));
+        $grades = DB::table('student_class_t_s')
+            ->where('classt_id', $class_id)
+            ->where('student_id', $student_id)
+            ->select('averageGrade', 'quizGrade', 'assignmentGrade', 'projectGrade')
+            ->first();
+
+        if ($grades) {
+            return view('teacher.editstudent', compact('teacher','class_id', 'student_id', 'grades'));
+        } else {
+            return redirect()->route('your_error_route')->with('error', 'Grades not found for the specified student in the class.');
+        }
+    }
+
+    public function storeStudentGrades($class_id, $student_id, Request $request)
+    {
+        $request->validate([
+            'averageGrade' => 'required|numeric',
+            'quizGrade' => 'required|numeric',
+            'projectGrade' => 'required|numeric',
+            'assignmentGrade' => 'required|numeric',
+        ]);
+
+        $result = DB::table('student_class_t_s')
+            ->where('classt_id', $class_id)
+            ->where('student_id', $student_id)
+            ->update([
+                'averageGrade' => $request->input('averageGrade'),
+                'quizGrade' => $request->input('quizGrade'),
+                'projectGrade' => $request->input('projectGrade'),
+                'assignmentGrade' => $request->input('assignmentGrade'),
+            ]);
+
+        if ($result) {
+            return redirect()->route('teacher.showClass', $class_id);
+        } else {
+            return redirect()->route('teacher.showClass', $class_id)->with('error', 'Failed to update grades.');
+        }
+    }
+
+    public function createC()
+    {
+        $teacher = Auth::guard('teacher')->user();
+        return view('teacher.addcertificate', compact('teacher'));
+    }
+
+    public function storeC(Request $request)
+    {
+        $request->validate([
+            'graduationCertificateImage' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'description' => 'required',
+        ]);
+        $teacher = Auth::guard('teacher')->user();
+
+        $imagePath = $request->file('certificateImage')->storeAs('public/certificates', 'certificate_' . time() . '.' . $request->file('certificateImage')->getClientOriginalExtension());
+        $certificate = new Certificate([
+            'graduationCertificateImage' => $imagePath,
+            'description' => $request->input('description'),
+            'teacher_id' => $teacher->id,
+        ]);
+        $certificate->save();
+        return redirect(route('teacher.manageCertificates'))->with('success', 'Certificate added successfully');
     }
 
     public function index() {

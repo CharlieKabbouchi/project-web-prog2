@@ -211,12 +211,19 @@ Route::prefix('teacher')->group(function () {
         Route::get('/manage/classes', [TeacherController::class, 'manageClasses'])->name('teacher.manageClasses');
         Route::get('/manage/classes/create', [ClassTController::class, 'createT'])->name('teacher.createClass');
         Route::post('/manage/classes/store', [ClassTController::class, 'storeT'])->name('teacher.storeClass');
-        Route::get('/manage/classes/show/{class_id}', [ClassTController::class, 'showT'])->name('teacher.showClass');
+        Route::get('/manage/classes/show/{class}', [ClassTController::class, 'showT'])->name('teacher.showClass');
         Route::get('/manage/classes/edit/{class}', [ClassTController::class, 'edit'])->name('teacher.editclass');
         Route::put('/manage/classes/update/{class}', [ClassTController::class, 'update'])->name('teacher.updateClass');
         Route::post('/manage/classes/delete/{class}', [ClassTController::class, 'destroy'])->name('teacher.deleteClass');
 
         //Certificates
-        Route::get('/manage/certificates', [CertificateController::class, 'manageCertificates'])->name('teacher.manageCertificates');
+        Route::get('/manage/certificates', [TeacherController::class, 'manageCertificates'])->name('teacher.manageCertificates');
+        Route::get('/manage/certificates/create', [TeacherController::class, 'createC'])->name('teacher.createCertificate');
+        Route::post('/manage/certificates/store', [TeacherController::class, 'storeC'])->name('teacher.storeCertificate');
+
+        //Students
+        Route::get('/teacher/classes/{class}/students/{student}/edit', [TeacherController::class, 'editStudentGrades'])->name('editStudentGrades');
+        Route::post('/teacher/classes/{class}/students/{student}/update', [TeacherController::class, 'storeStudentGrades'])->name('storeStudentGrades');
+        
     });
 });
