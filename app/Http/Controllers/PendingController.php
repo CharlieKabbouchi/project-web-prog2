@@ -58,8 +58,11 @@ class PendingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pending $pending)
+    public function destroy( $pending)
+    
     {
-        //
+        $pending=Pending::findOrFail( $pending);
+        $pending->delete();
+        return redirect(route('viewpendteacher'));
     }
 }

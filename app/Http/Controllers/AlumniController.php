@@ -28,10 +28,8 @@ class AlumniController extends Controller {
         $alumniId = session('alumni_id');
         $alumni = Auth::guard('alumni')->user();
 
-        $alumniFirstName = $alumni->getStudent->firstName;
-        $alumniLastName = $alumni->getStudent->lastName;
         $event = Event::findOrFail($event);
-        return view('alumni.EditEvent', compact('event', 'alumniFirstName', 'alumniLastName', 'alumni'));
+        return view('alumni.EditEvent', compact('event', 'alumni'));
     }
     public function login(Request $request) {
         $credentials = $request->only('email', 'password');

@@ -37,7 +37,7 @@ class SParentController extends Controller {
         $classes = [];
     
         foreach ($students as $student) {
-            $classes[$student->id] = $student->getClassT()->with(['getCourse', 'getCourse'])->withPivot('averageGrade')->get() ?? [];
+            $classes[$student->id] = $student->getClassT()->with(['getCourse'])->withPivot('averageGrade')->get() ?? [];
         }
 
         $studentData = [];
@@ -123,9 +123,10 @@ class SParentController extends Controller {
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SParent $sParent) {
-        $sp = SParent::findOrFail($sParent);
-        return redirect()->intended('/parent/editparent')->with('parent', $sp);
+    public function edit( $parent) {
+        $sp = SParent::findOrFail($parent);
+        $admin = Auth::guard('admin')->user();
+        return view('parent.editParent')->with('wparent', $sp)->with('admin',$admin);
     }
 
     /**

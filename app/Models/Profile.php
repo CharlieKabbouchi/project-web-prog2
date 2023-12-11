@@ -10,11 +10,11 @@ class Profile extends Model
     use HasFactory;
 
     public function getSParent(){
-        return $this->belongsTo(SParent::class,"sparent_id","id");
+        return $this->belongsTo(SParent::class,"s_parent_id","id");
     }
 
-    public function getAlumuni(){
-        return $this->belongsTo(Alumuni::class,"alumuni_id","id");
+    public function getAlumni(){
+        return $this->belongsTo(Alumni::class,"alumni_id","id");
     }
 
     public function getAdmin(){

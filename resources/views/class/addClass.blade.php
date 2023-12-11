@@ -34,12 +34,16 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="DayofWeek">Day of Week:</label>
-                    <input type="text" class="form-control" id="DayofWeek" name="DayofWeek" required>
+                    <label for="Day">Day of Week:</label>
+                    <input type="text" class="form-control" id="Day" name="Day" required>
+                </div>
+                <div class="form-group">
+                    <label for="abscence">Permitted Abscences:</label>
+                    <input type="number" min="3" class="form-control" id="abscence" name="abscence" required>
                 </div>
 
-                {{-- Add other class attributes as needed --}}
             </div>
+          
 
             <div class="col-md-6">
                 <h5>Associated Information</h5>
