@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AlumniController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\ClassTController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DepartmentController;
@@ -196,8 +197,8 @@ Route::prefix('student')->group(function () {
         Route::get('/manage/class', [StudentController::class, 'manageClass'])->name('student.manageclass');
         Route::get('/manage/Q&A', [StudentController::class, 'manageQandA'])->name('student.manageQ&A');
         Route::get('/manage/calendar', [StudentController::class, 'manageCalendar'])->name('student.viewCalendar');
-        Route::get('/view/profile/{id}', [StudentController::class, 'viewProfile'])->name('viewprofile');
-        Route::get('/edit/profile/{id}', [StudentController::class, 'editProfile'])->name('editprofile');
+        Route::get('/view/profile/{id}', [StudentController::class, 'viewProfile'])->name('student.viewprofile');
+        Route::get('/edit/profile/{id}', [StudentController::class, 'editProfile'])->name('student.editprofile');
         // Add other student routes here
     });
 
