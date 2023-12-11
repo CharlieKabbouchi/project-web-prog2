@@ -43,9 +43,9 @@
                     @foreach ($alumnis as $alumni)
                         <tr >
                             <td>{{ $alumni->id }}</td>
-                            <td>{{ $alumni->firstName }}</td>
-                            <td>{{ $alumni->lastName }}</td>
-                            <td>{{ $alumni->email }}</td>
+                            <td>{{ $alumni->getStudent->firstName }}</td>
+                            <td>{{ $alumni->getStudent->lastName }}</td>
+                            <td>{{ $alumni->getStudent->email }}</td>
                             <td class="actions-column">
                             <form method="get" action="{{ route('admin.viewalumni', ['alumni' => $alumni->id]) }}">
                                 @csrf
