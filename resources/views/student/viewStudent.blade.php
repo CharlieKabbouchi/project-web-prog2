@@ -1,12 +1,11 @@
-@extends('layout.parent')
-<title>Admin Dashboard</title>
+@extends('layout.admin')
+<title>Admin Student Details</title>
 
 @section('content')
-    <h1 class="page-title">Dashboard</h1>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    @foreach ($studentData as $data)
-        <h5> {{ $data['name'] }} </h5>
+   
+        @foreach ($studentData as $data)
+        <div class="row">
+       <h2> {{ $data['name'] }} </h2>
         <div class="row">
             <div class="col-sm-6 col-md-3">
                 <div class="card card-stats card-primary card-round">
@@ -66,7 +65,23 @@
                 </div>
             </div>
         </div>
+      
+    <div class="row">
+        <table>
+        <tr>
+            <th>Class ID</th>
+            <th>Course Name</th>
+            <th>Class Time</th>
+        </tr>
+        @foreach($data['classes'] as $class )
+        <tr>
+                 <td>{{ $class->id }}</td>
+                <td>{{ $class->getCourse->name }}</td>
+                <td>{{ $class->DayofWeek }}: {{ $class->starttime }} - {{ $class->endtime }}</td>
+            </tr>
+        @endforeach
+        </table>
+    </div>
     @endforeach
 
-
-@endsection
+@endsection('content')

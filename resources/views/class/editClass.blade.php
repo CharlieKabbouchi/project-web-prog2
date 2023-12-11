@@ -16,12 +16,12 @@
 
                 <div class="form-group">
                     <label for="startingDate">Starting Date:</label>
-                    <input type="date" class="form-control" id="startingDate" name="startingDate" value="{{ $class->startingDate }}" required>
+                    <input type="date" class="form-control" id="startingDate" name="startingDate" value="{{ date('Y-m-d', strtotime($class->startingDate)) }}" required>
                 </div>
 
                 <div class="form-group">
                     <label for="endingDate">Ending Date:</label>
-                    <input type="date" class="form-control" id="endingDate" name="endingDate" value="{{ $class->endingDate }}" required>
+                    <input type="date" class="form-control" id="endingDate" name="endingDate" value="{{date('Y-m-d', strtotime($class->endingDate)) }}" required>
                 </div>
 
                 <div class="form-group">
@@ -35,10 +35,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="DayofWeek">Day of Week:</label>
-                    <input type="text" class="form-control" id="DayofWeek" name="DayofWeek" value="{{ $class->DayofWeek }}" required>
+                    <label for="Day">Day of Week:</label>
+                    <input type="text" class="form-control" id="Day" name="Day" value="{{ $class->DayofWeek }}" required>
                 </div>
-
+                <div class="form-group">
+                    <label for="abscence">Permitted Abscences:</label>
+                    <input type="number" min="3" class="form-control" id="abscence" name="abscence" required  value="{{ $class->abscence }}" >
+                </div>
               
             </div>
 
@@ -72,7 +75,7 @@
                     <select class="form-control" id="teacher" name="teacher" required>
                         @foreach ($teachers as $teacher)
                             <option value="{{ $teacher->id }}" {{ $class->teacher_id === $teacher->id ? 'selected' : '' }}>
-                                {{ $teacher->name }}
+                                {{ $teacher->firstName }}  {{ $teacher->lastName }}
                             </option>
                         @endforeach
                     </select>

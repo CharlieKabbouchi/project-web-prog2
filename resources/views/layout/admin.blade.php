@@ -211,13 +211,6 @@
 								
 							</a>
 						</li>
-                        <li class="nav-item">
-							<a  href="{{route('admin.manageAdmins')}}">
-								<i class="flaticon-agenda-1"></i>
-								<p>Admins</p>
-								
-							</a>
-						</li>
 						
 
 					</ul>

@@ -37,7 +37,7 @@ class SParentController extends Controller {
         $classes = [];
     
         foreach ($students as $student) {
-            $classes[$student->id] = $student->getClassT()->with(['getCourse', 'getCourse'])->withPivot('averageGrade')->get() ?? [];
+            $classes[$student->id] = $student->getClassT()->with(['getCourse'])->withPivot('averageGrade')->get() ?? [];
         }
 
         $studentData = [];

@@ -22,16 +22,16 @@ class Admin extends Authenticatable {
     public static function boot() {
         parent::boot();
         static::creating(function ($admin) {
-            return DB::transaction(function () use ($admin) {
+            // return DB::transaction(function () use ($admin) {
                 $currentYear = date('Y');
-                $nextId = self::where('id', 'like', 'a' . $currentYear . '%')->count() + 1;
-                $admin->id = 'a' . $currentYear . str_pad($nextId, 3, '0', STR_PAD_LEFT);
+                $nextId = self::where('id', 'like', 'A' . $currentYear . '%')->count() + 1;
+                $admin->id = 'A' . $currentYear . str_pad($nextId, 3, '0', STR_PAD_LEFT);
                 $admin->email = $admin->id . '@gmail.com';
 
                 $rawPassword = Str::random(8);
                 info("Raw Password for {$admin->email}: {$rawPassword}");
                 $admin->password = Hash::make($rawPassword);
-            });
+            // });
         });
     }
 

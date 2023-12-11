@@ -24,41 +24,46 @@
  
 @section('content')
     <div class="row">
-        <h4 class="page-title">Students</h4>
-        @if ($pstudentsn>0)
-        <a href='{{route('viewpendstudent')}}'>Register Pending Students</a>
-      @endif
+        <h4 class="page-title">Pending Users</h4>
     </div>
-   
     <div class="row">
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
                 <thead>
+                  
                     <tr class="bg-primary">
-                        <th>Id</th>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Email</th>
+                        <th>Phone</th>
                         <th rowspan="2">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($students as $student)
+                    @foreach ($pusers as $puser)
                         <tr >
-                            <td>{{ $student->id }}</td>
-                            <td>{{ $student->firstName }}</td>
-                            <td>{{ $student->lastName }}</td>
-                            <td>{{ $student->email }}</td>
-                            <td class="actions-column"><form method="get" action="{{ route('admin.viewStudent', ['student' => $student->id]) }}">
+                            <td>{{ $puser->firstName }}</td>
+                            <td>{{ $puser->lastName }}</td>
+                            <td>{{ $puser->email }}</td>
+                            <td>{{ $puser->phone}}</td>
+                            <td class="actions-column">
+                               @if($puser->type=='teacher')
+                            <form method="get" action="{{ route('admin.addTeacher', ['wteacher' => $puser->id]) }}">
                                 @csrf
-                                <input type="submit" class="btn btn-primary btn-rounded btn-login" value="View">
+                                <input type="submit" class="btn btn-primary btn-rounded btn-login" value="Register">
                             </form>
-                           
-                            <form method="get" action="{{ route('admin.editStudent', ['student' => $student->id]) }}">
+                            @elseif ($puser->type=='student')
+                            <form method="get" action="{{ route('admin.addStudent', ['wstudent' => $puser->id]) }}">
                                 @csrf
-                                <input type="submit" class="btn btn-primary btn-rounded btn-login" value="Edit">
+                                <input type="submit" class="btn btn-primary btn-rounded btn-login" value="Register">
                             </form>
-                            <form method="post" action="{{ route('admin.deleteStudent',$student->id) }}">
+                            @elseif ($puser->type=='parent')
+                            <form method="get" action="{{ route('admin.addParent', ['wparent' => $puser->id]) }}">
+                                @csrf
+                                <input type="submit" class="btn btn-primary btn-rounded btn-login" value="Register">
+                            </form>
+                            @endif
+                            <form method="post" action="{{ route('admin.deletePUser',['pending'=>$puser->id]) }}">
                                 @csrf
                                  @method('POST')
                                 <input type="submit" class="btn btn-primary btn-rounded btn-login" value="Delete">
