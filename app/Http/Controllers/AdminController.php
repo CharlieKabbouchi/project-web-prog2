@@ -9,6 +9,7 @@ use App\Models\Student;
 use App\Models\Alumni;
 use App\Models\ClassT;
 use App\Models\Course;
+use App\Models\SParent;
 use App\Models\Teacher;
 use App\Models\Department;
 use App\Models\Pending;
@@ -49,23 +50,68 @@ class AdminController extends Controller
         $adminId = $request->session()->get('admin_id');
         $adminId = session('admin_id');
         $admin = Auth::guard('admin')->user();
-        $pteachersn=Pending::where('type','teacher')->count();
-        return view('/admin/manageteacher', compact('teachers', 'admin','pteachersn'));
+        $pteachersn = Pending::where('type', 'teacher')->count();
+        return view('/admin/manageteacher', compact('teachers', 'admin', 'pteachersn'));
     }
     public function manageStudents(Request $request)
     {
         $students = Student::all();
         $admin = Auth::guard('admin')->user();
-        $pstudentsn=Pending::where('type','student')->count();
-        return view('/admin/managestudent', compact('students', 'admin','pstudentsn'));
+        $pstudentsn = Pending::where('type', 'student')->count();
+        return view('/admin/managestudent', compact('students', 'admin', 'pstudentsn'));
     }
 
-    public function viewStudents ($student)
+    public function manageParents(Request $request)
+    {
+        $parents = SParent::all();
+        $admin = Auth::guard('admin')->user();
+        $pparentsn = Pending::where('type', 'parent')->count();
+        return view('/admin/manageparent', compact('parents', 'admin', 'pparentsn'));
+    }
+    public function managealumnis(Request $request)
+    {
+        
+        $admin = Auth::guard('admin')->user();
+        $students = Student::all();
+        foreach ($students as $student) {
+            $classes = [];
+            $classes[$student->id] = $student->getClassT()->with(['getCourse'])->withPivot('averageGrade')->get() ?? [];
+            $totalCredits = 0;
+
+            foreach ($classes[$student->id] as $class) {
+                if ($class->pivot->averageGrade >= 60) {
+                    $totalCredits += $class->getCourse->credits;
+                }
+            }
+
+            $totalCreditsShouldTaken=0;
+            $totalCreditsShouldTaken += $student->getDepartment->totalCredits;
+           var_dump ($totalCredits);
+           var_dump ($totalCreditsShouldTaken);
+            if ($totalCreditsShouldTaken == $totalCredits && $student->isGraduated == false) {
+                dd($student);
+                $student->isGraduated = true;
+                $alumni = new Alumni();
+                $alumni->graduationYear = date('Y');
+                $alumni->student_id = $student->id;
+                $student->save();
+                $alumni->save();
+            }
+        }
+        $alumnis = Alumni::all();
+        return view('admin.managealumni', compact('alumnis', 'admin','totalCreditsShouldTaken','totalCredits'));
+    }
+    public function editparents($parent)
+    {
+        return redirect(route("admin.editparents", ['parent' => $parent]));
+    }
+
+    public function viewStudents($student)
     {
 
         return redirect(route("admin.showStudent", ['student' => $student]));
     }
-    public function viewTeachers ($teacher)
+    public function viewTeachers($teacher)
     {
 
         return redirect(route("admin.showTeacher", ['teacher' => $teacher]));
@@ -73,15 +119,15 @@ class AdminController extends Controller
     public function viewPendingTeachers(Request $request)
     {
         $admin = Auth::guard('admin')->user();
-        $pusers=Pending::where('type','teacher')->get();
-        return view('/admin/viewpendingusers', compact('pusers','admin'));
+        $pusers = Pending::where('type', 'teacher')->get();
+        return view('/admin/viewpendingusers', compact('pusers', 'admin'));
     }
     public function viewPendingStudents(Request $request)
     {
-       
+
         $admin = Auth::guard('admin')->user();
-        $pusers=Pending::where('type','student')->get();
-        return view('/admin/viewpendingusers', compact('pusers','admin'));
+        $pusers = Pending::where('type', 'student')->get();
+        return view('/admin/viewpendingusers', compact('pusers', 'admin'));
     }
     public function addteachers($wteacher)
     {
@@ -89,7 +135,7 @@ class AdminController extends Controller
     }
     public function addstudents($wstudent)
     {
-        
+
         return redirect(route("admin.createstudent", ['wstudent' => $wstudent]));
     }
 
