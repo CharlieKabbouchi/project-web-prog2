@@ -87,25 +87,5 @@
 
     </div>
     <div class="row">
-        {{-- @if ($department->getCourse->count() > 0)
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Course Name</th>
-                    <th>Credits</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($department->getCourse as $course)
-                    <tr>
-                        <td>{{ $course->name }}</td>
-                        <td>{{ $course->credits }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table> --}}
-    {{-- @else
-        <p>No courses available in this department.</p>
-    @endif --}}
     </div>
 @endsection('content')

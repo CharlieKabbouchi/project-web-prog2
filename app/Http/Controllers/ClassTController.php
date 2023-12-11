@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 use App\Models\Course;
+use App\Models\StudentClassT;
 use App\Models\Teacher;
+use App\Models\Student;
+use App\Models\ReviewC;
 use App\Models\Department;
 use App\Models\DepartmentCourse;
 use App\Models\Semester;
@@ -30,36 +33,27 @@ class ClassTController extends Controller {
         return view('class.addClass', compact('admin', 'teachers', 'courses', 'semesters'));
     }
 
-    public function store(Request $request)
+    public function show(Request $request,$class)
     {
+
+        $sclass=ClassT::findOrFail($class);
+
+        $teacherInfo = Teacher::whereHas('getClassT', function ($query) use ($class) {
+            $query->where('id', $class);
+        })->first();
+        
+        $averageGrade = StudentClassT::where('classt_id', $class)
+            ->avg('averageGrade');
+    
+        $students = Student::whereHas('getClassT', function ($query) use ($class) {
+            $query->where('id', $class);
+        })->get();
+        
+        $reviews = ReviewC::where('classt_id', $class)->get();
+              
+        $admin = Auth::guard('admin')->user();
+        return view('class.viewClass', compact('sclass', 'admin', 'teacherInfo', 'averageGrade', 'students','reviews'));
        
-        // $request->validate([
-
-        //     'startingDate'=>'required',
-        //     'endingDate'=>'required',
-        //     'dayOfWeek' => 'required',
-        //     'starttime' => 'required',
-        //     'endtime' => 'required',
-        //     'teacher' => 'required|exists:teachers,id',
-        //     'course' => 'required|exists:courses,id',
-        //     'semester' => 'required|exists:semesters,id',
-        // ]);
-
-        $class = new ClassT();
-        $class->startingDate = $request->startingDate;
-        $class->endingDate = $request->endingDate;
-        $class->DayofWeek = "Thursday";
-        $class->starttime = $request->starttime;
-        $class->endtime = $request->endtime;
-        $class->teacher_id= $request->teacher;
-        $class->semester_id= $request->semester;
-        $class->course_id= $request->course;
-        // $class->getCourse->attach($request->course);
-        // $class->getSemester->attach($request->semester);
-        $class->abscence=6;
-        $class->save();
-
-        return redirect(route('admin.manageClasses'));
     }
 
     public function edit(Request $request, $id)
@@ -76,26 +70,64 @@ class ClassTController extends Controller {
     public function update(Request $request, $id)
     {
         $request->validate([
-            'dayOfWeek' => 'required',
-            'starttime' => 'required',
-            'endtime' => 'required',
+
             'startingDate'=>'required',
             'endingDate'=>'required',
-            'teacher' => 'required|exists:teachers,id',
-            'course' => 'required|exists:courses,id',
-            'semester' => 'required|exists:semesters,id',
+            'Day' => 'required',
+            'starttime' => 'required',
+            'endtime' => 'required',
+            'teacher' => 'required',
+            'course' => 'required',
+            'semester' => 'required',
+            'abscence' => 'required',
         ]);
+              
 
         $class = ClassT::findOrFail($id);
-        $class->dayOfWeek = $request->dayOfWeek;
+        $class->DayOfWeek = $request->Day;
         $class->starttime = $request->starttime;
         $class->endtime = $request->endtime;
         $class->startingDate = $request->startingDate;
         $class->endingDate = $request->endingDate;
      
-        $class->getTeacher->attach($request->teacher);
-        $class->getCourse->attach($request->course);
-        $class->getSemester->attach($request->semester);
+        $class->teacher_id= $request->teacher;
+        $class->semester_id= $request->semester;
+        $class->course_id= $request->course;
+       
+        $class->abscence=$request->abscence;
+
+        $class->save();
+
+        return redirect(route('admin.manageClasses'));
+    }
+    public function store(Request $request)
+    {
+        // $request->validate([
+
+        //     'startingDate'=>'required',
+        //     'endingDate'=>'required',
+        //     'Day' => 'required',
+        //     'starttime' => 'required',
+        //     'endtime' => 'required',
+        //     'teacher' => 'required',
+        //     'course' => 'required',
+        //     'semester' => 'required',
+        //     'abscence' => 'required',
+        // ]);
+              
+
+        $class = new ClassT();
+        $class->DayOfWeek = $request->Day;
+        $class->starttime = $request->starttime;
+        $class->endtime = $request->endtime;
+        $class->startingDate = $request->startingDate;
+        $class->endingDate = $request->endingDate;
+     
+        $class->teacher_id= $request->teacher;
+        $class->semester_id= $request->semester;
+        $class->course_id= $request->course;
+       
+        $class->abscence=$request->abscence;
 
         $class->save();
 

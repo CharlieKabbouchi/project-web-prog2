@@ -7,6 +7,8 @@ use App\Models\Department;
 use App\Models\DepartmentCourse;
 use App\Models\ClassT;
 use App\Models\Course;
+use App\Models\Pending;
+use App\Models\Profile;
 use App\Models\Semester;
 use App\Models\SemesterCourse;
 use Illuminate\Http\Request;
@@ -56,29 +58,32 @@ class TeacherController extends Controller {
         'totalUploadedResources'));
     }
 
-    
+
 
     public function index() {
-        $teacher = Teacher::all();
-        return redirect()->intended('/teacher/allteachers')->with('teacher', $teacher);
+       
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create() {
-        return redirect()->intended('/teacher/addteacher');
+    public function create($wteacher) {
+        $admin = Auth::guard('admin')->user();
+        $wteacher=Pending::findOrFail($wteacher);
+        return view('teacher.addTeacher', compact('admin','wteacher'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request) {
+
          $request->validate([
             'firstName' => 'required|string',
             'lastName' => 'required|string',
             'Gender' => 'required|string',
             'salary' => 'required|integer',
+            'email' => 'required|email',
+            //'image' => 'required|image',//link
+           'phone'=>'required',
+           'DOB' =>'required'
         ]);
 
         $te = new Teacher();
@@ -87,51 +92,78 @@ class TeacherController extends Controller {
         $te->Gender = $request->Gender;
         $te->salary = $request->salary;
         $te->save();
-
-        return redirect(route('teacher.index'));
+        $pending=Pending::where('email',$request->email)->where('phone',$request->phone);
+        $pending->delete();
+        $prf=new Profile();
+        $prf->phone=$request->phone;
+        $prf->email=$request->email;
+        $prf->image="sdf";
+        $prf->dateOfBirth=$request->DOB;
+        $prf->teacher_id=$te->id;
+        $prf->save();
+        return redirect(route("admin.manageTeachers"));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Teacher $teacher) {
-        //
+    public function show(Request $request,$teacher) {
+        $teacherInfo=Teacher::findOrFail($teacher);
+        $adminId = $request->session()->get('admin_id');
+        $adminId = session('admin_id');
+        $admin = Auth::guard('admin')->user();
+
+   
+        return view('teacher.viewTeacher', compact('teacherInfo', 'admin'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Teacher $teacher) {
-        $te=Teacher::findOrFail($teacher);
-        return redirect()->intended('/teacher/editteacher')->with('teacher', $te);
+    public function edit($teacher) {
+        $teacher = Teacher::findOrFail($teacher);
+        $admin = Auth::guard('admin')->user();
+        return view('teacher.editTeacher', compact('teacher', 'admin'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Teacher $teacher) {
+    public function update(Request $request, $teacher) {
         $request->validate([
             'firstName' => 'required|string',
             'lastName' => 'required|string',
             'Gender' => 'required|string',
             'salary' => 'required|integer',
+            'email' => 'required|email',
+           'phone'=>'required',
+           'DOB' =>'required'
         ]);
+          //'image' => 'required|image',//link
     
         $te=Teacher::findOrFail($teacher);
         $te->firstName = $request->firstName;
         $te->lastName = $request->lastName;
         $te->Gender = $request->Gender;
         $te->salary = $request->salary;
+
+        $prf=$te->getProfile;
+        $prf->phone=$request->phone;
+        $prf->email=$request->email;
+        $prf->image="sdfsfs";//$request->image;
+        $prf->dateOfBirth=$request->DOB;
+        $prf->save();
         $te->save();
 
-        return redirect(route('teacher.index'));
+        return redirect(route("admin.manageTeachers"));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Teacher $teacher) {
+    public function destroy($teacher) {
+        $teacher=Teacher::findOrFail($teacher);
         $teacher->delete();
-        return redirect(route("teacher.index")); 
+        return redirect(route("admin.manageTeachers")); 
     }
 }
