@@ -239,6 +239,7 @@ class AdminController extends Controller
         $studentCount = Student::count();
         $teacherCount = Teacher::count();
         $alumniCount = Alumni::count();
+
         // Fetch data from the databasi
         $enrollmentData = Student::selectRaw('SUBSTRING(id, 2, 4) as enrollment_year, COUNT(*) as total')
             ->groupBy('enrollment_year')

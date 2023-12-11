@@ -131,7 +131,6 @@
 											<span class="link-collapse">Edit Profile</span>
 										</a>
 									</li>
-									
 								</ul>
 							</div>
 						</div>

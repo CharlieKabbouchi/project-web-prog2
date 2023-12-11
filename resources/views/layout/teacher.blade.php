@@ -152,7 +152,7 @@
 										<div class="u-img"><img src="{{asset('assets/img/profile.jpg')}}" alt="image profile"></div>
 										<div class="u-text">
 											<h4>{{$teacher->firstName}}</h4>
-											<p class="text-muted">{{$teacher->email}}</p><a href="{{route('admin.viewprofile')}}" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
+											<p class="text-muted">{{$teacher->email}}</p><a href="" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
 										</div>
 									</div>
 								</li>
@@ -206,12 +206,12 @@
 								<ul class="nav">
 									<li>
                                        
-										<a href="{{route('admin.viewprofile')}}">
+										<a href="">
 											<span class="link-collapse">My Profile</span>
 										</a>
 									</li>
 									<li>
-										<a href="{{route('admin.editprofile')}}">
+										<a href="">
 											<span class="link-collapse">Edit Profile</span>
 										</a>
 									</li>
@@ -222,7 +222,7 @@
 					</div>
 					<ul class="nav">
 						<li class="nav-item active">
-							<a href="{{route('teacherDashboard')}}">
+							<a href="{{route('teacher.dashboard')}}">
 								<i class="flaticon-home"></i>
 								<p>Dashboard</p>
 								<span class="badge badge-count">5</span>
@@ -235,24 +235,20 @@
 							<h4 class="text-section">Manage Assets</h4>
 						</li>
 						<li class="nav-item">
-							<a data-toggle="collapse" href="{{route('admin.managedepartments')}}">
+							<a  href="{{route('teacher.manageClasses')}}">
 								<i class="flaticon-layers"></i>
-								<p>Departments</p>
-								<span class="caret"></span>
+								<p>My Classes</p>
 							</a>
-                            
                         </li>	
 						<li class="nav-item">
-							<a data-toggle="collapse" href="{{route('admin.managesemesters')}}">
-								<i class="flaticon-agenda-1"></i>
-								<p>Semesters</p>
-								<span class="caret"></span>
-							</a>
-							
+							<a  href="{{route('teacher.manageCertificates')}}">
+								<i class="flaticon-layers"></i>
+								<p>My Certificates</p>
+							</a>	
 						</li>
                    
 						<li class="nav-item">
-							<a data-toggle="collapse" href="{{route('admin.managecourses')}}">
+							<a data-toggle="collapse" href="">
 								<i class="flaticon-box"></i>
 								<p>Courses</p>
 								<span class="caret"></span>
@@ -260,7 +256,7 @@
 							
 						</li>
 						<li class="nav-item">
-							<a data-toggle="collapse" href="{{route('admin.manageclasses')}}">
+							<a data-toggle="collapse" href="">
 								<i class="flaticon-placeholder"></i>
 								<p>Classes</p>
 								<span class="caret"></span>
@@ -275,7 +271,7 @@
 							<h4 class="text-section">Manage Users</h4>
 						</li>
                         <li class="nav-item">
-							<a data-toggle="collapse" href="{{route('admin.manageteachers')}}">
+							<a data-toggle="collapse" href="">
 								<i class="flaticon-placeholder"></i>
 								<p>Teachers</p>
 								<span class="caret"></span>
@@ -283,7 +279,7 @@
 							
 						</li>
                         <li class="nav-item">
-							<a data-toggle="collapse" href="{{route('admin.managestudents')}}">
+							<a data-toggle="collapse" href="">
 								<i class="flaticon-placeholder"></i>
 								<p>Students</p>
 								<span class="caret"></span>
@@ -291,7 +287,7 @@
 							
 						</li>
                         <li class="nav-item">
-							<a data-toggle="collapse" href="{{route('admin.manageAlumnis')}}">
+							<a data-toggle="collapse" href="">
 								<i class="flaticon-placeholder"></i>
 								<p>Alumnis</p>
 								<span class="caret"></span>
@@ -299,7 +295,7 @@
 							
 						</li>
                         <li class="nav-item">
-							<a data-toggle="collapse" href="{{route('admin.manageParent')}}">
+							<a data-toggle="collapse" href="">
 								<i class="flaticon-placeholder"></i>
 								<p>Parents</p>
 								<span class="caret"></span>

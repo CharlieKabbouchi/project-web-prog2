@@ -15,31 +15,92 @@ class StudentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    // public function showLoginForm()
-    // {
-    //     return view('auth.student-login');
-    // }
-    // public function login(Request $request)
-    // {
-    //     $credentials = $request->only('email', 'password');
+    public function showLoginForm()
+    {
+        return view('auth.student-login');
+    }
 
-    //     if (Auth::guard('student')->attempt($credentials)) {
-    //         $student = Auth::guard('student')->user();
-    //         $request->session()->put('student_id', $student->id);
-    //         return redirect()->intended('/student/dashboard');
-    //     }
+    public function manageEvent()
+    {
+        return view('student.manageevents');
+    }
 
-    //     return back()->withErrors(['error' => 'Invalid login credentials']);
-    // }
+    public function manageClass()
+    {
+        return view('student.manageclass');
+    }
+
+    public function manageQandA()
+    {
+        return view('student.manageQ&A');
+    }
+
+    public function manageCalendar()
+    {
+        return view('student.manageCalendar');
+    }
+
+    public function viewProfile()
+    {
+        //
+    }
+
+    public function editProfile()
+    {
+        //
+    }
+    
+
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::guard('student')->attempt($credentials)) {
+            $student = Auth::guard('student')->user();
+            $request->session()->put('student_id', $student->id);
+            return redirect()->intended('/student/dashboard');
+        }
+
+        return back()->withErrors(['error' => 'Invalid login credentials']);
+    }
   
     public function showDashboard(Request $request) {
-         
+        
         $student = Student::find(session('student_id'));
-        // $studentId = $request->session()->get('student_id');
-        // $studentId = session('student_id');
-        // $student = Auth::guard('student')->user();
-        // dd($alumni);
-        return view('student.dashboard', compact('student'));
+        $studentId = $request->session()->get('student_id');
+        $studentId = session('student_id');
+        $student = Auth::guard('student')->user();
+        //dd($alumni);
+
+        foreach ($students as $student) {
+            $classes[$student->id] = $student->getClassT()->with(['getCourse', 'getCourse'])->withPivot('averageGrade')->get() ?? [];
+        }
+
+        $studentData = [];
+    
+        foreach ($students as $student) {
+            $totalClassesTaken = count($classes[$student->id]);
+            $totalWeightedGrade = 0;
+            $totalCredits = 0;
+    
+            foreach ($classes[$student->id] as $class) {
+                $totalWeightedGrade += $class->pivot->averageGrade * $class->getCourse->credits;
+                $totalCredits += $class->getCourse->credits;
+            }
+    
+            $gpa = ($totalCredits > 0) ? $totalWeightedGrade / $totalCredits : 0;
+            $remainingCredits = $totalCredits - $totalCreditsTaken;
+            $studentData[] = [
+                'totalCreditsTaken' => $student->totalCreditsTaken,
+                'totalCredits' => $student->getDepartment->totalCredits,
+                'totalClassesTaken' => $totalClassesTaken,
+                'gpa' => $gpa,
+                'remainingCredits' => $remainingCredits,
+                // 'classes' => $classes[$student->id],
+            ];
+        }
+
+        return view('parent.dashboard', compact('student', 'studentData'));
     }
 
   

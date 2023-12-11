@@ -48,6 +48,7 @@ return new class extends Migration
             ->on('admins')
             ->onDelete('cascade');
             $table->timestamps();
+            // $table->morphs("user");
         });
     }
 

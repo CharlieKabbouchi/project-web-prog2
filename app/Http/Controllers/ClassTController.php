@@ -33,6 +33,7 @@ class ClassTController extends Controller {
         return view('class.addClass', compact('admin', 'teachers', 'courses', 'semesters'));
     }
 
+
     public function show(Request $request,$class)
     {
 
@@ -54,6 +55,42 @@ class ClassTController extends Controller {
         $admin = Auth::guard('admin')->user();
         return view('class.viewClass', compact('sclass', 'admin', 'teacherInfo', 'averageGrade', 'students','reviews'));
        
+    }
+
+    public function storeT(Request $request)
+    {
+       
+        // $request->validate([
+
+        //     'startingDate'=>'required',
+        //     'endingDate'=>'required',
+        //     'dayOfWeek' => 'required',
+        //     'starttime' => 'required',
+        //     'endtime' => 'required',
+        //     'teacher' => 'required|exists:teachers,id',
+        //     'course' => 'required|exists:courses,id',
+        //     'semester' => 'required|exists:semesters,id',
+        // ]);
+        $class = new ClassT();
+        $class->startingDate = $request->startingDate;
+        $class->endingDate = $request->endingDate;
+        $class->DayofWeek = $request->DayofWeek;
+        $class->starttime = $request->starttime;
+        $class->endtime = $request->endtime;
+        $class->teacher_id= $request->teacher;
+        $class->semester_id= $request->semester;
+        $class->course_id= $request->course;
+        // $class->getCourse->attach($request->course);
+        // $class->getSemester->attach($request->semester);
+        $class->abscence=6;
+        $class->save();
+
+        return redirect(route('teacher.manageClasses'));
+    }
+
+    public function showT($class_id)
+    {
+    
     }
 
     public function edit(Request $request, $id)
