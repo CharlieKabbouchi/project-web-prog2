@@ -9,8 +9,8 @@ class Certificate extends Model
 {
     use HasFactory;
     
-    public function getAlumuni(){
-        return $this->belongsTo(Alumuni::class,"alumuni_id","id");
+    public function getAlumni(){
+        return $this->belongsTo(Alumni::class,"alumni_id","id");
     }
 
     public function getTeacher(){
