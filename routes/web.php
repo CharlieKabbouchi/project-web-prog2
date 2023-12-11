@@ -198,8 +198,8 @@ Route::prefix('student')->group(function () {
         Route::get('/manage/class', [StudentController::class, 'manageClass'])->name('student.manageclass');
         Route::get('/manage/Q&A', [StudentController::class, 'manageQandA'])->name('student.manageQ&A');
         Route::get('/manage/calendar', [StudentController::class, 'manageCalendar'])->name('student.viewCalendar');
-        Route::get('/view/profile/{id}', [StudentController::class, 'viewProfile'])->name('viewprofile');
-        Route::get('/edit/profile/{id}', [StudentController::class, 'editProfile'])->name('editprofile');
+        Route::get('/view/profile/{id}', [StudentController::class, 'viewProfile'])->name('student.viewprofile');
+        Route::get('/edit/profile/{id}', [StudentController::class, 'editProfile'])->name('student.editprofile');
         Route::get('/view/class/{id}', [StudentController::class, 'viewClass'])->name('viewclass');
         Route::get('/view/resource/{id}', [StudentController::class, 'viewResource'])->name('viewresource');
         Route::get('/view/assignment/{id}', [StudentController::class, 'viewAssignment'])->name('viewassignment');

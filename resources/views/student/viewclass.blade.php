@@ -1,4 +1,4 @@
-@extends('layout.student)
+@extends('layout.student')
 <style>
     .actions-column {
         display: flex;

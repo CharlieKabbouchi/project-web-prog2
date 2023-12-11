@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Assignment;
 use App\Models\Student;
 use App\Models\SParent;
 use App\Models\Pending;
 use App\Models\Department;
 use App\Models\Profile;
+use App\Models\Submission;
+use App\Models\UploadResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -237,13 +240,13 @@ class StudentController extends Controller
         $student = Auth::guard('student')->user();
         //dd($alumni);
 
-        foreach ($students as $student) {
+        foreach ($student as $student) {
             $classes[$student->id] = $student->getClassT()->with(['getCourse', 'getCourse'])->withPivot('averageGrade')->get() ?? [];
         }
 
         $studentData = [];
     
-        foreach ($students as $student) {
+        foreach ($student as $student) {
             $totalClassesTaken = count($classes[$student->id]);
             $totalWeightedGrade = 0;
             $totalCredits = 0;
