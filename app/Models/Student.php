@@ -20,7 +20,7 @@ class Student extends Authenticatable {
     public static function boot() {
         parent::boot();
         static::creating(function ($student) {
-            return DB::transaction(function () use ($student) {
+            // return DB::transaction(function () use ($student) {
                 $currentYear = date('Y');
                 $nextId = self::where('id', 'like', 'S' . $currentYear . '%')->count() + 1;
                 $student->id = 'S' . $currentYear . str_pad($nextId, 3, '0', STR_PAD_LEFT);
@@ -29,7 +29,7 @@ class Student extends Authenticatable {
                 $rawPassword = Str::random(8);
                 info("Raw Password for {$student->email}: {$rawPassword}");
                 $student->password = Hash::make($rawPassword);
-            });
+            // });
         });
     }
 

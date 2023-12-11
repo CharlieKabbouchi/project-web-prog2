@@ -20,7 +20,7 @@ class SParent extends Authenticatable {
     public static function boot() {
         parent::boot();
         static::creating(function ($parent) {
-            return DB::transaction(function () use ($parent) {
+            // return DB::transaction(function () use ($parent) {
                 $currentYear = date('Y');
                 $nextId = self::where('id', 'like', 'P' . $currentYear . '%')->count() + 1;
                 $parent->id = 'P' . $currentYear . str_pad($nextId, 3, '0', STR_PAD_LEFT);
@@ -29,7 +29,7 @@ class SParent extends Authenticatable {
                 $rawPassword = Str::random(8);
                 info("Raw Password for {$parent->email}: {$rawPassword}");
                 $parent->password = Hash::make($rawPassword);
-            });
+            // });
         });
     }
 
