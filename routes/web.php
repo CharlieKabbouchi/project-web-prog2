@@ -7,6 +7,7 @@ use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\ClassTController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\FirebaseController;
 use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SParentController;
@@ -21,9 +22,6 @@ use App\Http\Controllers\PendingController;
 use App\Models\Semester;
 use App\Models\Teacher;
 
-Route::get('upload', [FirebaseManagement::class, 'showForm']);
-Route::post('/uploadd', [FirebaseManagement::class, 'upload']);
-Route::get('/download/{filename}', [FirebaseManagement::class, 'download']);
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,6 +33,9 @@ Route::get('/download/{filename}', [FirebaseManagement::class, 'download']);
 |
 */
 
+Route::get('/upload',  [FirebaseController::class, 'showUploadForm'])->name('upload.form');
+Route::post('/upload-image',  [FirebaseController::class, 'uploadImage'])->name('upload.image');
+Route::get('/image-gallery', [FirebaseController::class, 'showImageGallery']);
 
 Route::get('/', function () {
     return view('welcome');
