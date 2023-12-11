@@ -257,6 +257,17 @@ Route::prefix('alumni')->group(function () {
         //     return 'Alumni Dashboard';
         // })->name('alumni.dashboard');
         Route::get('/dashboard', [AlumniController::class, 'showDashboard'])->name('alumni.dashboard');
+        Route::post('/logout', [AlumniController::class, 'LogoutAlumni'])->name('alumni.logout');
+
+        Route::get('/manage/Events', [AlumniController::class, 'manageEvents'])->name('alumni.manageEvents');
+        Route::get('/manage/Events/edit/{event}', [AlumniController::class, 'showEdit'])->name('alumni.editEvent');
+        Route::get('/manage/Events/create', [AlumniController::class, 'createEvent'])->name('alumni.createEvent');
+        Route::post('/manage/Events/create', [AlumniController::class, 'storeEvent'])->name('alumni.storeEvent');
+        Route::post('/manage/Events/edit/{event}', [AlumniController::class, 'updateEvent'])->name('alumni.updateEvent');
+        Route::post('/manage/Events/{event}', [AlumniController::class, 'deleteEvent'])->name('alumni.deleteEvent');
+        Route::get('/manage/Q&A', [AlumniController::class, 'manageQA'])->name('alumni.manageQ&A');
+        Route::post('/submitAnswer/{questionId}', [AlumniController::class, 'submitAnswer'])->name('alumni.submitAnswer');
+        Route::get('/manage/Calendar', [AlumniController::class, 'viewCalendar'])->name('alumni.viewCalendar');
         // Add other alumni routes here
     });
 });
@@ -265,12 +276,30 @@ Route::prefix('alumni')->group(function () {
 Route::prefix('teacher')->group(function () {
     Route::get('/login', [TeacherController::class, 'showLoginForm'])->name('teacher.login');
     Route::post('/login', [TeacherController::class, 'login']);
-
+ 
     Route::middleware(['auth.teacher'])->group(function () {
         // Route::get('/dashboard', function () {
         //     return 'Teacher Dashboard';
         // })->name('teacher.dashboard');
         Route::get('/dashboard', [TeacherController::class, 'showDashboard'])->name('teacher.dashboard');
-        // Add other teacher routes here
+       
+        //Classes
+        Route::get('/manage/classes', [TeacherController::class, 'manageClasses'])->name('teacher.manageClasses');
+        Route::get('/manage/classes/create', [ClassTController::class, 'createT'])->name('teacher.createClass');
+        Route::post('/manage/classes/store', [ClassTController::class, 'storeT'])->name('teacher.storeClass');
+        Route::get('/manage/classes/show/{class}', [ClassTController::class, 'showT'])->name('teacher.showClass');
+        Route::get('/manage/classes/edit/{class}', [ClassTController::class, 'edit'])->name('teacher.editclass');
+        Route::put('/manage/classes/update/{class}', [ClassTController::class, 'update'])->name('teacher.updateClass');
+        Route::post('/manage/classes/delete/{class}', [ClassTController::class, 'destroy'])->name('teacher.deleteClass');
+ 
+        //Certificates
+        Route::get('/manage/certificates', [TeacherController::class, 'manageCertificates'])->name('teacher.manageCertificates');
+        Route::get('/manage/certificates/create', [TeacherController::class, 'createC'])->name('teacher.createCertificate');
+        Route::post('/manage/certificates/store', [TeacherController::class, 'storeC'])->name('teacher.storeCertificate');
+ 
+        //Students
+        Route::get('/teacher/classes/{class}/students/{student}/edit', [TeacherController::class, 'editStudentGrades'])->name('editStudentGrades');
+        Route::post('/teacher/classes/{class}/students/{student}/update', [TeacherController::class, 'storeStudentGrades'])->name('storeStudentGrades');
+       
     });
 });

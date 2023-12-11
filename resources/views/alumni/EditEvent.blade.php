@@ -46,7 +46,7 @@
 
                         <div class="form-group">
                             <label for="alumniName">Alumni Name:</label>
-                            <input type="text" name="alumniName" class="form-control" value="{{ $alumniFirstName }} {{ $alumniLastName }}" disabled>
+                            <input type="text" name="alumniName" class="form-control" value="{{ $alumni->getStudent->firstName }} {{ $alumni->getStudent->lastName }}" disabled>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Update Event</button>
