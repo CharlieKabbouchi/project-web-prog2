@@ -6,7 +6,12 @@ use App\Models\Student;
 use App\Models\SParent;
 use App\Models\Pending;
 use App\Models\Department;
+use App\Models\Submission;
+use App\Models\Event;
+use App\Models\UploadResource;
 use App\Models\Profile;
+use App\Models\Assignment;
+use App\Models\ClassT;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -145,7 +150,7 @@ class StudentController extends Controller
         $student = Auth::guard('student')->user();
 
         $classId = $id;
-
+        $class = ClassT::find($id);
         $teacher = $class->teacher()->first();
         $assignments = Assignment::where('classt_id', $id)->get();
 
@@ -202,6 +207,7 @@ class StudentController extends Controller
         
         $classDetails = $student->getClassT()->where('classt_id', $classId)->with('getCourse')->first();
         $courseName = $classDetails->getCourse->name;
+        $teacherName = $classDetails->teacher->name;
         
         $details = [
             'course' => $courseName,
@@ -237,13 +243,13 @@ class StudentController extends Controller
         $student = Auth::guard('student')->user();
         //dd($alumni);
 
-        foreach ($students as $student) {
+        foreach ($student as $student) {
             $classes[$student->id] = $student->getClassT()->with(['getCourse', 'getCourse'])->withPivot('averageGrade')->get() ?? [];
         }
 
         $studentData = [];
     
-        foreach ($students as $student) {
+        foreach ($student as $student) {
             $totalClassesTaken = count($classes[$student->id]);
             $totalWeightedGrade = 0;
             $totalCredits = 0;
@@ -252,6 +258,10 @@ class StudentController extends Controller
                 $totalWeightedGrade += $class->pivot->averageGrade * $class->getCourse->credits;
                 $totalCredits += $class->getCourse->credits;
             }
+
+            
+            $curCredits = $student->totalCreditsTaken;
+            $totalCreditsTaken = $curCredits;
     
             $gpa = ($totalCredits > 0) ? $totalWeightedGrade / $totalCredits : 0;
             $remainingCredits = $totalCredits - $totalCreditsTaken;

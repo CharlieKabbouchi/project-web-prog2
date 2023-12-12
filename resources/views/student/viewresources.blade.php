@@ -39,7 +39,7 @@
                     @foreach ($resourceDetails as $resource)
                         <tr>
                         <td>{{ $resource['teacherName'] }}</td>
-                        <td>{{ $submission['attachment'] }}</td> 
+                        <td>{{ $resource['attachment'] }}</td> 
                         </tr>
                     @endforeach
                 </tbody>
