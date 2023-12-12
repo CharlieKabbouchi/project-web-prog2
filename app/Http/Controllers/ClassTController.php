@@ -9,7 +9,6 @@ use App\Models\ReviewC;
 use App\Models\Department;
 use App\Models\DepartmentCourse;
 use App\Models\Semester;
-use App\Models\Student;
 use App\Models\SemesterCourse;
 use App\Models\ClassT;
 use Illuminate\Http\Request;
@@ -35,27 +34,7 @@ class ClassTController extends Controller {
     }
 
 
-    public function store(Request $request)
-
-        $sclass=ClassT::findOrFail($class);
-
-        $teacherInfo = Teacher::whereHas('getClassT', function ($query) use ($class) {
-            $query->where('id', $class);
-        })->first();
-        
-        $averageGrade = StudentClassT::where('classt_id', $class)
-            ->avg('averageGrade');
     
-        $students = Student::whereHas('getClassT', function ($query) use ($class) {
-            $query->where('id', $class);
-        })->get();
-        
-        $reviews = ReviewC::where('classt_id', $class)->get();
-              
-        $admin = Auth::guard('admin')->user();
-        return view('class.viewClass', compact('sclass', 'admin', 'teacherInfo', 'averageGrade', 'students','reviews'));
-       
-    }
 
     public function edit(Request $request, $id)
     {
@@ -143,47 +122,47 @@ class ClassTController extends Controller {
         return redirect(route('admin.manageClasses'));
     }
 
-    public function createT(Request $request)
-    {
-        $teacher = Auth::guard('teacher')->user();
-        $classes = $teacher->getClassT()
-        ->with('getCourse', 'getSemester')
-        ->get();
-        $semesters = $classes->pluck('getSemester')->unique();
-        $courses = $classes->pluck('getCourse')->unique(); 
-        return view('teacher.addClass', compact('teacher','courses','semesters'));
-    }
+    // public function createT(Request $request)
+    // {
+    //     $teacher = Auth::guard('teacher')->user();
+    //     $classes = $teacher->getClassT()
+    //     ->with('getCourse', 'getSemester')
+    //     ->get();
+    //     $semesters = $classes->pluck('getSemester')->unique();
+    //     $courses = $classes->pluck('getCourse')->unique(); 
+    //     return view('teacher.addClass', compact('teacher','courses','semesters'));
+    // }
 
-    public function storeT(Request $request)
-    {
+    // public function storeT(Request $request)
+    // {
        
-        // $request->validate([
+    //     // $request->validate([
 
-        //     'startingDate'=>'required',
-        //     'endingDate'=>'required',
-        //     'dayOfWeek' => 'required',
-        //     'starttime' => 'required',
-        //     'endtime' => 'required',
-        //     'teacher' => 'required|exists:teachers,id',
-        //     'course' => 'required|exists:courses,id',
-        //     'semester' => 'required|exists:semesters,id',
-        // ]);
-        $class = new ClassT();
-        $class->startingDate = $request->startingDate;
-        $class->endingDate = $request->endingDate;
-        $class->DayofWeek = $request->DayofWeek;
-        $class->starttime = $request->starttime;
-        $class->endtime = $request->endtime;
-        $class->teacher_id= $request->teacher;
-        $class->semester_id= $request->semester;
-        $class->course_id= $request->course;
-        // $class->getCourse->attach($request->course);
-        // $class->getSemester->attach($request->semester);
-        $class->abscence=6;
-        $class->save();
+    //     //     'startingDate'=>'required',
+    //     //     'endingDate'=>'required',
+    //     //     'dayOfWeek' => 'required',
+    //     //     'starttime' => 'required',
+    //     //     'endtime' => 'required',
+    //     //     'teacher' => 'required|exists:teachers,id',
+    //     //     'course' => 'required|exists:courses,id',
+    //     //     'semester' => 'required|exists:semesters,id',
+    //     // ]);
+    //     $class = new ClassT();
+    //     $class->startingDate = $request->startingDate;
+    //     $class->endingDate = $request->endingDate;
+    //     $class->DayofWeek = $request->DayofWeek;
+    //     $class->starttime = $request->starttime;
+    //     $class->endtime = $request->endtime;
+    //     $class->teacher_id= $request->teacher;
+    //     $class->semester_id= $request->semester;
+    //     $class->course_id= $request->course;
+    //     // $class->getCourse->attach($request->course);
+    //     // $class->getSemester->attach($request->semester);
+    //     $class->abscence=6;
+    //     $class->save();
 
-        return redirect(route('teacher.manageClasses'));
-    }
+    //     return redirect(route('teacher.manageClasses'));
+    // }
 
     public function showT($class_id)
     {

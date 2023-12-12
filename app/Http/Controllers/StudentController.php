@@ -10,8 +10,11 @@ use App\Models\SParent;
 use App\Models\Pending;
 use App\Models\Department;
 use App\Models\Profile;
+use App\Models\StudentClassT;
 use App\Models\Submission;
 use App\Models\UploadResource;
+
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -101,9 +104,28 @@ class StudentController extends Controller
 
     public function enrollClass()
     {
-        //
-    }
+        $student = Auth::guard('student')->user();
 
+        $department = $student->getDepartment;
+
+        $enrolledClasses = $student->getClassT;
+        $availableClasses = ClassT::whereHas('getCourse.getDepartment', function ($query) use ($department) {
+            $query->where('department_id', $department->id);
+        })->whereNotIn('id', $enrolledClasses->pluck('id'))->get();
+        
+        $classesDetail = $availableClasses->map(function ($class) {
+            return [
+                'classId'=>$class->id,
+                'CourseName' => $class->getCourse->name,
+                'Semester' => $class->getSemester->yearBelongsTo ."-" . $class->getSemester->type,
+                'Day' => $class->DayofWeek,
+                'startingTime' => $class->starttime,
+                'endingTime' => $class->endtime, 
+                'teacher'=>$class->getTeacher->firstName." ". $class->getTeacher->lastName
+            ];          
+        });
+        return view ('student.enrollClass',compact('classesDetail','student'));
+    }
     public function viewProfile()
     {
         //
@@ -198,26 +220,25 @@ class StudentController extends Controller
 
     public function viewClass(Request $request,$id)
     {
-        $student = Student::find(session('student_id'));
-        $studentId = $request->session()->get('student_id');
-        $studentId = session('student_id');
+       
         $student = Auth::guard('student')->user();
 
-        $classId = $id;
-        
-        $classDetails = $student->getClassT()->where('classt_id', $classId)->with('getCourse')->first();
-        $courseName = $classDetails->getCourse->name;
-        
+        $class=ClassT::find($id);
+      
+        $classDetails=StudentClassT::where('classt_id', $id)->where('student_id', $student->id)->get();
+        $courseName = $class->getCourse->name;
+       
         $details = [
             'course' => $courseName,
-            'teacher' => $teacherName,
-            'attendance' => $classDetails->attendence,
-            'averageGrade' => $classDetails->averageGrade,
-            'quizGrade' => $classDetails->quizGrade,
-            'projectGrade' => $classDetails->projectGrade,
-            'assignmentGrade' => $classDetails->assignmentGrade,
+            'teacher' => $class->getTeacher->firstName." ". $class->getTeacher->lastName,
+            'attendance' =>  $classDetails->pluck('attendence'),
+            'averageGrade' => $classDetails->pluck('averageGrade'),
+            'quizGrade' => $classDetails->pluck('quizGrade'),
+            'projectGrade' => $classDetails->pluck('projectGrade'),
+            'assignmentGrade' => $classDetails->pluck('assignmentGrade'),
         ];
-        return view('student.viewclass',compact('Details'));
+       
+        return view('student.viewclass',compact('details','student'));
     }
     
 
@@ -235,62 +256,90 @@ class StudentController extends Controller
     }
   
     public function showDashboard(Request $request) {
+
+        $classes = [];
+        $student = Auth::guard('student')->user();
+        $studentinfo = Student::find(session('student_id'));
+        $studentId = $request->session()->get('student_id');
+        $classes[$student->id] = $studentinfo->getClassT()->with(['getCourse', 'getSemester'])->withPivot('averageGrade')->get() ?? [];
         
-        $student = Student::find(session('student_id'));
-        $studentId = $request->session()->get('student_id');
-        $studentId = session('student_id');
-        $student = Auth::guard('student')->user();
-        //dd($alumni);
-
-        foreach ($student as $student) {
-            $classes[$student->id] = $student->getClassT()->with(['getCourse', 'getCourse'])->withPivot('averageGrade')->get() ?? [];
-        }
-
         $studentData = [];
-    
-        foreach ($student as $student) {
-            $totalClassesTaken = count($classes[$student->id]);
-            $totalWeightedGrade = 0;
-            $totalCredits = 0;
-    
-            foreach ($classes[$student->id] as $class) {
-                $totalWeightedGrade += $class->pivot->averageGrade * $class->getCourse->credits;
-                $totalCredits += $class->getCourse->credits;
-            }
-    
-            $gpa = ($totalCredits > 0) ? $totalWeightedGrade / $totalCredits : 0;
-            $remainingCredits = $totalCredits - $totalCreditsTaken;
-            $studentData[] = [
-                'totalCreditsTaken' => $student->totalCreditsTaken,
-                'totalCredits' => $student->getDepartment->totalCredits,
-                'totalClassesTaken' => $totalClassesTaken,
-                'gpa' => $gpa,
-                'remainingCredits' => $remainingCredits,
-                // 'classes' => $classes[$student->id],
-            ];
+        
+        // Calculate overall GPA
+        $totalClassesTaken = count($classes[$studentinfo->id]);
+        $totalWeightedGrade = 0;
+        $totalCredits = 0;
+        
+        foreach ($classes[$studentinfo->id] as $class) {
+            $totalWeightedGrade += $class->pivot->averageGrade * $class->getCourse->credits;
+            $totalCredits += $class->getCourse->credits;
         }
+        
+        $overallGPA = ($totalCredits > 0) ? $totalWeightedGrade / $totalCredits : 0;
 
-        return view('student.dashboard', compact('student', 'studentData'));
-    }
-
-    public function manageClass(Request $request)
+        $semesterlyGPA = [];
+        
+        foreach ($classes[$studentinfo->id] as $class) {
+            $semester = $class->getSemester->yearBelongsTo.$class->getSemester->type; // Adjust this based on your actual attribute for the semester name
+        
+            if (!isset($semesterlyGPA[$semester])) {
+                $semesterlyGPA[$semester] = [
+                    'totalWeightedGrade' => 0,
+                    'totalCredits' => 0,
+                    'totalClassesTaken' => 0,
+                    'gpa' => 0,
+                ];
+            }
+        
+            $semesterlyGPA[$semester]['totalWeightedGrade'] += $class->pivot->averageGrade * $class->getCourse->credits;
+            $semesterlyGPA[$semester]['totalCredits'] += $class->getCourse->credits;
+            $semesterlyGPA[$semester]['totalClassesTaken']++;
+        }
+        
+        foreach ($semesterlyGPA as $semester => $data) {
+            $semesterlyGPA[$semester]['gpa'] = ($data['totalCredits'] > 0) ? $data['totalWeightedGrade'] / $data['totalCredits'] : 0;
+        }
+        
+        $studentData[] = [
+            'name' => $studentinfo->firstName . ' ' . $studentinfo->lastName,
+            'totalCreditsTaken' => $totalCredits,
+            'totalCredits' => $studentinfo->getDepartment->totalCredits,
+            'totalClassesTaken' => $totalClassesTaken,
+            'overallGPA' => $overallGPA,
+            'semesterlyGPA' => $semesterlyGPA,
+            'classes' => $classes[$studentinfo->id],
+        ];
+    //dd($studentData);
+        
+        return view('student.dashboard', compact('studentData', 'student'));
+        
+}
+    public function manageClass ()
     {
-        $student = Student::find(session('student_id'));
-        $studentId = $request->session()->get('student_id');
-        $studentId = session('student_id');
+       
         $student = Auth::guard('student')->user();
 
-        $enrolledCourses = $student->getClassT()->with('getCourse')->get()->pluck('getCourse');
+        $classes = $student->getClassT;
 
-        return view('/student/manageclass',compact('enrolledCourses',));
-    }
     
+        $classesDetail = $classes->map(function ($class) {
+            return [
+                'classId'=>$class->id,
+                'CourseName' => $class->getCourse->name,
+                'Semester' => $class->getSemester->yearBelongsTo ."-" . $class->getSemester->type,
+                'Day' => $class->DayofWeek,
+                'startingTime' => $class->starttime,
+                'endingTime' => $class->endtime, 
+                'teacher'=>$class->getTeacher->firstName." ". $class->getTeacher->lastName
+            ];
+    });
+        return view('student.manageclass',compact('classesDetail','student'));
+    }
 
     //Management
     public function index()
     {
-        $stds=Student::all();
-        return redirect()->intended('/student/allstudents')->with('stds', $stds);
+        
     }
 
     /**

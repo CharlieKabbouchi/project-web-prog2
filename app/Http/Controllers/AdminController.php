@@ -86,9 +86,8 @@ class AdminController extends Controller
 
             $totalCreditsShouldTaken=0;
             $totalCreditsShouldTaken += $student->getDepartment->totalCredits;
-
             if ($totalCreditsShouldTaken == $totalCredits && $student->isGraduated == false) {
-                // dd($student);
+                dd($student);
                 $student->isGraduated = true;
                 $alumni = new Alumni();
                 $alumni->graduationYear = date('Y');
@@ -343,28 +342,6 @@ class AdminController extends Controller
         return redirect()->route('admin.dashboard');
     }
 
-    public function viewAlumni(Request $request, $alumniId) {
-        $adminId = $request->session()->get('admin_id');
-        $adminId = session('admin_id');
-        $admin = Auth::guard('admin')->user();
-        
-        // Find the alumni by ID
-        $alumni = Alumni::find($alumniId);
-    
-        // Check if the alumni exists
-        if (!$alumni) {
-            // Handle case where alumni is not found, you may redirect or show an error message
-            return redirect()->route('admin.alumni')->with('error', 'Alumni not found.');
-        }
-    
-        // Retrieve events associated with the alumni
-        $events = $alumni->getEvent;
-    
-        // Extract alumni details
-     
-    
-        return view('admin.viewAlumni', compact('admin', 'alumni', 'events'));
-    }
     public function index()
     {
     }

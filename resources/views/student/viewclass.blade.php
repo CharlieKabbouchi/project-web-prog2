@@ -28,7 +28,7 @@
         <div class="col-md-12">
             <h5>Class Information</h5>
             <!-- Display class information -->
-            <p>Class Teacher is: {{ $Details['teacherName'] }}</p>
+            <p>Class Teacher is: {{ $details['teacher'] }}</p>
             <table class="table">
                 <thead>
                     <tr>
@@ -44,9 +44,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($Details as $detail)
+                    @foreach ($details as $detail)
                         <tr>
-                            <td>{{ $detail['course']->name }}</td>
+                            <td>{{ $detail['course']}}</td>
                             <td>{{ $detail['attendance'] }}</td>
                             <td>{{ $detail['averageGrade'] }}</td>
                             <td>{{ $detail['quizGrade'] }}</td>

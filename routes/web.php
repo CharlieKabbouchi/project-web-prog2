@@ -175,7 +175,7 @@ Route::prefix('admin')->group(function () {
         Route::post('/manage/parents/delete/{parent}', [SParentController::class, 'destroy'])->name('admin.deleteparent');
         Route::get('/manaeg/register/pendingparents',[AdminController::class, 'viewPendingparents'])->name('viewpendparents');
 
-//Alumnis
+        //Alumnis
         Route::get('/manage/alumnis', [AdminController::class, 'managealumnis'])->name('admin.managealumnis');
         Route::get('/manage/alumnis/view/{alumni}', [AdminController::class, 'viewAlumni'])->name('admin.viewalumni');
         //PendingUsers
@@ -202,7 +202,7 @@ Route::prefix('student')->group(function () {
     Route::get('/login', [StudentController::class, 'showLoginForm'])->name('student.login');
     Route::post('/login', [StudentController::class, 'login']);
 
-    Route::middleware(['auth.student'])->group(function () {
+        Route::middleware(['auth.student'])->group(function () {
         // Route::get('/dashboard', function () {
         //     return 'Student Dashboard';
         // })->name('student.dashboard');
@@ -215,12 +215,12 @@ Route::prefix('student')->group(function () {
         Route::get('/view/profile/{id}', [StudentController::class, 'viewProfile'])->name('student.viewprofile');
         Route::get('/edit/profile/{id}', [StudentController::class, 'editProfile'])->name('student.editprofile');
       
-        Route::get('/view/class/{id}', [StudentController::class, 'viewClass'])->name('viewclass');
+        Route::get('/view/class/{id}', [StudentController::class, 'viewClass'])->name('student.viewclass');
         Route::get('/view/resource/{id}', [StudentController::class, 'viewResource'])->name('viewresource');
         Route::get('/view/assignment/{id}', [StudentController::class, 'viewAssignment'])->name('viewassignment');
         Route::get('/view/submission/{id}', [StudentController::class, 'viewSubmission'])->name('viewsubmission');
         Route::get('/add/submission/{id}', [StudentController::class, 'addSubmission'])->name('addsubmission');
-        Route::get('/enroll/class/', [StudentController::class, 'enrollClass'])->name('enrollClass');
+        Route::get('/enroll/class/', [StudentController::class, 'enrollClass'])->name('student.enrollClass');
         Route::get('/enroll/event/', [StudentController::class, 'enrollEvent'])->name('enrollEvent');
         Route::get('/add/reviewc/', [StudentController::class, 'addReviewc'])->name('addReviewc');
         Route::get('/view/event/', [StudentController::class, 'viewEvent'])->name('viewEvent');

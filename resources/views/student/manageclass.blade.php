@@ -33,7 +33,6 @@
                 <thead>
                     <tr class="bg-primary">
                         <th>Course</th>
-                        <th>Credits</th>
                         <th>Semester</th>
                         <th>Teacher</th>
                         <th>Day of the Week</th>
@@ -42,16 +41,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($enrolledCourses as $class)
+                    @foreach ($classesDetail as $class)
                         <tr>
-                            <td>{{ $class->getCourse->name }}</td>
-                            <td>{{ $class->getCourse->credits}}</td>
-                            <td>{{ $class->getSemester->type }} - {{ $class->getSemester->yearBelongsTo }}</td>
-                            <td>{{ $class->getTeacher->firstName }} {{ $class->getTeacher->lastName }}</td>
-                            <td>{{ $class->DayofWeek }}</td>
-                            <td>{{ $class->starttime }} - {{ $class->endtime }}</td>
+                            <td>{{ $class['CourseName'] }}</td>
+                            <td>{{ $class['Semester']}}</td>
+                            <td>{{ $class['teacher']}} </td>
+                            <td>{{ $class['Day'] }}</td>
+                            <td>{{$class['startingTime'] }} - {{$class['endingTime'] }} </td>
                             <td class="actions-column">
-                                <form method="get" action="{{ route('student.viewclass', ['class' => $class->id]) }}">
+                                <form method="get" action="{{ route('student.viewclass', ['id' => $class['classId']]) }}">
                                     @csrf
                                     <button type="submit" class="btn btn-primary btn-rounded btn-login">View Class</button>
                                 </form>                                

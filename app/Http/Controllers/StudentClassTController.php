@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\StudentClassT;
+use App\Models\Student;
+use App\Models\ClassT;
+use App\Models\Profile;
 use Illuminate\Http\Request;
 
 class StudentClassTController extends Controller
