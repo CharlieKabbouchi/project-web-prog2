@@ -218,28 +218,30 @@ class StudentController extends Controller
         return view('student.viewresources',compact('resourceDetails'));
     }
 
-    public function viewClass(Request $request,$id)
+    public function viewClass(Request $request, $id)
     {
-       
         $student = Auth::guard('student')->user();
 
-        $class=ClassT::find($id);
-      
-        $classDetails=StudentClassT::where('classt_id', $id)->where('student_id', $student->id)->get();
+        $class = ClassT::find($id);
+        $classDetails = StudentClassT::where('classt_id', $id)->where('student_id', $student->id)->get();
+    
         $courseName = $class->getCourse->name;
-       
+        
+        // dd($classDetails);
         $details = [
             'course' => $courseName,
-            'teacher' => $class->getTeacher->firstName." ". $class->getTeacher->lastName,
-            'attendance' =>  $classDetails->pluck('attendence'),
-            'averageGrade' => $classDetails->pluck('averageGrade'),
-            'quizGrade' => $classDetails->pluck('quizGrade'),
-            'projectGrade' => $classDetails->pluck('projectGrade'),
-            'assignmentGrade' => $classDetails->pluck('assignmentGrade'),
+            'teacher' => $class->getTeacher->firstName . " " . $class->getTeacher->lastName,
+            'classDetails' => $classDetails,
+            // 'attendance' => $classDetails->attendence,
+            // 'averageGrade' => $classDetails->averageGrade,
+            // 'quizGrade' => $classDetails->quizGrade,
+            // 'projectGrade' => $classDetails->projectGrade,
+            // 'assignmentGrade' => $classDetails->assignmentGrade,
         ];
-       
-        return view('student.viewclass',compact('details','student'));
+        // dd($details);
+        return view('student.viewclass', compact('details', 'student'));
     }
+    
     
 
     public function login(Request $request)
@@ -332,7 +334,7 @@ class StudentController extends Controller
                 'endingTime' => $class->endtime, 
                 'teacher'=>$class->getTeacher->firstName." ". $class->getTeacher->lastName
             ];
-    });
+        });
         return view('student.manageclass',compact('classesDetail','student'));
     }
 
