@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ClassT;
 use App\Models\SParent;
 use App\Models\Student;
+use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -125,6 +126,9 @@ class SParentController extends Controller {
      */
     public function edit( $parent) {
         $sp = SParent::findOrFail($parent);
+        $prf=Profile::where('s_parent_id',$sp->id);
+        dd( $prf);
+
         $admin = Auth::guard('admin')->user();
         return view('parent.editParent')->with('wparent', $sp)->with('admin',$admin);
     }

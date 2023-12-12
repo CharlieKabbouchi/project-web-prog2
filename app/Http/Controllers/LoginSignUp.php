@@ -67,7 +67,7 @@ class LoginSignUp extends Controller
             $nuser->DOB=$request->DOB;
             $proimg=time().'-'.$request->file('image')->getClientOriginalName();
             //onedrivestorage and get the link
-            $nuser->image=link;
+            $nuser->image=//link;
             $nuser->save();
             return redirect()->route('login');
             
