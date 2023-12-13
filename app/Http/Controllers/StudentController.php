@@ -11,6 +11,7 @@ use App\Models\Pending;
 use App\Models\Department;
 use App\Models\Event;
 use App\Models\Profile;
+use App\Models\Question;
 use App\Models\ReviewE;
 use App\Models\StudentClassT;
 use App\Models\Submission;
@@ -140,8 +141,28 @@ class StudentController extends Controller {
 
     public function manageQandA() {
         return view('student.manageQ&A');
+        $student = Student::with('questions.getAnswer')->find(session('student_id'));
+
+        return view('student.manageQ&A',compact('student'));
     }
 
+    public function addQuestion() {
+        return view('student.addQuestion');
+    }
+
+    public function storeQuestion(Request $request) {
+
+        $question = new Question();
+        $question->description = $request->input('description');
+        $question->student_id = session('student_id');
+        $question->save();
+
+        return redirect()->route('student.manageQandA')->with('success', 'Question added successfully');
+    }
+
+    public function manageCalendar() {
+        return view('student.manageCalendar');
+    }
     public function viewCalendar() {
         return view('student.viewCalendar');
     }
