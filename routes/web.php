@@ -230,6 +230,9 @@ Route::prefix('student')->group(function () {
         Route::get('/view/event/{id}', [StudentController::class, 'viewEvent'])->name('student.viewEvent');
         Route::get('/student/all-events', [StudentController::class, 'showAllEvents'])->name('student.showAllEvents');
         Route::post('/logout',[StudentController::class, 'Logout'])->name('student.logout');
+        Route::get('/student/addquestion', [StudentController::class,'addQuestion'])->name('student.addquestion');
+        Route::post('/student/storequestion',[StudentController::class,'storeQuestion'])->name('student.storequestion');
+
         // Add other student routes here
     });
 
