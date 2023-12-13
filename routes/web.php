@@ -212,7 +212,7 @@ Route::prefix('student')->group(function () {
         Route::get('/manage/events', [StudentController::class, 'manageEvent'])->name('student.manageevents');
         Route::get('/manage/class', [StudentController::class, 'manageClass'])->name('student.manageclass');
         Route::get('/manage/Q&A', [StudentController::class, 'manageQandA'])->name('student.manageQ&A');
-        Route::get('/manage/calendar', [StudentController::class, 'manageCalendar'])->name('student.viewCalendar');
+        Route::get('/manage/calendar', [StudentController::class, 'viewCalendar'])->name('student.viewCalendar');
         Route::get('/view/profile/{id}', [StudentController::class, 'viewProfile'])->name('student.viewprofile');
         Route::get('/edit/profile/{id}', [StudentController::class, 'editProfile'])->name('student.editprofile');
       

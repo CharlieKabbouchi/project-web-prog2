@@ -15,7 +15,6 @@ use App\Models\ReviewE;
 use App\Models\StudentClassT;
 use App\Models\Submission;
 use App\Models\UploadResource;
-use App\Models\Question;
 
 
 use Illuminate\Http\Request;
@@ -30,7 +29,7 @@ class StudentController extends Controller {
     public function manageEvent(Request $request) {
         $student = Student::find(session('student_id'));
 
-        $events = $student->getEvent->get();
+        $events = $student->getEvent()->get();
 
 
         $eventDetails = $events->map(function ($event) {
@@ -140,27 +139,11 @@ class StudentController extends Controller {
     }
 
     public function manageQandA() {
-        $student = Student::with('questions.getAnswer')->find(session('student_id'));
-        
-        return view('student.manageQ&A',compact('student'));
+        return view('student.manageQ&A');
     }
 
-    public function addQuestion() {
-        return view('student.addQuestion');
-    }
-
-    public function storeQuestion(Request $request) {
-
-        $question = new Question();
-        $question->description = $request->input('description');
-        $question->student_id = session('student_id');
-        $question->save();
-
-        return redirect()->route('student.manageQandA')->with('success', 'Question added successfully');
-    }
-
-    public function manageCalendar() {
-        return view('student.manageCalendar');
+    public function viewCalendar() {
+        return view('student.viewCalendar');
     }
 
     public function enrollClass() {
@@ -238,8 +221,7 @@ class StudentController extends Controller {
         $student = Student::find(session('student_id'));
 
         $classId = $id;
-        $class = ClassT::find($id);
-        
+
         $teacher = $class->teacher()->first();
         $assignments = Assignment::where('classt_id', $id)->get();
 
