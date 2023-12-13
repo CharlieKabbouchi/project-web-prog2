@@ -9,13 +9,13 @@ class Event extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'type', 'time', 'startingtime', 'endingtime', 'alumni_id'];
+    protected $fillable = ['id', 'title', 'description', 'type', 'time', 'startingtime', 'endingtime', 'alumni_id'];
     public function getAlumni(){
         return $this->belongsTo(Alumni::class,"alumni_id","id");
     }
 
     public function getStudent(){
-        return $this->belongsToMany(Student::class,"student_event","event_id","student_id");
+        return $this->belongsToMany(Student::class,"student_events","event_id","student_id");
     }
 
     public function getReviewE(){

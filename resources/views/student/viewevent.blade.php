@@ -7,16 +7,16 @@
     }
 
     .table-bordered {
-        border: 2px solid #00688B; 
+        border: 2px solid #00688B;
     }
 
     .table-bordered th,
     .table-bordered td {
-        border: 1px solid #00688B; 
+        border: 1px solid #00688B;
     }
 
     .table-bordered thead th {
-        background-color: #87CEEB; 
+        background-color: #87CEEB;
     }
 </style>
 @section('content')
@@ -27,7 +27,6 @@
     <div class="row">
         <div class="col-md-12">
             <h5>Event Information</h5>
-            <a href="{{ route('student.addreviewc') }}">Add review to the event</a>
             <table class="table">
                 <thead>
                     <tr>
@@ -37,21 +36,32 @@
                         <th>Type</th>
                         <th>Starting Time</th>
                         <th>Ending Time</th>
-                        <th>Time</th>
+                        <th>Date</th>
+                        <th>Your Rating</th>
                     </tr>
                 </thead>
                 <tbody>
-                        <tr>
-                            <td>{{ $detail['alumniName'] }}</td>
-                            <td>{{ $detail['title'] }}</td>
-                            <td>{{ $detail['description'] }}</td>
-                            <td>{{ $detail['type'] }}</td>
-                            <td>{{ $detail['startingTime'] }}</td>
-                            <td>{{ $detail['endingTime'] }}</td>
-                            <td>{{ $detail['time'] }}</td>
-                        </tr>
+                    <tr>
+                        <td>{{ $alumniName }}</td>
+                        <td>{{ $eventDetails['title'] }}</td>
+                        <td>{{ $eventDetails['description'] }}</td>
+                        <td>{{ $eventDetails['type'] }}</td>
+                        <td>{{ $eventDetails['startingTime'] }}</td>
+                        <td>{{ $eventDetails['endingTime'] }}</td>
+                        <td>{{ $eventDetails['time'] }}</td>
+
+                        <td>
+                            @if ($event->getReviewE->count() > 0)
+                                {{-- Display the rating if it exists --}}
+                                {{ $event->getReviewE->avg('rating') }}
+                            @else
+                                {{-- Show "Add Review" button if there is no rating --}}
+                                <a href="{{ route('student.addReviewE', ['eventId' => $event->id]) }}" class='btn btn-primary'>Add review to the event</a>
+                            @endif
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
-@endsection('content')
+@endsection

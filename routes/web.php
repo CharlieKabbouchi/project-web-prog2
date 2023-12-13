@@ -221,9 +221,12 @@ Route::prefix('student')->group(function () {
         Route::get('/view/submission/{id}', [StudentController::class, 'viewSubmission'])->name('viewsubmission');
         Route::get('/add/submission/{id}', [StudentController::class, 'addSubmission'])->name('addsubmission');
         Route::get('/enroll/class/', [StudentController::class, 'enrollClass'])->name('student.enrollClass');
-        Route::get('/enroll/event/', [StudentController::class, 'enrollEvent'])->name('enrollEvent');
-        Route::get('/add/reviewc/', [StudentController::class, 'addReviewc'])->name('addReviewc');
-        Route::get('/view/event/', [StudentController::class, 'viewEvent'])->name('viewEvent');
+        Route::post('/enroll/event/{eventId}', [StudentController::class, 'enrollEvent'])->name('student.enrollToEvent');
+        Route::get('/add/reviewc/', [StudentController::class, 'addReviewc'])->name('student.addReviewC');
+        Route::get('/student/addReviewE/{eventId}', [StudentController::class, 'addReviewE'])->name('student.addReviewE');
+        Route::post('/student/submitReviewE/{eventId}', [StudentController::class, 'submitReviewE'])->name('student.submitReviewE');
+        Route::get('/view/event/{id}', [StudentController::class, 'viewEvent'])->name('student.viewEvent');
+        Route::get('/student/all-events', [StudentController::class, 'showAllEvents'])->name('student.showAllEvents');
         // Add other student routes here
     });
 

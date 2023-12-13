@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ReviewE extends Model
 {
     use HasFactory;
-
+    protected $fillable = ['description', 'rating', 'event_id', 'student_id'];
     public function getEvent(){
         return $this->belongsTo(Event::class,"event_id","id");
     }
