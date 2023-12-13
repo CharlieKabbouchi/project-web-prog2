@@ -18,6 +18,7 @@ class AdminSeeder extends Seeder
             'id' => 'a2023001',
             'firstName' => 'Admin',
             'lastName' => 'User',
+            'isSuper' => 1,
             'Gender' => 'Male',
             'salary' => 50000,
             'email' => 'admin@example.com',

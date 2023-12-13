@@ -37,7 +37,7 @@ return new class extends Migration
             ->references('id')
             ->on('students')
             ->onDelete('cascade');
-            $table->foreign('sparent_id')
+            $table->foreign('s_parent_id')
             ->nullable()
             ->references('id')
             ->on('s_parents')

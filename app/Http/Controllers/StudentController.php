@@ -149,14 +149,19 @@ class StudentController extends Controller {
     public function enrollClass() {
         $student = Student::find(session('student_id'));
 
-        $department = $student->getDepartment;
+        $allClasses = ClassT::all();
+        // dd($allClasses);
 
         $enrolledClasses = $student->getClassT;
-        $availableClasses = ClassT::whereHas('getCourse.getDepartment', function ($query) use ($department) {
-            $query->where('department_id', $department->id);
-        })->whereNotIn('id', $enrolledClasses->pluck('id'))->get();
 
-        $classesDetail = $availableClasses->map(function ($class) {
+        // dd($enrolledClasses);
+        $unenrolledClasses = $allClasses->reject(function ($class) use ($enrolledClasses) {
+            return $enrolledClasses->contains('id', $class->id);
+        });
+
+        // dd($unenrolledClasses);
+
+        $classesDetail = $unenrolledClasses->map(function ($class) {
             return [
                 'classId' => $class->id,
                 'CourseName' => $class->getCourse->name,
@@ -167,7 +172,18 @@ class StudentController extends Controller {
                 'teacher' => $class->getTeacher->firstName . " " . $class->getTeacher->lastName
             ];
         });
+        // dd($classesDetail);
         return view('student.enrollClass', compact('classesDetail', 'student'));
+    }
+    public function enroll(Request $request, $classId) {
+        $studentId = $request->session()->get('student_id');
+        $student = Student::find($studentId);
+
+        $class = ClassT::find($classId);
+
+        $student->getClassT()->attach($class);
+
+        return redirect()->route('student.manageclass')->with('success', 'Enrollment successful!');
     }
     public function viewProfile() {
         //

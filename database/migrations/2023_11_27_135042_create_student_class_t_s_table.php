@@ -23,11 +23,11 @@ return new class extends Migration
             ->on('class_t_s')
             ->onDelete('cascade');
             $table->timestamps();
-            $table->integer('attendence');
-            $table->float('averageGrade')->nuallable();
-            $table->float('quizGrade')->nuallable();
-            $table->float('projectGrade')->nuallable();
-            $table->float('assignmentGrade')->nuallable();
+            $table->integer('attendence')->default(0);
+            $table->float('averageGrade')->nullable();
+            $table->float('quizGrade')->nullable();
+            $table->float('projectGrade')->nullable();
+            $table->float('assignmentGrade')->nullable();
             $table->primary(['student_id', 'classt_id']);
         });
     }

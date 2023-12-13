@@ -222,6 +222,7 @@ Route::prefix('student')->group(function () {
         Route::get('/view/submission/{id}', [StudentController::class, 'viewSubmission'])->name('viewsubmission');
         Route::get('/add/submission/{id}', [StudentController::class, 'addSubmission'])->name('addsubmission');
         Route::get('/enroll/class/', [StudentController::class, 'enrollClass'])->name('student.enrollClass');
+        Route::get('/enroll/{classId}', [StudentController::class, 'enroll'])->name('student.enroll');
         Route::post('/enroll/event/{eventId}', [StudentController::class, 'enrollEvent'])->name('student.enrollToEvent');
         Route::get('/add/reviewc/', [StudentController::class, 'addReviewc'])->name('student.addReviewC');
         Route::get('/student/addReviewE/{eventId}', [StudentController::class, 'addReviewE'])->name('student.addReviewE');

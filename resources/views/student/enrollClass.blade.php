@@ -48,10 +48,10 @@
                             <td>{{ $class['Day'] }}</td>
                             <td>{{$class['startingTime'] }} - {{$class['endingTime'] }} </td>
                             <td class="actions-column">
-                                <form method="get" action="{{ route('student.viewclass', ['id' => $class['classId']]) }}">
+                                <form method="get" action="{{ route('student.enroll', ['classId' => $class['classId']]) }}">
                                     @csrf
                                     <button type="submit" class="btn btn-primary btn-rounded btn-login">Enroll</button>
-                                </form>                                
+                                </form>                          
                             </td>
                         </tr>
                     @endforeach

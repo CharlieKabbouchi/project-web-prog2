@@ -1,3 +1,5 @@
+@extends('layout.student')
+
 @section('content')
     <div class="row">
         <h4 class="page-title">Class Details</h4>
@@ -27,7 +29,6 @@
                             <td>{{ $classDetail->quizGrade }}</td>
                             <td>{{ $classDetail->projectGrade }}</td>
                             <td>{{ $classDetail->assignmentGrade }}</td>
-
                             {{-- <td class="actions-column">
                             <form method="get" action="{{ route('student.viewsubmission', ['class' => $class->id]) }}">
                                 @csrf
