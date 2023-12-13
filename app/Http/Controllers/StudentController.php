@@ -6,6 +6,7 @@ use App\Models\Assignment;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\ClassT;
+use App\Models\Course;
 use App\Models\SParent;
 use App\Models\Pending;
 use App\Models\Department;
@@ -69,25 +70,36 @@ class StudentController extends Controller {
         return view('student.enrollToEvent', compact('student', 'allEvents'));
     }
 
-    public function addReviewc() {
-        return view('student.addreviewc');
+    public function addReviewc($classId) {
+        $student = Student::find(session('student_id'));
+        $class = ClassT::find($classId);
+        // dd($class);
+        return view('student.addreviewc', compact('student', 'class', 'classId'));
     }
 
-    public function storeReviewc(Request $request,$id) {
+    public function storeReviewc(Request $request) {
         $student = Student::find(session('student_id'));
-        $review= new ReviewC();
-        $class = ClassT::find($id);
 
-        $class->student_id = $student->id;
-        $review->class_id = $class->id;
+        $review = new ReviewC();
+
+        // Retrieve class using the classId from the form
+        $classId = $request->input('classId');
+        $class = ClassT::find($classId);
+
+        if (!$class) {
+            return redirect()->route('student.manageclass')->with('error', 'Class not found');
+        }
+
+        $review->classt_id = $class->id;
         $review->description = $request->input('description');
         $review->rating = $request->input('rating');
         $review->student_id = session('student_id');
         $review->save();
 
-        return redirect()->route('student.manageclass')->with('success', 'Question added successfully');
+        return redirect()->route('student.manageclass')->with('success', 'Review added successfully');
     }
-    
+
+
     public function addReviewE(Request $request, $eventId) {
         $event = Event::find($eventId);
 
@@ -157,7 +169,7 @@ class StudentController extends Controller {
     public function manageQandA() {
         $student = Student::with('questions.getAnswer')->find(session('student_id'));
 
-        return view('student.manageQ&A',compact('student'));
+        return view('student.manageQ&A', compact('student'));
     }
 
     public function addQuestion() {
@@ -255,7 +267,7 @@ class StudentController extends Controller {
     public function viewAssignment(Request $request, $id) {
         $student = Student::find(session('student_id'));
 
-        $classId = $id; 
+        $classId = $id;
         $class = ClassT::find($id);
 
         $teacher = $class->teacher()->first();
@@ -302,23 +314,30 @@ class StudentController extends Controller {
         $student = Student::find(session('student_id'));
 
         $class = ClassT::find($id);
-        $classDetails = StudentClassT::where('classt_id', $id)->where('student_id', $student->id)->get();
+        $classDetails = StudentClassT::select('student_id', 'classt_id', 'attendence', 'averageGrade', 'quizGrade', 'projectGrade', 'assignmentGrade')
+            ->where('classt_id', $id)
+            ->where('student_id', $student->id)
+            ->get();
+        // $course = Course::find($id);
 
         $courseName = $class->getCourse->name;
-
+        $classReviews = $class->getReviewC;
         // dd($classDetails);
         $details = [
             'course' => $courseName,
             'teacher' => $class->getTeacher->firstName . " " . $class->getTeacher->lastName,
             'classDetails' => $classDetails,
+            // 'classReviews' => $classReviews,
             // 'attendance' => $classDetails->attendence,
             // 'averageGrade' => $classDetails->averageGrade,
             // 'quizGrade' => $classDetails->quizGrade,
             // 'projectGrade' => $classDetails->projectGrade,
             // 'assignmentGrade' => $classDetails->assignmentGrade,
         ];
-        // dd($details);
-        return view('student.viewclass', compact('details', 'student'));
+
+        // dd($student);
+
+        return view('student.viewclass', compact('details', 'student', 'classReviews')); // 'course'
     }
 
     public function Logout() {

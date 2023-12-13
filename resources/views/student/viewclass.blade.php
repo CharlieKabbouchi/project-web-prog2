@@ -4,7 +4,7 @@
     <div class="row">
         <h4 class="page-title">Class Details</h4>
     </div>
-    <a href="{{ route('student.addreviewc',['class' => $class->id]) }}">Add Review for this class</a>
+
     <div class="row">
         <div class="col-md-12">
             <h5>Class Information</h5>
@@ -18,6 +18,7 @@
                         <th>Quiz Grade</th>
                         <th>Project Grade</th>
                         <th>Assignment Grade</th>
+                        <th>Review</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,6 +30,17 @@
                             <td>{{ $classDetail->quizGrade }}</td>
                             <td>{{ $classDetail->projectGrade }}</td>
                             <td>{{ $classDetail->assignmentGrade }}</td>
+                            <td>
+                                @php
+                                    $studentReview = $classReviews->where('student_id', $student->id)->first();
+                                @endphp
+                            
+                                @if ($studentReview)
+                                    {{ $studentReview->rating }}
+                                @else
+                                    <a href="{{ route('student.addReviewcForm', ['classId' => $classDetail->classt_id]) }}" class="btn btn-primary">Add Review for this class</a>
+                                @endif
+                            </td>
                             {{-- <td class="actions-column">
                             <form method="get" action="{{ route('student.viewsubmission', ['class' => $class->id]) }}">
                                 @csrf

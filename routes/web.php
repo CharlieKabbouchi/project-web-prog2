@@ -232,8 +232,8 @@ Route::prefix('student')->group(function () {
         Route::post('/logout',[StudentController::class, 'Logout'])->name('student.logout');
         Route::get('/student/addquestion', [StudentController::class,'addQuestion'])->name('student.addquestion');
         Route::post('/student/storequestion',[StudentController::class,'storeQuestion'])->name('student.storequestion');
-        Route::get('/student/addreviewc', [StudentController::class,'addReviewc'])->name('student.addreviewc');
-        Route::post('/student/storereviewc',[StudentController::class,'storeReviewc'])->name('student.storereviewc');
+        Route::get('/student/addreviewc/{classId}', [StudentController::class,'addReviewc'])->name('student.addReviewcForm');
+        Route::post('/student/storereviewc', [StudentController::class,'storeReviewc'])->name('student.storereviewc');
 
         // Add other student routes here
     });

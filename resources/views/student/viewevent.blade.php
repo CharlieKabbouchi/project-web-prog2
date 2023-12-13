@@ -51,11 +51,13 @@
                         <td>{{ $eventDetails['time'] }}</td>
 
                         <td>
-                            @if ($event->getReviewE->count() > 0)
-                                {{-- Display the rating if it exists --}}
-                                {{ $event->getReviewE->avg('rating') }}
+                            @php
+                                $eventReview = $event->getReviewE->where('student_id', $student->id)->first();
+                            @endphp
+                        
+                            @if ($eventReview)
+                                {{ $eventReview->rating }}
                             @else
-                                {{-- Show "Add Review" button if there is no rating --}}
                                 <a href="{{ route('student.addReviewE', ['eventId' => $event->id]) }}" class='btn btn-primary'>Add review to the event</a>
                             @endif
                         </td>
