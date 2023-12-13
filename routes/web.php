@@ -72,6 +72,7 @@ Route::delete('/class_ts/{class_t}', [ClassTController::class, 'destroy'])->name
 
 Route::post('/logout',[AdminController::class, 'Logout'])->name('logout');
 
+
 // Admin Routes
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
@@ -227,6 +228,7 @@ Route::prefix('student')->group(function () {
         Route::post('/student/submitReviewE/{eventId}', [StudentController::class, 'submitReviewE'])->name('student.submitReviewE');
         Route::get('/view/event/{id}', [StudentController::class, 'viewEvent'])->name('student.viewEvent');
         Route::get('/student/all-events', [StudentController::class, 'showAllEvents'])->name('student.showAllEvents');
+        Route::post('/logout',[StudentController::class, 'Logout'])->name('student.logout');
         // Add other student routes here
     });
 

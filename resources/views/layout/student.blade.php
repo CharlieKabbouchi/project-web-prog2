@@ -82,7 +82,7 @@
 										<div class="u-img"><img src="{{asset('assets/img/profile.jpg')}}" alt="image profile"></div>
 										<div class="u-text">
 											<h4>{{$student->firstName}}</h4>
-                                            <form  method="post" action="{{route('logout')}}" >@csrf<input type='submit'class="btn btn-primary btn-rounded btn-login" value='Logout'></form>
+                                            <form  method="post" action="{{route('student.logout')}}" >@csrf<input type='submit'class="btn btn-primary btn-rounded btn-login" value='Logout'></form>
 										</div>
 									</div>
 								</li>

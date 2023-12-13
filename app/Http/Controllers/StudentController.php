@@ -65,7 +65,7 @@ class StudentController extends Controller {
     public function showAllEvents() {
         $student = Student::find(session('student_id'));
         $allEvents = Event::all();
-    
+
         return view('student.enrollToEvent', compact('student', 'allEvents'));
     }
 
@@ -269,7 +269,10 @@ class StudentController extends Controller {
         return view('student.viewclass', compact('details', 'student'));
     }
 
-
+    public function Logout() {
+        auth()->guard('student')->logout();
+        return redirect('/');
+    }
 
     public function login(Request $request) {
         $credentials = $request->only('email', 'password');
