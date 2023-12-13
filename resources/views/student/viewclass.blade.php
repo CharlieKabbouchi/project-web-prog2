@@ -4,7 +4,7 @@
     <div class="row">
         <h4 class="page-title">Class Details</h4>
     </div>
-
+    <a href="{{ route('student.addreviewc',['class' => $class->id]) }}">Add Review for this class</a>
     <div class="row">
         <div class="col-md-12">
             <h5>Class Information</h5>

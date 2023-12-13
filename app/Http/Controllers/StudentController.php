@@ -16,8 +16,7 @@ use App\Models\ReviewE;
 use App\Models\StudentClassT;
 use App\Models\Submission;
 use App\Models\UploadResource;
-
-
+use App\Models\ReviewC;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -73,6 +72,22 @@ class StudentController extends Controller {
     public function addReviewc() {
         return view('student.addreviewc');
     }
+
+    public function storeReviewc(Request $request,$id) {
+        $student = Student::find(session('student_id'));
+        $review= new ReviewC();
+        $class = ClassT::find($id);
+
+        $class->student_id = $student->id;
+        $review->class_id = $class->id;
+        $review->description = $request->input('description');
+        $review->rating = $request->input('rating');
+        $review->student_id = session('student_id');
+        $review->save();
+
+        return redirect()->route('student.manageclass')->with('success', 'Question added successfully');
+    }
+    
     public function addReviewE(Request $request, $eventId) {
         $event = Event::find($eventId);
 
@@ -140,7 +155,6 @@ class StudentController extends Controller {
     }
 
     public function manageQandA() {
-        return view('student.manageQ&A');
         $student = Student::with('questions.getAnswer')->find(session('student_id'));
 
         return view('student.manageQ&A',compact('student'));
@@ -241,7 +255,8 @@ class StudentController extends Controller {
     public function viewAssignment(Request $request, $id) {
         $student = Student::find(session('student_id'));
 
-        $classId = $id;
+        $classId = $id; 
+        $class = ClassT::find($id);
 
         $teacher = $class->teacher()->first();
         $assignments = Assignment::where('classt_id', $id)->get();
