@@ -66,20 +66,12 @@
 								<i class="flaticon-search-1"></i>
 							</a>
 						</li>
-						
-						<li class="nav-item dropdown hidden-caret">
-							<a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class="flaticon-alarm"></i>
-								<span class="notification">3</span>
-							</a>
-							
-						</li>
 						<li class="nav-item dropdown hidden-caret">
 							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="{{asset('assets/img/profile.jpg')}}" alt="image profile" width="36" class="img-circle"></a>
 							<ul class="dropdown-menu dropdown-user animated fadeIn">
 								<li>
 									<div class="user-box">
-										<div class="u-img"><img src="{{asset('assets/img/profile.jpg')}}" alt="image profile"></div>
+										<div class="u-img"><img src="{{$student->getProfile->image}}" alt="image profile"></div>
 										<div class="u-text">
 											<h4>{{$student->firstName}}</h4>
                                             <form  method="post" action="{{route('student.logout')}}" >@csrf<input type='submit'class="btn btn-primary btn-rounded btn-login" value='Logout'></form>
@@ -107,7 +99,7 @@
 				<div class="sidebar-content">
 					<div class="user">
 						<div class="photo">
-							<img src="{{asset('assets/img/profile.jpg')}}" alt="image profile">
+							<img src="{{$student->getProfile->image}}" alt="image profile">
 						</div>
 						<div class="info">
 							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
@@ -184,110 +176,81 @@
 			<div class="content">
             @yield('content')
 			</div>
-			<footer class="footer">
-				<div class="container-fluid">
-					<nav class="pull-left">
-						<ul class="nav">
-							<li class="nav-item">
-								<a class="nav-link" >
-									Instituation Name
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									Help
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									Licenses
-								</a>
-							</li>
-						</ul>
-					</nav>
-					<div class="copyright ml-auto">
-						2023, made with <i class="la la-heart heart text-danger"></i> by Instituation Name
-					</div>				
-				</div>
-			</footer>
 		</div>
 		
-	
-		
-		
 	</div>
-	<!--   Core JS Files   -->
-	<script src="{{asset('assets/js/core/jquery.3.2.1.min.js')}}"></script>
-	<script src="{{asset('assets/js/core/popper.min.js')}}"></script>
-	<script src="{{asset('assets/js/core/bootstrap.min.js')}}"></script>
-
-	<!-- jQuery UI -->
-	<script src="{{asset('assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js')}}"></script>
-	<script src="{{asset('assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js')}}"></script>
-
-	<!-- jQuery Scrollbar -->
-	<script src="{{asset('assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js')}}"></script>
-
-	<!-- Moment JS -->
-	<script src="{{asset('assets/js/plugin/moment/moment.min.js')}}"></script>
-
-	<!-- Chart JS -->
-	<script src="{{asset('assets/js/plugin/chart.js/chart.min.js')}}"></script>
-
-	<!-- Chart Circle -->
-	<script src="{{asset('assets/js/plugin/chart-circle/circles.min.js')}}"></script>
-
-	<!-- Datatables -->
-	<script src="{{asset('assets/js/plugin/datatables/datatables.min.js')}}"></script>
-
-	<!-- Bootstrap Notify -->
-	<script src="{{asset('assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js')}}"></script>
-
-	<!-- Bootstrap Toggle -->
-	<script src="{{asset('assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js')}}"></script>
-
-	<!-- jQuery Vector Maps -->
-	<script src="{{asset('assets/js/plugin/jqvmap/jquery.vmap.min.js')}}"></script>
-	<script src="{{asset('assets/js/plugin/jqvmap/maps/jquery.vmap.world.js')}}"></script>
-
-	<!-- Google Maps Plugin -->
-	<script src="{{asset('assets/js/plugin/gmaps/gmaps.js')}}"></script>
-
-	<!-- Dropzone -->
-	<script src="{{asset('assets/js/plugin/dropzone/dropzone.min.js')}}"></script>
-
-	<!-- Fullcalendar -->
-	<script src="{{asset('assets/js/plugin/fullcalendar/fullcalendar.min.js')}}"></script>
-
-	<!-- DateTimePicker -->
-	<script src="{{asset('assets/js/plugin/datepicker/bootstrap-datetimepicker.min.js')}}"></script>
-
-	<!-- Bootstrap Tagsinput -->
-	<script src="{{asset('assets/js/plugin/bootstrap-tagsinput/bootstrap-tagsinput.min.js')}}"></script>
-
-	<!-- Bootstrap Wizard -->
-	<script src="{{asset('assets/js/plugin/bootstrap-wizard/bootstrapwizard.js')}}"></script>
-
-	<!-- jQuery Validation -->
-	<script src="{{asset('assets/js/plugin/jquery.validate/jquery.validate.min.js')}}"></script>
-
-	<!-- Summernote -->
-	<script src="{{asset('assets/js/plugin/summernote/summernote-bs4.min.js')}}"></script>
-
-	<!-- Select2 -->
-	<script src="{{asset('assets/js/plugin/select2/select2.full.min.js')}}"></script>
-
-	<!-- Sweet Alert -->
-	<script src="{{asset('assets/js/plugin/sweetalert/sweetalert.min.js')}}"></script>
-
-	<!-- Ready Pro JS -->
-	<script src="{{asset('assets/js/ready.min.js')}}"></script>
-
-	<!-- Ready Pro DEMO methods, don't include it in your project! -->
-	<script src="{{asset('assets/js/setting-demo.js')}}"></script>
-	<script src="{{asset('assets/js/demo.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<!--   Core JS Files   -->
+		<script src="{{asset('assets/js/core/jquery.3.2.1.min.js')}}"></script>
+		<script src="{{asset('assets/js/core/popper.min.js')}}"></script>
+		<script src="{{asset('assets/js/core/bootstrap.min.js')}}"></script>
+	
+		<!-- jQuery UI -->
+		<script src="{{asset('assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js')}}"></script>
+		<script src="{{asset('assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js')}}"></script>
+	
+		<!-- jQuery Scrollbar -->
+		<script src="{{asset('assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js')}}"></script>
+	
+		<!-- Moment JS -->
+		<script src="{{asset('assets/js/plugin/moment/moment.min.js')}}"></script>
+	
+		<!-- Chart JS -->
+		<script src="{{asset('assets/js/plugin/chart.js/chart.min.js')}}"></script>
+	
+		<!-- Chart Circle -->
+		<script src="{{asset('assets/js/plugin/chart-circle/circles.min.js')}}"></script>
+	
+		<!-- Datatables -->
+		<script src="{{asset('assets/js/plugin/datatables/datatables.min.js')}}"></script>
+	
+		<!-- Bootstrap Notify -->
+		<script src="{{asset('assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js')}}"></script>
+	
+		<!-- Bootstrap Toggle -->
+		<script src="{{asset('assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js')}}"></script>
+	
+		<!-- jQuery Vector Maps -->
+		<script src="{{asset('assets/js/plugin/jqvmap/jquery.vmap.min.js')}}"></script>
+		<script src="{{asset('assets/js/plugin/jqvmap/maps/jquery.vmap.world.js')}}"></script>
+	
+		<!-- Google Maps Plugin -->
+		<script src="{{asset('assets/js/plugin/gmaps/gmaps.js')}}"></script>
+	
+		<!-- Dropzone -->
+		<script src="{{asset('assets/js/plugin/dropzone/dropzone.min.js')}}"></script>
+	
+		<!-- Fullcalendar -->
+		<script src="{{asset('assets/js/plugin/fullcalendar/fullcalendar.min.js')}}"></script>
+	
+		<!-- DateTimePicker -->
+		<script src="{{asset('assets/js/plugin/datepicker/bootstrap-datetimepicker.min.js')}}"></script>
+	
+		<!-- Bootstrap Tagsinput -->
+		<script src="{{asset('assets/js/plugin/bootstrap-tagsinput/bootstrap-tagsinput.min.js')}}"></script>
+	
+		<!-- Bootstrap Wizard -->
+		<script src="{{asset('assets/js/plugin/bootstrap-wizard/bootstrapwizard.js')}}"></script>
+	
+		<!-- jQuery Validation -->
+		<script src="{{asset('assets/js/plugin/jquery.validate/jquery.validate.min.js')}}"></script>
+	
+		<!-- Summernote -->
+		<script src="{{asset('assets/js/plugin/summernote/summernote-bs4.min.js')}}"></script>
+	
+		<!-- Select2 -->
+		<script src="{{asset('assets/js/plugin/select2/select2.full.min.js')}}"></script>
+	
+		<!-- Sweet Alert -->
+		<script src="{{asset('assets/js/plugin/sweetalert/sweetalert.min.js')}}"></script>
+	
+		{{-- <!-- Ready Pro JS -->
+		<script src="{{asset('assets/js/ready.min.js')}}"></script>
+	
+		<!-- Ready Pro DEMO methods, don't include it in your project! -->
+		<script src="{{asset('assets/js/setting-demo.js')}}"></script>
+		<script src="{{asset('assets/js/demo.js')}}"></script> --}}
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </body>
 </html>

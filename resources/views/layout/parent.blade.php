@@ -68,18 +68,11 @@
 						</li>
 						
 						<li class="nav-item dropdown hidden-caret">
-							<a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class="flaticon-alarm"></i>
-								<span class="notification">3</span>
-							</a>
-							
-						</li>
-						<li class="nav-item dropdown hidden-caret">
 							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="{{asset('assets/img/profile.jpg')}}" alt="image profile" width="36" class="img-circle"></a>
 							<ul class="dropdown-menu dropdown-user animated fadeIn">
 								<li>
 									<div class="user-box">
-										<div class="u-img"><img src="{{asset('assets/img/profile.jpg')}}" alt="image profile"></div>
+										<div class="u-img"><img src="{{$parent->getProfile->image}}" alt="image profile"></div>
 										<div class="u-text">
 											<h4>{{$parent->firstName}}</h4>
                                             <form  method="post" action="{{route('logout')}}" >@csrf<input type='submit'class="btn btn-primary btn-rounded btn-login" value='Logout'></form>
@@ -107,7 +100,7 @@
 				<div class="sidebar-content">
 					<div class="user">
 						<div class="photo">
-							<img src="{{asset('assets/img/profile.jpg')}}" alt="image profile">
+							<img src="{{$parent->getProfile->image}}" alt="image profile">
 						</div>
 						<div class="info">
 							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
@@ -168,32 +161,6 @@
 			<div class="content">
             @yield('content')
 			</div>
-			<footer class="footer">
-				<div class="container-fluid">
-					<nav class="pull-left">
-						<ul class="nav">
-							<li class="nav-item">
-								<a class="nav-link" >
-									Instituation Name
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									Help
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									Licenses
-								</a>
-							</li>
-						</ul>
-					</nav>
-					<div class="copyright ml-auto">
-						2023, made with <i class="la la-heart heart text-danger"></i> by Instituation Name
-					</div>				
-				</div>
-			</footer>
 		</div>
 				
 	</div>
@@ -261,12 +228,12 @@
 	<!-- Sweet Alert -->
 	<script src="{{asset('assets/js/plugin/sweetalert/sweetalert.min.js')}}"></script>
 
-	<!-- Ready Pro JS -->
+	{{-- <!-- Ready Pro JS -->
 	<script src="{{asset('assets/js/ready.min.js')}}"></script>
 
 	<!-- Ready Pro DEMO methods, don't include it in your project! -->
 	<script src="{{asset('assets/js/setting-demo.js')}}"></script>
-	<script src="{{asset('assets/js/demo.js')}}"></script>
+	<script src="{{asset('assets/js/demo.js')}}"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
