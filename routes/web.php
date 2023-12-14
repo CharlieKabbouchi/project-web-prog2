@@ -73,7 +73,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
         Route::post('/logout',[AdminController::class, 'Logout'])->name('logout');
 
-        Route::get('/view/profile', [AdminController::class, 'viewprofile'])->name('viewprofile');
+        Route::get('/view/profile', [AdminController::class, 'viewprofile'])->name('admin.viewprofile');
         Route::get('/add/department}', [AdminController::class, 'addDepartment'])->name('addDepartment');
         Route::get('/edit/profile/{id}', [AdminController::class, 'editprofile'])->name('editprofile');
         Route::put('/update/profile/{id}', [AdminController::class, 'updateProfile'])->name('admin.updateprofile');
@@ -261,7 +261,7 @@ Route::prefix('alumni')->group(function () {
         // })->name('alumni.dashboard');
         Route::get('/dashboard', [AlumniController::class, 'showDashboard'])->name('alumni.dashboard');
         Route::post('/logout', [AlumniController::class, 'LogoutAlumni'])->name('alumni.logout');
-        Route::get('/view/profile', [AlumniController::class,'viewProfile'])->name('viewprofile');
+        Route::get('/view/profile', [AlumniController::class,'viewProfile'])->name('alumni.viewprofile');
         Route::get('/edit/profile/{id}', [AlumniController::class, 'editProfile'])->name('alumni.editprofile');
         Route::put('/update/profile/{id}', [AlumniController::class, 'updateProfile'])->name('alumni.updateprofile');
 

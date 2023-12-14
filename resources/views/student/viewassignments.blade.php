@@ -46,10 +46,10 @@
                                     <form method="get"
                                         action="{{ route('student.addsubmission', ['assignment' => $assignment['assignmentId']]) }}">
                                         @csrf
-                                        <button type="submit" class="btn btn-primary btn-rounded btn-login">Sumbit</button>
+                                        <button type="submit" class="btn btn-primary">Sumbit</button>
                                     </form>
                                 @elseif ($assignment['isSubmitted'])
-                                    <p>Submitted</p>
+                                    <p class="btn btn-success disabled" style="color: black">Submitted</p>
                                 @elseif (!$assignment['isWithinDeadline'])
                                     <p>Passed Deadline</p>
                                 @endif                          

@@ -1,4 +1,4 @@
-@extends('layout.admin')
+@extends('layout.parent')
 <title>View Profile</title>
 @section('content')
     <div class="container-fluid">
@@ -7,7 +7,7 @@
             <div class="card card-profile card-secondary">
                 <div class="card-header" style="background-image: url('../assets/img/blogpost.jpg')">
                     <div class="profile-picture">
-                        <img src="{{ $admin->getProfile->image }}" alt="Profile Picture">
+                        <img src="{{ $parent->getProfile->image }}" alt="Profile Picture">
                     </div>
                 </div>
                 <div class="card-body">

@@ -1,4 +1,4 @@
-@extends('layout.student')
+@extends('layout.alumni')
 <title>View Profile</title>
 @section('content')
     <div class="container-fluid">
