@@ -39,12 +39,7 @@
 					<img src="{{asset('assets/img/logoresponsive.png')}}" alt="logo img" class="logo-img">
 				</a>
 				
-				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon">
-						<i class="la la-bars"></i>
-					</span>
-				</button>
-				<button class="topbar-toggler more"><i class="la la-ellipsis-v"></i></button>
+			
 			</div>
 			<!-- End Logo Header -->
 
@@ -66,14 +61,7 @@
 								<i class="flaticon-search-1"></i>
 							</a>
 						</li>
-						
-						<li class="nav-item dropdown hidden-caret">
-							<a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class="flaticon-alarm"></i>
-								<span class="notification">3</span>
-							</a>
-							
-						</li>
+					
 						<li class="nav-item dropdown hidden-caret">
 							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="{{asset('assets/img/profile.jpg')}}" alt="image profile" width="36" class="img-circle"></a>
 							<ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -122,7 +110,7 @@
 							<div class="collapse in" id="collapseExample">
 								<ul class="nav">
 									<li>
-										<a href="{{route('viewprofile',['id'=>$admin->id])}}">
+										<a href="{{route('viewprofile')}}">
 											<span class="link-collapse">My Profile</span>
 										</a>
 									</li>

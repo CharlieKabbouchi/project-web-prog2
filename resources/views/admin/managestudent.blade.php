@@ -25,14 +25,12 @@
 @section('content')
     <div class="row">
         <h4 class="page-title">Students</h4>
-        @if ($pstudentsn>0)
-        <a href='{{route('viewpendstudent')}}'>Register Pending Students</a>
-      @endif
+      
     </div>
    
     <div class="row">
         <div class="table-responsive">
-            <table class="table table-bordered table-striped">
+            <table class="table">
                 <thead>
                     <tr class="bg-primary">
                         <th>Id</th>
@@ -51,17 +49,17 @@
                             <td>{{ $student->email }}</td>
                             <td class="actions-column"><form method="get" action="{{ route('admin.viewStudent', ['student' => $student->id]) }}">
                                 @csrf
-                                <input type="submit" class="btn btn-primary btn-rounded btn-login" value="View">
+                                <input type="submit" class="btn btn-primary" value="View">
                             </form>
                            
                             <form method="get" action="{{ route('admin.editStudent', ['student' => $student->id]) }}">
                                 @csrf
-                                <input type="submit" class="btn btn-primary btn-rounded btn-login" value="Edit">
+                                <input type="submit" class="btn btn-primary" value="Edit">
                             </form>
                             <form method="post" action="{{ route('admin.deleteStudent',$student->id) }}">
                                 @csrf
                                  @method('POST')
-                                <input type="submit" class="btn btn-primary btn-rounded btn-login" value="Delete">
+                                <input type="submit" class="btn btn-danger" value="Delete">
                             </form>
                             </td>
                            
@@ -69,6 +67,9 @@
                     @endforeach
                 </tbody>
             </table>
+            @if ($pstudentsn>0)
+            <a class="btn btn-success"href='{{route('viewpendstudent')}}'>Register Pending Students</a>
+          @endif
         </div>
     </div>
 @endsection('content')

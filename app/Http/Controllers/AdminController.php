@@ -80,7 +80,7 @@ class AdminController extends Controller {
             $totalCreditsShouldTaken = 0;
             $totalCreditsShouldTaken += $student->getDepartment->totalCredits;
             if ($totalCreditsShouldTaken == $totalCredits && $student->isGraduated == false) {
-                dd($student);
+               // dd($student);
                 $student->isGraduated = true;
                 $alumni = new Alumni();
                 $alumni->graduationYear = date('Y');
@@ -92,7 +92,9 @@ class AdminController extends Controller {
         $alumnis = Alumni::all();
         return view('admin.managealumni', compact('alumnis', 'admin', 'totalCreditsShouldTaken', 'totalCredits'));
     }
+
     public function editparents($parent) {
+
         return redirect(route("admin.editparents", ['parent' => $parent]));
     }
 
@@ -227,11 +229,17 @@ class AdminController extends Controller {
         return back()->withErrors(['error' => 'Invalid login credentials']);
     }
 
-    public function viewprofile($id) {
-        //
+
+
+    public function viewprofile()
+    {
+        $admin = Auth::guard('admin')->user();
+        return view('admin.viewprofile',compact('admin'));
+
     }
-    public function editprofile($id) {
-        //
+    
+    public function editprofile($id)
+    {
 
     }
     public function updateprofile($profile) {
@@ -309,7 +317,7 @@ class AdminController extends Controller {
 
         $events = $alumni->getEvent;
         // dd($events);
-        
+
         return view('admin.viewAlumni', compact('admin', 'alumni', 'events'));
     }
 

@@ -27,7 +27,6 @@
                             <td>{{ $alumni->getStudent->firstName }} {{ $alumni->getStudent->lastName }}</td>
                             <td>{{ $alumni->email }}</td>
                         </tr>
-
                 </tbody>
             </table>
         </div>
@@ -62,6 +61,7 @@
                     @endforeach
                 </tbody>
             </table>
+
         </div>
     </div>
 @endsection

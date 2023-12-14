@@ -26,11 +26,11 @@
     <div class="row">
         <h4 class="page-title">Semesters</h4>
     </div>
-    <a href='{{ route('admin.addSemesters') }}'>Add New Semester</a>
+ 
  
     <div class="row">
         <div class="table-responsive">
-            <table class="table table-bordered table-striped">
+            <table class="table">
                 <thead>
                     <tr class="bg-primary">
  
@@ -50,17 +50,17 @@
                             <td>{{ $sem->type}}</td>
                             <td class="actions-column"><form method="get" action="{{ route('admin.viewSemester', ['semester' => $sem->id]) }}">
                                 @csrf
-                                <input type="submit" class="btn btn-primary btn-rounded btn-login" value="View">
+                                <input type="submit" class="btn btn-primary" value="View">
                             </form>
                            
                             <form method="get" action="{{ route('admin.editSemester', ['semester' => $sem->id]) }}">
                                 @csrf
-                                <input type="submit" class="btn btn-primary btn-rounded btn-login" value="Edit">
+                                <input type="submit" class="btn btn-primary" value="Edit">
                             </form>
                             <form method="post" action="{{ route('admin.deleteSemester',$sem->id) }}">
                                 @csrf
                                  @method('POST')
-                                <input type="submit" class="btn btn-primary btn-rounded btn-login" value="Delete">
+                                <input type="submit" class="btn btn-danger" value="Delete">
                             </form>
                             </td>
                            
@@ -68,6 +68,7 @@
                     @endforeach
                 </tbody>
             </table>
+            <a class="btn btn-success"href='{{ route('admin.addSemesters') }}'>Add New Semester</a>
         </div>
     </div>
 @endsection('content')
