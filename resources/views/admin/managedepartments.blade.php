@@ -27,11 +27,11 @@
     <div class="row">
         <h4 class="page-title">Departments</h4>
     </div>
-    <a href='{{ route('addDepartment') }}'>Add New Department</a>
+   
 
     <div class="row">
         <div class="table-responsive">
-            <table class="table table-bordered table-striped" style="border-color: skyblue;">
+            <table class="table">
                 <thead>
                     <tr class="bg-primary">
                         <th>Name</th>
@@ -51,17 +51,17 @@
 
                             <td class="actions-column"><form method="get" action="{{ route('admin.viewDepartment', ['department' => $dep->id]) }}">
                                 @csrf
-                                <input type="submit" class="btn btn-primary btn-rounded btn-login" value="View">
+                                <input type="submit" class="btn btn-primary" value="View">
                             </form>
                         
                             <form method="get" action="{{ route('admin.editDepartment', ['department' => $dep->id]) }}">
                                 @csrf
-                                <input type="submit" class="btn btn-primary btn-rounded btn-login" value="Edit">
+                                <input type="submit" class="btn btn-primary" value="Edit">
                             </form>
                             <form method="post" action="{{ route('admin.deleteDepartment', ['department' => $dep->id]) }}">
                                 @csrf
                                  @method('POST')
-                                <input type="submit" class="btn btn-primary btn-rounded btn-login" value="Delete">
+                                <input type="submit" class="btn btn-danger" value="Delete">
                             </form>
                             </td>
 
@@ -69,6 +69,7 @@
                     @endforeach
                 </tbody>
             </table>
+            <a class="btn btn-success"href='{{ route('addDepartment') }}'>Add New Department</a>
         </div>
     </div>
 @endsection('content')

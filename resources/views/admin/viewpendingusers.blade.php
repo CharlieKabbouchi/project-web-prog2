@@ -28,7 +28,7 @@
     </div>
     <div class="row">
         <div class="table-responsive">
-            <table class="table table-bordered table-striped">
+            <table class="table">
                 <thead>
                   
                     <tr class="bg-primary">
@@ -50,23 +50,23 @@
                                @if($puser->type=='teacher')
                             <form method="get" action="{{ route('admin.addTeacher', ['wteacher' => $puser->id]) }}">
                                 @csrf
-                                <input type="submit" class="btn btn-primary btn-rounded btn-login" value="Register">
+                                <input type="submit" class="btn btn-success" value="Register">
                             </form>
                             @elseif ($puser->type=='student')
                             <form method="get" action="{{ route('admin.addStudent', ['wstudent' => $puser->id]) }}">
                                 @csrf
-                                <input type="submit" class="btn btn-primary btn-rounded btn-login" value="Register">
+                                <input type="submit" class="btn btn-success" value="Register">
                             </form>
                             @elseif ($puser->type=='parent')
                             <form method="get" action="{{ route('admin.addParent', ['wparent' => $puser->id]) }}">
                                 @csrf
-                                <input type="submit" class="btn btn-primary btn-rounded btn-login" value="Register">
+                                <input type="submit" class="btn btn-success" value="Register">
                             </form>
                             @endif
                             <form method="post" action="{{ route('admin.deletePUser',['pending'=>$puser->id]) }}">
                                 @csrf
                                  @method('POST')
-                                <input type="submit" class="btn btn-primary btn-rounded btn-login" value="Delete">
+                                <input type="submit" class="btn btn-danger" value="Delete">
                             </form>
                             </td>
                            

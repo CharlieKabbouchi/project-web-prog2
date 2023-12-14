@@ -29,7 +29,7 @@
    
     <div class="row">
         <div class="table-responsive">
-            <table class="table table-bordered table-striped">
+            <table class="table">
                 <thead>
                     <tr class="bg-primary">
                         <th>Id</th>
@@ -49,7 +49,7 @@
                             <td class="actions-column">
                             <form method="get" action="{{ route('admin.viewalumni', ['alumni' => $alumni->id]) }}">
                                 @csrf
-                                <input type="submit" class="btn btn-primary btn-rounded btn-login" value="View">
+                                <input type="submit" class="btn btn-primary" value="View">
                             </form>
                             </td>
                            
@@ -59,9 +59,4 @@
             </table>
         </div>
     </div>
-    
-    <script>
-        console.log($totalCreditsShouldTaken);
-        console.log($totalCredits);
-        </script>
 @endsection('content')
