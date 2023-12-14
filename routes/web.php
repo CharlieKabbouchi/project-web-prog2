@@ -152,14 +152,14 @@ Route::prefix('admin')->group(function () {
 
 //Parents
         Route::get('/manage/parents', [AdminController::class, 'manageparents'])->name('admin.manageparents');
-        Route::get('/manage/parents/modify/{parent}', [AdminController::class, 'editparents'])->name('admin.editparent');
-        Route::get('/manage/parents/add/{wparent}', [AdminController::class, 'addparents'])->name('admin.addparents');//
-        Route::get('/manage/parents/create/{wparent}', [SParentController::class, 'create'])->name('admin.createparents');
+        Route::get('/manage/parents/modify/{parent}', [AdminController::class, 'editparents'])->name('admin.editParent');
+        Route::get('/manage/parents/add/{wparent}', [AdminController::class, 'addparents'])->name('admin.addParent');//
+        Route::get('/manage/parents/create/{wparent}', [SParentController::class, 'create'])->name('admin.createparent');
         Route::post('/manage/parents/store', [SParentController::class, 'store'])->name('admin.storeparents');
         Route::get('/manage/parents/show/{parent}', [SParentController::class, 'show'])->name('admin.showparent');
         Route::get('/manage/parents/edit/{parent}', [SparentController::class, 'edit'])->name('admin.editparents');
-        Route::put('/manage/parents/update/{parent}', [SParentController::class, 'update'])->name('admin.updateparents');
-        Route::post('/manage/parents/delete/{parent}', [SParentController::class, 'destroy'])->name('admin.deleteparent');
+        Route::post('/manage/parents/update/{parent}', [SParentController::class, 'update'])->name('admin.updateparents');
+        Route::post('/manage/parents/delete/{parent}', [SParentController::class, 'destroy'])->name('admin.deleteParent');
         Route::get('/manaeg/register/pendingparents',[AdminController::class, 'viewPendingparents'])->name('viewpendparents');
 
         //Alumnis

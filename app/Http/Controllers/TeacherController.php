@@ -216,11 +216,11 @@ class TeacherController extends Controller {
             'lastName' => 'required|string',
             'Gender' => 'required|string',
             'salary' => 'required|integer',
-            'email' => 'required|email',
+           // 'email' => 'required|email',
            'phone'=>'required',
            'DOB' =>'required'
         ]);
-          //'image' => 'required|image',//link
+         
     
         $te=Teacher::findOrFail($teacher);
         $te->firstName = $request->firstName;
@@ -231,7 +231,6 @@ class TeacherController extends Controller {
         $prf=$te->getProfile;
         $prf->phone=$request->phone;
         $prf->email=$request->email;
-        $prf->image="sdfsfs";//$request->image;
         $prf->dateOfBirth=$request->DOB;
         $prf->save();
         $te->save();

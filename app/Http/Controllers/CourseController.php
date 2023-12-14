@@ -96,15 +96,29 @@ $numberDeps=$departments->count();
         $course = Course::findOrFail($id);
         $course->name = $request->name;
         $course->credits = $request->credits;
-        $pivot = new DepartmentCourse ();
+        $existingDepartmentCourse = DepartmentCourse::where('course_id', $id)
+    ->where('department_id', $request->department)
+    ->first();
+    if (!$existingDepartmentCourse) {
+        // If the record doesn't exist, create new records
+        $pivot = new DepartmentCourse();
         $pivot->course_id = $course->id;
         $pivot->department_id = $request->department;
         $pivot->save();
-        $pivot=new SemesterCourse();
-        $pivot->course_id = $course->id;
-        $pivot->semester_id = $request->department;
-        $pivot->save();
-        $course->save();
+    }
+    $existingSemesterCourse = SemesterCourse::where('course_id', $id)
+    ->where('semester_id', $request->semester)
+    ->first();
+
+if (!$existingSemesterCourse) {
+    // If the record doesn't exist, create new records for SemesterCourse
+    $pivotSemester = new SemesterCourse();
+    $pivotSemester->course_id = $course->id;
+    $pivotSemester->semester_id =$request->semester;
+    $pivotSemester->save();
+}
+    
+    $course->save();
         return redirect(route("admin.manageCourses"));
     }
 

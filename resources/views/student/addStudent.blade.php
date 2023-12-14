@@ -44,12 +44,6 @@
             </div>
 
             <div class="form-group">
-                <label for="image">Profile Image:</label>
-                <input type="file" class="form-control" id="email" name="image" required>
-                <img src="{{ asset($wstudent->image) }}" alt="Student Image" width="50">
-            </div>
-
-            <div class="form-group">
                 <label for="phone">Phone:</label>
                 <input type="text" class="form-control" id="phone" name="phone" value="{{ $wstudent->phone }}" required>
             </div>
