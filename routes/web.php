@@ -256,6 +256,7 @@ Route::prefix('alumni')->group(function () {
         // })->name('alumni.dashboard');
         Route::get('/dashboard', [AlumniController::class, 'showDashboard'])->name('alumni.dashboard');
         Route::post('/logout', [AlumniController::class, 'LogoutAlumni'])->name('alumni.logout');
+        Route::get('/view/profile', [AlumniController::class,'viewProfile'])->name('viewprofile');
 
         Route::get('/manage/Events', [AlumniController::class, 'manageEvents'])->name('alumni.manageEvents');
         Route::get('/manage/Events/edit/{event}', [AlumniController::class, 'showEdit'])->name('alumni.editEvent');
