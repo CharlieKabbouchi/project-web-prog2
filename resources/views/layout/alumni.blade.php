@@ -85,7 +85,7 @@
 
                         <li class="nav-item dropdown hidden-caret">
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"
-                                aria-expanded="false"> <img src="{{ asset('assets/img/profile.jpg') }}"
+                                aria-expanded="false"> <img src="{{ $alumni->getProfile->image}}"
                                     alt="image profile" width="36" class="img-circle"></a>
                             <ul class="dropdown-menu dropdown-user animated fadeIn">
                                 <li>
@@ -136,12 +136,12 @@
                             <div class="collapse in" id="collapseExample">
                                 <ul class="nav">
                                     <li>
-                                        <a href="{{ route('viewprofile') }}">
+                                        <a href="{{ route('alumni.viewprofile') }}">
                                             <span class="link-collapse">My Profile</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('editprofile', ['id' => $alumni->id]) }}">
+                                        <a href="{{ route('alumni.editprofile', ['id' => $alumni->id]) }}">
                                             <span class="link-collapse">Edit Profile</span>
                                         </a>
                                     </li>

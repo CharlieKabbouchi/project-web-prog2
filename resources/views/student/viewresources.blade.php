@@ -38,7 +38,7 @@
                     @foreach ($resourceDetails as $resource)
                         <tr>
                         <td>{{ $resource['teacherName'] }}</td>
-                        <td>{{ $resource['attachment'] }}</td>
+                         <td><a href="{{$resource['attachment']}}" class="btn btn-primary">Download File</a></td>   
                         </tr>
                     @endforeach
                 </tbody>

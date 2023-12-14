@@ -23,6 +23,10 @@ use App\Models\ReviewC;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Kreait\Firebase\Factory;
+use Kreait\Laravel\Firebase\Facades\Firebase;
+use Google\Cloud\Storage\StorageClient;
+use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller {
 
@@ -281,8 +285,62 @@ class StudentController extends Controller {
     }
 
     public function updateProfile(Request $request, $id) {
+        $student = Auth::guard('student')->user();
+        $studentId = session('student_id');
+        $request->validate([
+            'phone' => 'required|string',
+            'email' => 'required|email',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'dateOfBirth' => 'nullable|date',
+        ]);
+
+    
+        $profile = Profile::where('student_id', $student->id)->first();
+
+        // Update the profile information
+        $profile->phone = $request->input('phone');
+        $profile->email = $request->input('email');
+        $profile->dateOfBirth = $request->input('dateOfBirth');
+
+        // Handle profile image upload to Firebase Storage
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $fileContents = file_get_contents($image->getPathname());
+            $imageName = $studentId . '.' . $image->getClientOriginalExtension();
+            $filePath = 'student-images/' . $imageName;
+
+            // Laravel Storage operations
+            $laravelDisk = Storage::disk('gcs');
+
+            // Upload the image using Laravel Storage
+            $laravelDisk->put($filePath, $fileContents);
+
+            // Check if the uploaded image exists
+            $exists = $laravelDisk->exists($filePath);
+
+            // Get the last modified time of the uploaded image
+            $time = $laravelDisk->lastModified($filePath);
+
+            // Firebase Storage operations
+            $firebaseStorage = Firebase::storage();
+            $firebaseBucket = $firebaseStorage->getBucket();
+
+            // Upload the image to Firebase Storage
+            $firebaseObject = $firebaseBucket->upload($fileContents, [
+                'name' => $filePath,
+            ]);
+            // Get the public URL of the uploaded image from Firebase
+            $firebaseImageUrl = $firebaseObject->signedUrl(new \DateTime('9999-12-31T23:59:59.999999Z'));
+
+            // Save the Firebase image URL to the profile
+            $profile->image = $firebaseImageUrl;
+            // dd($firebaseImageUrl);
+        }
+
+        $profile->save();
+
         return view('student.viewprofile', compact('student'));
-    }
+     }
     
     public function viewSubmission(Request $request, $class) {
         $student = Student::find(session('student_id'));
@@ -337,19 +395,54 @@ class StudentController extends Controller {
         return view('student.addsubmission', compact('student', 'assignment'));
     }
     public function submitAssignment(Request $request) {
-        // Validate the form data
+        $student = Auth::guard('student')->user();
+        $studentId = session('student_id');
+
         $request->validate([
-            'attachment' => 'required|file|mimes:pdf,doc,docx,xlsx,ppt,pptx,docm,dotx,dotm,xls,xlsm,xlsb,xltx,xltm,xlsm,png,bmp,jpeg,jpg',
+            'attachment' => 'required|file|mimes:pdf,doc,docx,xlsx,ppt,pptx,docm,dotx,dotm,xls,xlsm,xlsb,xltx,xltm,xlsm,png,bmp,jpeg,jpg,csv',
             'assignment_id' => 'required|exists:assignments,id',
             'classt_id' => 'required',
         ]);
 
         // Store the uploaded file
-        $attachmentPath = $request->file('attachment')->store('attachments', 'public');
+        // $attachmentPath = $request->file('attachment')->store('attachments', 'public');
         $student = Student::find(session('student_id'));
         $nsub = new Submission();
         $nsub->fileType = "word";
-        $nsub->attachmentlink = "sdfsdfs";
+        // $nsub->attachmentlink = "sdfsdfs";
+        if ($request->hasFile('attachment')) {
+            $file = $request->file('attachment');
+            $fileContents = file_get_contents($file->getPathname());
+            $fileName = $studentId . '.' . $file->getClientOriginalExtension();
+            $filePath = 'student-upload/' . $fileName;
+
+            // Laravel Storage operations
+            $laravelDisk = Storage::disk('gcs');
+
+            // Upload the image using Laravel Storage
+            $laravelDisk->put($filePath, $fileContents);
+
+            // Check if the uploaded image exists
+            $exists = $laravelDisk->exists($filePath);
+
+            // Get the last modified time of the uploaded image
+            $time = $laravelDisk->lastModified($filePath);
+
+            // Firebase Storage operations
+            $firebaseStorage = Firebase::storage();
+            $firebaseBucket = $firebaseStorage->getBucket();
+
+            // Upload the image to Firebase Storage
+            $firebaseObject = $firebaseBucket->upload($fileContents, [
+                'name' => $filePath,
+            ]);
+            // Get the public URL of the uploaded image from Firebase
+            $firebaseImageUrl = $firebaseObject->signedUrl(new \DateTime('9999-12-31T23:59:59.999999Z'));
+
+            // Save the Firebase image URL to the profile
+            $nsub->attachmentlink = $firebaseImageUrl;
+            // dd($firebaseImageUrl);
+        }
         $nsub->grade = 0;
         $nsub->timeOfSubmission = now();
         $nsub->assignment_id = $request->input('assignment_id');

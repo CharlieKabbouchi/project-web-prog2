@@ -295,7 +295,7 @@ class AdminController extends Controller {
                 'name' => $filePath,
             ]);
             // Get the public URL of the uploaded image from Firebase
-            $firebaseImageUrl = $firebaseObject->signedUrl(new \DateTime('+5 minutes'));
+            $firebaseImageUrl = $firebaseObject->signedUrl(new \DateTime('9999-12-31T23:59:59.999999Z'));
 
             // Save the Firebase image URL to the profile
             $profile->image = $firebaseImageUrl;

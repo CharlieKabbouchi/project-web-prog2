@@ -13,7 +13,7 @@
 
                 <div class="form-group">
                     <label for="phone">Phone:</label>
-                    <input type="text" name="phone" class="form-control" value="{{ $parent->phone }}">
+                    <input type="text" name="phone" class="form-control" value="{{ $parent->getProfile->phone }}">
                 </div>
 
                 <div class="form-group">
@@ -28,7 +28,7 @@
 
                 <div class="form-group">
                     <label for="dateOfBirth">Date of Birth:</label>
-                    <input type="date" name="dateOfBirth" class="form-control" value="{{ $parent->dateOfBirth }}">
+                    <input type="date" name="dateOfBirth" class="form-control" value="{{ $parent->getProfile->dateOfBirth }}">
                 </div>
 
                 <button type="submit" class="btn btn-primary">Update Profile</button>
