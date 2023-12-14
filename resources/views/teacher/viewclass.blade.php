@@ -1,5 +1,24 @@
 @extends('layout.teacher')
+<style>
+    .actions-column {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+    }
 
+    .table-bordered {
+        border: 2px solid #00688B; /* Darker blue color code */
+    }
+
+    .table-bordered th,
+    .table-bordered td {
+        border: 1px solid #00688B; /* Darker blue color code */
+    }
+
+    .table-bordered thead th {
+        background-color: #87CEEB; /* Lighter blue color code for header background */
+    }
+</style>
 @section('content')
     <div class="container mt-5">
         <div class="card mb-4">
@@ -9,17 +28,25 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
-                    <p><strong>Class ID:</strong> {{ $classInfo['id'] }}</p>
-                    <p><strong>Teacher:</strong> {{ $teacher->firstName }} {{ $teacher->lastName }}</p>
-                    <p><strong>Course:</strong> {{ $course->name }}</p>
-                    <p><strong>Semester:</strong> {{ $semester->yearBelongsTo }} {{ $semester->type }}</p>
-                    <p><strong>Start Time:</strong> {{ $class['starttime']  }}</p>
-                    <p><strong>End Time:</strong> {{ $class['endtime'] }}</p>
+                        <p><strong>Class ID:</strong> {{ $classInfo['id'] }}</p>
+                        <p><strong>Teacher:</strong> {{ $teacher->firstName }} {{ $teacher->lastName }}</p>
+                        <p><strong>Course:</strong> {{ $course->name }}</p>
+                        <p><strong>Semester:</strong> {{ $semester->yearBelongsTo }} {{ $semester->type }}</p>
+                        <p><strong>Start Time:</strong> {{ $class['starttime']  }}</p>
+                        <p><strong>End Time:</strong> {{ $class['endtime'] }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Uploads</h5>
+                        <div class="btn-group-vertical" role="group">
+                            <a href="{{ route('teacher.createAssignment', ['classt_id' => $class['id']]) }}" class="btn btn-primary btn-block">Upload Assignment</a>
+                            <a href="{{ route('teacher.createQuiz', ['classt_id' => $class['id']]) }}" class="btn btn-primary btn-block">Upload Quiz</a>
+                            <a href="{{ route('teacher.createProject', ['classt_id' => $class['id']]) }}" class="btn btn-primary btn-block">Upload Project</a>
+                            <a href="{{ route('teacher.createResource', ['classt_id' => $class['id']]) }}" class="btn btn-primary btn-block">Upload Resource</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
         <h2 class="mb-4">Students Enrolled</h2>
         @if(count($students) > 0)
             <table class="table table-bordered table-striped" style="border-color: skyblue;">

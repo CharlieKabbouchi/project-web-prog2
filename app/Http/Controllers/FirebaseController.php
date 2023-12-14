@@ -38,7 +38,7 @@ class FirebaseController extends Controller {
     public function uploadImage(Request $request)
     {
         $this->validate($request, [
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif',
         ]);
 
         $image = $request->file('image');

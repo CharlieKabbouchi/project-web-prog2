@@ -302,5 +302,16 @@ Route::prefix('teacher')->group(function () {
         Route::get('/teacher/classes/{class}/students/{student}/edit', [TeacherController::class, 'editStudentGrades'])->name('editStudentGrades');
         Route::post('/teacher/classes/{class}/students/{student}/update', [TeacherController::class, 'storeStudentGrades'])->name('storeStudentGrades');
 
+        //Assignments
+        Route::get('/create-assignment/{classt_id}', [TeacherController::class, 'createA'])->name('teacher.createAssignment');
+        Route::get('/create-quiz/{classt_id}', [TeacherController::class, 'createQ'])->name('teacher.createQuiz');
+        Route::get('/create-project/{classt_id}', [TeacherController::class, 'createP'])->name('teacher.createProject');
+        Route::post('/store-assignment/{classt_id}', [TeacherController::class, 'storeA'])->name('teacher.storeAssignment');
+        Route::post('/store-quiz/{classt_id}', [TeacherController::class, 'storeQ'])->name('teacher.storeQuiz');
+        Route::post('/store-project/{classt_id}', [TeacherController::class, 'storeP'])->name('teacher.storeProject');
+
+        //Resources
+        Route::get('/create-resource/{classt_id}', [TeacherController::class, 'createRe'])->name('teacher.createResource');
+        Route::post('/store-resource/{classt_id}', [TeacherController::class, 'storeRe'])->name('teacher.storeResource');
     });
 });

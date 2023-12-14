@@ -9,7 +9,7 @@ use App\Models\ReviewC;
 use App\Models\Department;
 use App\Models\DepartmentCourse;
 use App\Models\Semester;
-use App\Models\Student;
+use App\Models\Submission;
 use App\Models\SemesterCourse;
 use App\Models\ClassT;
 use Illuminate\Http\Request;
@@ -35,27 +35,27 @@ class ClassTController extends Controller {
     }
 
 
-    public function store(Request $request)
+    // public function store(Request $request)
+    // {
+    //     $sclass = ClassT::findOrFail($class);
 
-        $sclass=ClassT::findOrFail($class);
-
-        $teacherInfo = Teacher::whereHas('getClassT', function ($query) use ($class) {
-            $query->where('id', $class);
-        })->first();
+    //     $teacherInfo = Teacher::whereHas('getClassT', function ($query) use ($class) {
+    //         $query->where('id', $class);
+    //     })->first();
         
-        $averageGrade = StudentClassT::where('classt_id', $class)
-            ->avg('averageGrade');
+    //     $averageGrade = StudentClassT::where('classt_id', $class)
+    //         ->avg('averageGrade');
     
-        $students = Student::whereHas('getClassT', function ($query) use ($class) {
-            $query->where('id', $class);
-        })->get();
+    //     $students = Student::whereHas('getClassT', function ($query) use ($class) {
+    //         $query->where('id', $class);
+    //     })->get();
         
-        $reviews = ReviewC::where('classt_id', $class)->get();
+    //     $reviews = ReviewC::where('classt_id', $class)->get();
               
-        $admin = Auth::guard('admin')->user();
-        return view('class.viewClass', compact('sclass', 'admin', 'teacherInfo', 'averageGrade', 'students','reviews'));
+    //     $admin = Auth::guard('admin')->user();
+    //     return view('class.viewClass', compact('sclass', 'admin', 'teacherInfo', 'averageGrade', 'students','reviews'));
        
-    }
+    // }
 
     public function edit(Request $request, $id)
     {

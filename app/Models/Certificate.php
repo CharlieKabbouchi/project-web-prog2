@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Certificate extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['graduationCertificateImage', 'description', 'teacher_id',];
     
     public function getAlumni(){
         return $this->belongsTo(Alumni::class,"alumni_id","id");

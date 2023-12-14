@@ -2,19 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Assignment;
 use App\Models\Teacher;
 use App\Models\Department;
 use App\Models\DepartmentCourse;
 use App\Models\ClassT;
 use App\Models\Course;
+use App\Models\Certificate;
 use App\Models\Pending;
 use App\Models\Profile;
 use App\Models\Semester;
 use App\Models\Student;
+use App\Models\UploadResource;
 use App\Models\SemesterCourse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Kreait\Firebase\Storage;
 
 class TeacherController extends Controller {
     /**
@@ -124,22 +128,172 @@ class TeacherController extends Controller {
 
     public function storeC(Request $request)
     {
+        $teacher = Auth::guard('teacher')->user();
         $request->validate([
             'graduationCertificateImage' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'description' => 'required',
         ]);
-        $teacher = Auth::guard('teacher')->user();
 
-        $imagePath = $request->file('certificateImage')->storeAs('public/certificates', 'certificate_' . time() . '.' . $request->file('certificateImage')->getClientOriginalExtension());
-        $certificate = new Certificate([
-            'graduationCertificateImage' => $imagePath,
-            'description' => $request->input('description'),
-            'teacher_id' => $teacher->id,
-        ]);
-        $certificate->save();
-        return redirect(route('teacher.manageCertificates'))->with('success', 'Certificate added successfully');
+        if($request->hasFile('certificateImage')){
+            $filename = time().'-'.$request->file('certificateImage')->getClientOriginalName();
+            request->file('certificateImage')->storeAs('Certificates',$filename);
+            $imagePath = "storage/Certificates/".$filename;
+            $certificate = new Certificate();
+            $certificate->graduationCertificateImage = $imagePath;
+            $certificate->description = $request->description;
+            $certificate->teacher_id = $teacher->id;
+            $certificate->save();
+            return redirect(route('teacher.manageCertificates'))->with('success', 'Certificate added successfully');
+            }else{
+                return "No data found";
+            }
     }
 
+    public function createA($classt_id)
+    {
+        $teacher = Auth::guard('teacher')->user();
+        return view('teacher.addassignment', compact('teacher','classt_id'));
+    }
+
+    public function createQ($classt_id)
+    {
+        $teacher = Auth::guard('teacher')->user();
+        return view('teacher.addquiz', compact('teacher','classt_id'));
+    }
+
+    public function createP($classt_id)
+    {
+        $teacher = Auth::guard('teacher')->user();
+        return view('teacher.addproject', compact('teacher','classt_id'));
+    }
+
+    public function createRe($classt_id)
+    {
+        $teacher = Auth::guard('teacher')->user();
+        return view('teacher.uploadresource', compact('teacher','classt_id'));
+    }
+
+    public function storeA(Request $request, $classt_id)
+{
+    $teacher = Auth::guard('teacher')->user();
+    $this->validate($request, [
+        'startingDate' => 'required|date',
+        'endingDate' => 'required|date',
+    ]);
+    //$storage = Firebase::storage();
+    //$storageBucket = $storage->getBucket();
+    // $fileUrl = null;
+
+    // if ($request->hasFile('file')) {
+    //     $file = $request->file('file');
+    //     $filename = time() . '-' . $file->getClientOriginalName();
+    //     $storageObject = $storageBucket->upload($file, [
+    //         'name' => $filename,
+    //     ]);
+
+    //     $fileUrl = $storageObject->signedUrl(new \DateTime('+5 minutes'));
+    // }
+    $fileUrl = 'FileUrlA';
+    $assignment = new Assignment();
+    $assignment->title = 'assignment';
+    $assignment->description = $fileUrl;
+    $assignment->startingDate = $request->startingDate;
+    $assignment->endingDate = $request->endingDate;
+    $assignment->teacher_id = $teacher->id;
+    $assignment->classt_id = $classt_id;
+    $assignment->save();
+    return redirect()->route('teacher.manageClasses');
+}
+
+public function storeQ(Request $request, $classt_id)
+{
+    $teacher = Auth::guard('teacher')->user();
+    $this->validate($request, [
+        'startingDate' => 'required|date',
+        'endingDate' => 'required|date',
+    ]);
+    //$storage = Firebase::storage();
+    //$storageBucket = $storage->getBucket();
+    // $fileUrl = null;
+
+    // if ($request->hasFile('file')) {
+    //     $file = $request->file('file');
+    //     $filename = time() . '-' . $file->getClientOriginalName();
+    //     $storageObject = $storageBucket->upload($file, [
+    //         'name' => $filename,
+    //     ]);
+
+    //     $fileUrl = $storageObject->signedUrl(new \DateTime('+5 minutes'));
+    // }
+    $fileUrl = 'FileUrlQ';
+    $quiz = new Assignment();
+    $quiz->title = 'quiz';
+    $quiz->description = $fileUrl;
+    $quiz->startingDate = $request->startingDate;
+    $quiz->endingDate = $request->endingDate;
+    $quiz->teacher_id = $teacher->id;
+    $quiz->classt_id = $classt_id;
+    $quiz->save();
+    return redirect()->route('teacher.showClass');
+}
+
+public function storeP(Request $request, $classt_id)
+{
+    $teacher = Auth::guard('teacher')->user();
+    $this->validate($request, [
+        'startingDate' => 'required|date',
+        'endingDate' => 'required|date',
+    ]);
+    // $storage = Firebase::storage();
+    // $storageBucket = $storage->getBucket();
+    // $fileUrl = null;
+
+    // if ($request->hasFile('file')) {
+    //     $file = $request->file('file');
+    //     $filename = time() . '-' . $file->getClientOriginalName();
+    //     $storageObject = $storageBucket->upload($file, [
+    //         'name' => $filename,
+    //     ]);
+    //     $fileUrl = $storageObject->signedUrl(new \DateTime('+5 minutes'));
+    // }
+    $fileUrl = 'FileUrlP';
+    $project = new Assignment();
+    $project->title = 'project';
+    $project->description = $fileUrl;
+    $project->startingDate = $request->startingDate;
+    $project->endingDate = $request->endingDate;
+    $project->teacher_id = $teacher->id;
+    $project->classt_id = $classt_id;
+    $project->save();
+
+    return redirect()->route('teacher.manageClasses');
+}
+
+public function storeRe(Request $request, $classt_id)
+{
+    $teacher = Auth::guard('teacher')->user();
+    
+    //$storage = Firebase::storage();
+    //$storageBucket = $storage->getBucket();
+    // $fileUrl = null;
+
+    // if ($request->hasFile('file')) {
+    //     $file = $request->file('file');
+    //     $filename = time() . '-' . $file->getClientOriginalName();
+    //     $storageObject = $storageBucket->upload($file, [
+    //         'name' => $filename,
+    //     ]);
+
+    //     $fileUrl = $storageObject->signedUrl(new \DateTime('+5 minutes'));
+    // }
+    $fileUrl = 'Resource';
+    $resource = new UploadResource();
+    $resource->attachement = $fileUrl;
+    $resource->teacher_id = $teacher->id;
+    $resource->classt_id = $classt_id;
+    $resource->save();
+    return redirect()->route('teacher.manageClasses');
+}
 
     public function index() {
        
