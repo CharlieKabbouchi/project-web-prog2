@@ -199,7 +199,7 @@ Route::prefix('student')->group(function () {
         Route::get('/manage/class', [StudentController::class, 'manageClass'])->name('student.manageclass');
         Route::get('/manage/Q&A', [StudentController::class, 'manageQandA'])->name('student.manageQ&A');
         Route::get('/manage/calendar', [StudentController::class, 'viewCalendar'])->name('student.viewCalendar');
-        Route::get('/view/profile/{id}', [StudentController::class, 'viewProfile'])->name('student.viewprofile');
+        Route::get('/view/profile', [StudentController::class, 'viewProfile'])->name('student.viewprofile');
         Route::get('/edit/profile/{id}', [StudentController::class, 'editProfile'])->name('student.editprofile');
       
         Route::get('/view/class/{id}', [StudentController::class, 'viewClass'])->name('student.viewclass');
@@ -239,7 +239,7 @@ Route::prefix('parent')->group(function () {
 
         Route::get('/dashboard', [SParentController::class, 'showDashboard'])->name('parent.dashboard');
         Route::get('/ShowClasses', [SParentController::class, 'show'])->name('parent.ShowClasses');
-
+        Route::get('/view/proile',[SParentController::class,'viewProfile'])->name('parent.viewprofile');    
         // Add other parent routes here
     });
 });
@@ -279,7 +279,7 @@ Route::prefix('teacher')->group(function () {
         //     return 'Teacher Dashboard';
         // })->name('teacher.dashboard');
         Route::get('/dashboard', [TeacherController::class, 'showDashboard'])->name('teacher.dashboard');
-       
+        Route::get('/view/profile',[TeacherController::class,'viewProfile'])->name('teacher.viewprofile');
         //Classes
         Route::get('/manage/classes', [TeacherController::class, 'manageClasses'])->name('teacher.manageClasses');
         Route::get('/manage/classes/create', [ClassTController::class, 'createT'])->name('teacher.createClass');

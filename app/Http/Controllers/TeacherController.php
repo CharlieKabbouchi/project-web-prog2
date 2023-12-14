@@ -59,6 +59,11 @@ class TeacherController extends Controller {
         'totalUploadedResources'));
     }
 
+    public function viewprofile()
+    {
+        $teacher = Auth::guard('teacher')->user();
+        return view('teacher.viewprofile',compact('teacher'));
+    }
 
     public function manageClasses(Request $request)
     {

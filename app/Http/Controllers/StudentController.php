@@ -232,8 +232,12 @@ class StudentController extends Controller {
 
         return redirect()->route('student.manageclass')->with('success', 'Enrollment successful!');
     }
-    public function viewProfile() {
-        //
+    public function viewprofile()
+    {
+        $student = Auth::guard('student')->user();
+        $student = Student::find(session('student_id'));
+        
+        return view('student.viewprofile',compact('student'));
     }
 
     public function editProfile() {

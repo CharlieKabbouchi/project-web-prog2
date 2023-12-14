@@ -204,9 +204,8 @@
 
 							<div class="collapse in" id="collapseExample">
 								<ul class="nav">
-									<li>
-                                       
-										<a href="">
+									<li> 
+										<a href="{{route('teacher.viewprofile')}}">
 											<span class="link-collapse">My Profile</span>
 										</a>
 									</li>

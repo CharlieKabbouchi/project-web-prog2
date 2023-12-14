@@ -29,6 +29,11 @@ class SParentController extends Controller {
         return back()->withErrors(['error' => 'Invalid login credentials']);
     }
 
+    public function viewprofile()
+    {
+        $parent = SParent::find(session('parent_id'));        
+        return view('parent.viewprofile',compact('parent'));
+    }
 
     public function showDashboard(Request $request) {
         $parent = SParent::find(session('parent_id'));
