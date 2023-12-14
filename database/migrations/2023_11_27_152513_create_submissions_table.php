@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('fileType')->nullable();
             $table->longText('attachmentlink')->nullable();
-            $table->integer('grade');
+            $table->integer('grade')->nullable();
             $table->DateTime('timeOfSubmission');
             $table->unsignedBigInteger('assignment_id');
             $table->string('student_id');

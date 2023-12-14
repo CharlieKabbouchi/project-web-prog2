@@ -203,10 +203,11 @@ Route::prefix('student')->group(function () {
         Route::get('/edit/profile/{id}', [StudentController::class, 'editProfile'])->name('student.editprofile');
       
         Route::get('/view/class/{id}', [StudentController::class, 'viewClass'])->name('student.viewclass');
-        Route::get('/view/resource/{id}', [StudentController::class, 'viewResource'])->name('viewresource');
-        Route::get('/view/assignment/{id}', [StudentController::class, 'viewAssignment'])->name('viewassignment');
-        Route::get('/view/submission/{id}', [StudentController::class, 'viewSubmission'])->name('viewsubmission');
-        Route::get('/add/submission/{id}', [StudentController::class, 'addSubmission'])->name('addsubmission');
+        Route::get('/view/resource/{class}', [StudentController::class, 'viewResource'])->name('student.viewresources');
+        Route::get('/view/assignment/{class}', [StudentController::class, 'viewAssignment'])->name('student.viewassignments');
+        Route::get('/view/submission/{class}', [StudentController::class, 'viewSubmission'])->name('student.viewsubmissions');
+        Route::get('/add/submission/{assignment}', [StudentController::class, 'addSubmission'])->name('student.addsubmission');
+        Route::post('/add/submission/', [StudentController::class, 'submitAssignment'])->name('submit.assignment');
         Route::get('/enroll/class/', [StudentController::class, 'enrollClass'])->name('student.enrollClass');
         Route::get('/enroll/{classId}', [StudentController::class, 'enroll'])->name('student.enroll');
         Route::post('/enroll/event/{eventId}', [StudentController::class, 'enrollEvent'])->name('student.enrollToEvent');
