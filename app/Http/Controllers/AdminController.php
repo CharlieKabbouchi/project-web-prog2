@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Kreait\Firebase\Factory;
+use Kreait\Laravel\Firebase\Facades\Firebase;
+use Google\Cloud\Storage\StorageClient;
+use Illuminate\Support\Facades\Storage;
 use ConsoleTVs\Charts\Facades\Charts;
 use App\Http\Controllers\DepartmentController;
 use App\Models\Admin;
@@ -13,6 +17,7 @@ use App\Models\SParent;
 use App\Models\Teacher;
 use App\Models\Department;
 use App\Models\Pending;
+use App\Models\Profile;
 use App\Models\Semester;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -80,7 +85,7 @@ class AdminController extends Controller {
             $totalCreditsShouldTaken = 0;
             $totalCreditsShouldTaken += $student->getDepartment->totalCredits;
             if ($totalCreditsShouldTaken == $totalCredits && $student->isGraduated == false) {
-               // dd($student);
+                // dd($student);
                 $student->isGraduated = true;
                 $alumni = new Alumni();
                 $alumni->graduationYear = date('Y');
@@ -231,21 +236,71 @@ class AdminController extends Controller {
 
 
 
-    public function viewprofile()
-    {
+    public function viewprofile() {
         $admin = Auth::guard('admin')->user();
-        return view('admin.viewprofile',compact('admin'));
-
+        return view('admin.viewprofile', compact('admin'));
     }
-    
-    public function editprofile($id)
-    {
 
+    public function editprofile($id) {
+        $admin = Auth::guard('admin')->user();
+        return view('admin.editprofile', compact('admin'));
     }
-    public function updateprofile($profile) {
-        //
+    public function updateProfile(Request $request, $id) {
+        $admin = Auth::guard('admin')->user();
+        $adminId = session('admin_id');
+        $request->validate([
+            'phone' => 'required|string',
+            'email' => 'required|email',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'dateOfBirth' => 'nullable|date',
+        ]);
 
-    }
+        $profile = Profile::where('admin_id', $admin->id)->first();
+
+        // Update the profile information
+        $profile->phone = $request->input('phone');
+        $profile->email = $request->input('email');
+        $profile->dateOfBirth = $request->input('dateOfBirth');
+
+        // Handle profile image upload to Firebase Storage
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $fileContents = file_get_contents($image->getPathname());
+            $imageName = $adminId . '.' . $image->getClientOriginalExtension();
+            $filePath = 'admin-images/' . $imageName;
+
+            // Laravel Storage operations
+            $laravelDisk = Storage::disk('gcs');
+
+            // Upload the image using Laravel Storage
+            $laravelDisk->put($filePath, $fileContents);
+
+            // Check if the uploaded image exists
+            $exists = $laravelDisk->exists($filePath);
+
+            // Get the last modified time of the uploaded image
+            $time = $laravelDisk->lastModified($filePath);
+
+            // Firebase Storage operations
+            $firebaseStorage = Firebase::storage();
+            $firebaseBucket = $firebaseStorage->getBucket();
+
+            // Upload the image to Firebase Storage
+            $firebaseObject = $firebaseBucket->upload($fileContents, [
+                'name' => $filePath,
+            ]);
+            // Get the public URL of the uploaded image from Firebase
+            $firebaseImageUrl = $firebaseObject->signedUrl(new \DateTime('+5 minutes'));
+
+            // Save the Firebase image URL to the profile
+            $profile->image = $firebaseImageUrl;
+            // dd($firebaseImageUrl);
+        }
+
+        $profile->save();
+
+        return view('admin.viewprofile', compact('admin'));
+     }
 
     public function showDashboard(Request $request) {
         // $admin = Admin::find(session('admin_id'));
