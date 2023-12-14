@@ -76,6 +76,14 @@ class AlumniController extends Controller {
         // dd(Hash::make('12345678'));
         return view('alumni.dashboard', compact('alumni', 'graduationYear', 'departmentName', 'eventsCount', 'nonEventsCount'));
     }
+
+    public function viewprofile()
+    {
+        $alumni = Auth::guard('alumni')->user();
+        return view('alumni.viewprofile',compact('alumni'));
+
+    }
+
     public function manageEvents(Request $request) {
         $alumniId = session('alumni_id');
         $alumni = Auth::guard('alumni')->user();
