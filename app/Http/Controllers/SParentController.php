@@ -68,7 +68,11 @@ class SParentController extends Controller {
         return view('parent.dashboard', compact('parent', 'studentData', 'classes'));
     }
     
-    
+    public function viewprofile()
+    {
+        $parent = SParent::find(session('parent_id'));        
+        return view('parent.viewprofile',compact('parent'));
+    }
     
     
 

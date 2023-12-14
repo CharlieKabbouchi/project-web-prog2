@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('upload_resources', function (Blueprint $table) {
             $table->id();
-            $table->string('attachement');
+            $table->string('attachement', 1000);
             $table->unsignedBigInteger('classt_id');
             $table->string('teacher_id');
             $table->foreign('teacher_id')

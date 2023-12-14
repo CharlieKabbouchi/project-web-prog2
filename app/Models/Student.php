@@ -39,7 +39,7 @@ class Student extends Authenticatable {
     }
 
     public function getSParent() {
-        return $this->belongsTo(SParent::class, "sparent_id", "id");
+        return $this->belongsTo(SParent::class, "s_parent_id", "id");
     }
 
     public function getClassT() {

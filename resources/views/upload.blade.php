@@ -15,7 +15,7 @@
     <form action="{{ route('upload.image') }}" method="post" enctype="multipart/form-data">
         @csrf
         <label for="image">Select Image:</label>
-         <input type="file" name="image" accept="image/*">
+         <input type="file" name="image">
         <button type="submit">Upload</button>
     </form>
 </body>

@@ -21,13 +21,12 @@
 </style>
 @section('content')
     <div class="row">
-        <h4 class="page-title">Resources Details</h4>
+        <h4 class="page-title">Resources Are</h4>
     </div>
 
     <div class="row">
         <div class="col-md-12">
-            <h5>Uploaded resources are:</h5>
-            <!-- Display class information -->
+        
             <table class="table">
                 <thead>
                     <tr>
@@ -39,7 +38,7 @@
                     @foreach ($resourceDetails as $resource)
                         <tr>
                         <td>{{ $resource['teacherName'] }}</td>
-                        <td>{{ $submission['attachment'] }}</td> 
+                        <td>{{ $resource['attachment'] }}</td>
                         </tr>
                     @endforeach
                 </tbody>

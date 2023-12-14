@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('submissions', function (Blueprint $table) {
             $table->id();
             $table->string('fileType')->nullable();
-            $table->longText('attachmentlink')->nullable();
-            $table->integer('grade');
+            $table->longText('attachmentlink', 1000)->nullable();
+            $table->integer('grade')->nullable();
             $table->DateTime('timeOfSubmission');
             $table->unsignedBigInteger('assignment_id');
             $table->string('student_id');

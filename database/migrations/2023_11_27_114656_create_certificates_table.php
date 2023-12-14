@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('certificates', function (Blueprint $table) {
             $table->id();
-            $table->string('graduationCertificateImage');
-            $table->longText('description');
+            $table->string('graduationCertificateImage', 1000);
+            $table->string('description');
             $table->string('alumni_id')->nullable();
             $table->string('teacher_id')->nullable();
             $table->foreign('alumni_id')

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('firstName');
             $table->string('lastName');
             $table->string('Gender');
-            $table->integer('salary');
+            $table->integer('salary')->default(0);
             $table->string('email')->unique();
             $table->string('password');
             // $table->enum('status', ['pending', 'approved'])->default('pending');

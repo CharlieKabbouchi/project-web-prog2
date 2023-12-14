@@ -75,7 +75,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/view/profile', [AdminController::class, 'viewprofile'])->name('viewprofile');
         Route::get('/add/department}', [AdminController::class, 'addDepartment'])->name('addDepartment');
         Route::get('/edit/profile/{id}', [AdminController::class, 'editprofile'])->name('editprofile');
-        
+        Route::put('/update/profile/{id}', [AdminController::class, 'updateProfile'])->name('admin.updateprofile');
         //Departments
         Route::get('/manage/departments', [AdminController::class, 'manageDepartments'])->name('admin.manageDepartments');
         Route::get('/manage/departments/view/{department}', [AdminController::class, 'viewDepartments'])->name('admin.viewDepartment');
@@ -199,14 +199,15 @@ Route::prefix('student')->group(function () {
         Route::get('/manage/class', [StudentController::class, 'manageClass'])->name('student.manageclass');
         Route::get('/manage/Q&A', [StudentController::class, 'manageQandA'])->name('student.manageQ&A');
         Route::get('/manage/calendar', [StudentController::class, 'viewCalendar'])->name('student.viewCalendar');
-        Route::get('/view/profile/{id}', [StudentController::class, 'viewProfile'])->name('student.viewprofile');
+        Route::get('/view/profile', [StudentController::class, 'viewProfile'])->name('student.viewprofile');
         Route::get('/edit/profile/{id}', [StudentController::class, 'editProfile'])->name('student.editprofile');
       
         Route::get('/view/class/{id}', [StudentController::class, 'viewClass'])->name('student.viewclass');
-        Route::get('/view/resource/{id}', [StudentController::class, 'viewResource'])->name('viewresource');
-        Route::get('/view/assignment/{id}', [StudentController::class, 'viewAssignment'])->name('viewassignment');
-        Route::get('/view/submission/{id}', [StudentController::class, 'viewSubmission'])->name('viewsubmission');
-        Route::get('/add/submission/{id}', [StudentController::class, 'addSubmission'])->name('addsubmission');
+        Route::get('/view/resource/{class}', [StudentController::class, 'viewResource'])->name('student.viewresources');
+        Route::get('/view/assignment/{class}', [StudentController::class, 'viewAssignment'])->name('student.viewassignments');
+        Route::get('/view/submission/{class}', [StudentController::class, 'viewSubmission'])->name('student.viewsubmissions');
+        Route::get('/add/submission/{assignment}', [StudentController::class, 'addSubmission'])->name('student.addsubmission');
+        Route::post('/add/submission/', [StudentController::class, 'submitAssignment'])->name('submit.assignment');
         Route::get('/enroll/class/', [StudentController::class, 'enrollClass'])->name('student.enrollClass');
         Route::get('/enroll/{classId}', [StudentController::class, 'enroll'])->name('student.enroll');
         Route::post('/enroll/event/{eventId}', [StudentController::class, 'enrollEvent'])->name('student.enrollToEvent');
@@ -239,7 +240,7 @@ Route::prefix('parent')->group(function () {
 
         Route::get('/dashboard', [SParentController::class, 'showDashboard'])->name('parent.dashboard');
         Route::get('/ShowClasses', [SParentController::class, 'show'])->name('parent.ShowClasses');
-
+        Route::get('/view/profile',[SParentController::class,'viewProfile'])->name('parent.viewprofile');    
         // Add other parent routes here
     });
 });
@@ -279,7 +280,7 @@ Route::prefix('teacher')->group(function () {
         //     return 'Teacher Dashboard';
         // })->name('teacher.dashboard');
         Route::get('/dashboard', [TeacherController::class, 'showDashboard'])->name('teacher.dashboard');
-       
+        Route::get('/view/profile',[TeacherController::class,'viewProfile'])->name('teacher.viewprofile');
         //Classes
         Route::get('/manage/classes', [TeacherController::class, 'manageClasses'])->name('teacher.manageClasses');
         Route::get('/manage/classes/create', [ClassTController::class, 'createT'])->name('teacher.createClass');

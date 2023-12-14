@@ -206,12 +206,12 @@
 								<ul class="nav">
 									<li>
                                        
-										<a href="">
+										<a href="{{route('teacher.viewprofile')}}">
 											<span class="link-collapse">My Profile</span>
 										</a>
 									</li>
 									<li>
-										<a href="">
+										<a href="{{route('teacher.editprofile')}}">
 											<span class="link-collapse">Edit Profile</span>
 										</a>
 									</li>

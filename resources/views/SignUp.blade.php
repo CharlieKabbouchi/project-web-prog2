@@ -1,5 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+@if (Session::has('success'))
+    <div class="alert alert-success" role="alert">
+        {{ Session::get('success') }}
+    </div>
+@endif
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -52,8 +66,9 @@
                     </div>
                     <div class="form-group form-floating-label">
                         <label for="DOB">Date Of Birth</label>
-                        <input id="DOB" name="DOB" type="Date" class="form-control input-border-bottom"required>
-                      
+                        <input id="DOB" name="DOB" type="Date"
+                            class="form-control input-border-bottom"required>
+
                     </div>
                     <!-- Gender dropdown -->
                     <div class="form-group">

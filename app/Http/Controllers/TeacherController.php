@@ -178,7 +178,7 @@ class TeacherController extends Controller {
         $prf=new Profile();
         $prf->phone=$request->phone;
         $prf->email=$request->email;
-        $prf->image="sdf";
+        $prf->image="NO IMAGE";
         $prf->dateOfBirth=$request->DOB;
         $prf->teacher_id=$te->id;
         $prf->save();
@@ -246,5 +246,11 @@ class TeacherController extends Controller {
         $teacher=Teacher::findOrFail($teacher);
         $teacher->delete();
         return redirect(route("admin.manageTeachers")); 
+    }
+
+    public function viewprofile()
+    {
+        $teacher = Auth::guard('teacher')->user();
+        return view('teacher.viewprofile',compact('teacher'));
     }
 }

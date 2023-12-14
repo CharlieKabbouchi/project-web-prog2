@@ -9,7 +9,8 @@
         <div class="col-md-12">
             <h5>Class Information</h5>
             <p>Class Teacher is: {{ $details['teacher'] }}</p>
-            <table class="table table-bordered">
+            <p>Class Time : {{ $details['Time'] }}</p>
+            <table class="table">
                 <thead>
                     <tr>
                         <th>Course name</th>
@@ -41,28 +42,29 @@
                                     <a href="{{ route('student.addReviewcForm', ['classId' => $classDetail->classt_id]) }}" class="btn btn-primary">Add Review for this class</a>
                                 @endif
                             </td>
-                            {{-- <td class="actions-column">
-                            <form method="get" action="{{ route('student.viewsubmission', ['class' => $class->id]) }}">
-                                @csrf
-                                <button type="submit" class="btn btn-primary btn-rounded btn-login">View Submission</button>
-                            </form>
-                        </td>
-                        <td class="actions-column">
-                            <form method="get" action="{{ route('student.viewassignments', ['class' => $class->id]) }}">
-                                @csrf
-                                <button type="submit" class="btn btn-primary btn-rounded btn-login">View Assignments</button>
-                            </form>
-                        </td>
-                        <td class="actions-column">
-                            <form method="get" action="{{ route('student.viewresources', ['class' => $class->id]) }}">
-                                @csrf
-                                <button type="submit" class="btn btn-primary btn-rounded btn-login">View Resource</button>
-                            </form>
-                        </td> --}}
                         </tr>
                     @endforeach
                 </tbody>
             </table>
+            <h5>Classes Materials:</h5>
+
+            <form method="get" action="{{ route('student.viewsubmissions', ['class' => $classDetail->classt_id]) }}"
+                style="margin-top: 10px;">
+                @csrf
+                <button type="submit" class="btn btn-primary">View Submission</button>
+            </form>
+
+            <form method="get" action="{{ route('student.viewassignments', ['class' => $classDetail->classt_id]) }}"
+                style="margin-top: 10px;">
+                @csrf
+                <button type="submit" class="btn btn-primary">View Assignments</button>
+            </form>
+
+            <form method="get" action="{{ route('student.viewresources', ['class' => $classDetail->classt_id]) }}"
+                style="margin-top: 10px;">
+                @csrf
+                <button type="submit" class="btn btn-primary ">View Resource</button>
+            </form>
         </div>
     </div>
 @endsection

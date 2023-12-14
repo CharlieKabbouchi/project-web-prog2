@@ -122,7 +122,7 @@
 							<div class="collapse in" id="collapseExample">
 								<ul class="nav">
 									<li>
-										<a href="{{route('student.viewprofile',['id'=>$student->id])}}">
+										<a href="{{route('student.viewprofile')}}">
 											<span class="link-collapse">My Profile</span>
 										</a>
 									</li>

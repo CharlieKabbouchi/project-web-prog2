@@ -56,7 +56,7 @@ class LoginSignUp extends Controller
     public function signup (Request $request)
     {  
         
-            $request->validate(['firstName'=>'required|min:2|max:15','lastName'=>'required|min:2|max:15','Gender'=>'required','email'=> 'unique:pendings|email','phone'=>'min:8|max:12','image'=>'required','type'=>'required','DOB'=>'required']);
+            $request->validate(['firstName'=>'required|min:2|max:15','lastName'=>'required|min:2|max:15','Gender'=>'required','email'=> 'unique:pendings|email','phone'=>'min:8|max:12','type'=>'required','DOB'=>'required']);
             $nuser=new Pending();
             $nuser->firstName=$request->firstName;
             $nuser->lastName=$request->lastName;
@@ -67,7 +67,7 @@ class LoginSignUp extends Controller
             $nuser->DOB=$request->DOB;
             //$proimg=time().'-'.$request->file('image')->getClientOriginalName();//
             //onedrivestorage and get the link
-            $nuser->image="jjjnj";//link;
+            // $nuser->image="jjjnj";//link;
             $nuser->save();
             return redirect()->route('/');
             

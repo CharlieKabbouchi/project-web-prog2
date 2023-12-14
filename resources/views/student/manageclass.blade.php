@@ -25,11 +25,11 @@
     <div class="row">
         <h4 class="page-title">Classes Taken</h4>
     </div>
-    <a href="{{ route('student.enrollClass') }}">Enroll New Class</a>
+    
 
     <div class="row">
         <div class="table-responsive">
-            <table class="table table-bordered table-striped" style="border-color: skyblue;">
+            <table class="table">
                 <thead>
                     <tr class="bg-primary">
                         <th>Course</th>
@@ -51,7 +51,7 @@
                             <td class="actions-column">
                                 <form method="get" action="{{ route('student.viewclass', ['id' => $class['classId']]) }}">
                                     @csrf
-                                    <button type="submit" class="btn btn-primary btn-rounded btn-login">View Class</button>
+                                    <button type="submit" class="btn btn-primary">View Class</button>
                                 </form>                                
                             </td>
                         </tr>
@@ -59,5 +59,6 @@
                 </tbody>
             </table>
         </div>
+        <a class="btn btn-success"href="{{ route('student.enrollClass') }}">Enroll New Class</a>
     </div>
 @endsection('content')

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
-            $table->string('image')->nullable();
+            $table->string('image', 1000)->nullable();
             $table->Date('dateOfBirth');
             $table->string('alumni_id')->nullable();
             $table->string('teacher_id')->nullable();

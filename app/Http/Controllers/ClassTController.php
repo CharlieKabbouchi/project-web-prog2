@@ -199,4 +199,27 @@ class ClassTController extends Controller {
         $students = $class->getStudents->toArray();
         return view('teacher.viewclass', compact('teacher', 'classInfo', 'students','course','semester','class'));
     }
+
+    public function show(Request $request,$class)
+    {
+
+        $sclass=ClassT::findOrFail($class);
+
+        $teacherInfo = Teacher::whereHas('getClassT', function ($query) use ($class) {
+            $query->where('id', $class);
+        })->first();
+
+        $averageGrade = StudentClassT::where('classt_id', $class)
+            ->avg('averageGrade');
+
+        $students = Student::whereHas('getClassT', function ($query) use ($class) {
+            $query->where('id', $class);
+        })->get();
+
+        $reviews = ReviewC::where('classt_id', $class)->get();
+
+        $admin = Auth::guard('admin')->user();
+        return view('class.viewClass', compact('sclass', 'admin', 'teacherInfo', 'averageGrade', 'students','reviews'));
+
+    }
 }

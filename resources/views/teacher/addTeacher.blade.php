@@ -29,11 +29,11 @@
                 <label for="email">Personal Email:</label>
                 <input type="email" class="form-control" id="email" name="email" value="{{ $wteacher->email }}" required>
             </div>
-
-            <div class="form-group">
-                <label for="image">Profile Image:</label>
-                <img src="{{ asset($wteacher->image) }}" alt="Teacher Image" width="50">
-            </div>
+{{-- 
+        <div class="form-group">
+            <label for="image">Profile Image:</label>
+            <img src="{{ asset($wteacher->image) }}" alt="Teacher Image" width="50">
+        </div> --}}
 
             <div class="form-group">
                 <label for="phone">Phone:</label>

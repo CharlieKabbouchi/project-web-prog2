@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->DateTime('startingDate');
             $table->DateTime('endingDate');
-            $table->longText('description');
+            $table->string('description', 1000);
             $table->string('title');
             $table->unsignedBigInteger('classt_id');
             $table->string('teacher_id');
