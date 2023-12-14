@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Ready PRO Bootstrap 4 Admin Dashboard</title>
+    <title>View Event Calendar</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}" type="image/x-icon" />
 
@@ -60,18 +60,7 @@
                             <i class="la la-navicon"></i>
                         </button>
                     </div>
-                    <div class="collapse" id="search-nav">
-                        <form class="navbar-left navbar-form nav-search ml-md-3 mr-md-3">
-                            <div class="input-group">
-                                <input type="text" placeholder="Search ..." class="form-control">
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn btn-search">
-                                        <i class="la la-search search-icon"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                    
                     <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
                         <li class="nav-item toggle-nav-search hidden-caret">
                             <a class="nav-link" data-toggle="collapse" href="#search-nav" role="button"
@@ -80,14 +69,7 @@
                             </a>
                         </li>
 
-                        <li class="nav-item dropdown hidden-caret">
-                            <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="flaticon-alarm"></i>
-                                <span class="notification">3</span>
-                            </a>
-
-                        </li>
+                        
                         <li class="nav-item dropdown hidden-caret">
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"
                                 aria-expanded="false"> <img src="{{ asset('assets/img/profile.jpg') }}"
@@ -241,16 +223,12 @@
     <!-- Ready Pro DEMO methods, don't include it in your project! -->
     <script src="{{ asset('assets/js/setting-demo.js') }}"></script>
     <script>
-        /* initialize the calendar
-            		-----------------------------------------------------------------*/
         $(document).ready(function() {
             var date = new Date();
             var d = date.getDate();
             var m = date.getMonth();
             var y = date.getFullYear();
-            var className = Array('fc-primary', 'fc-danger', 'fc-default', 'fc-success', 'fc-info', 'fc-warning',
-                'fc-danger-solid', 'fc-warning-solid', 'fc-success-solid', 'fc-default-solid',
-                'fc-success-solid', 'fc-primary-solid');
+            var className = Array('fc-danger');
 
             var eventsData = {!! json_encode($events->toArray()) !!};
             var events = eventsData.map(function(event) {

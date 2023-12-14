@@ -127,7 +127,7 @@ class SParentController extends Controller {
     public function edit( $parent) {
         $sp = SParent::findOrFail($parent);
         $prf=Profile::where('s_parent_id',$sp->id);
-        dd( $prf);
+        // dd( $prf);
 
         $admin = Auth::guard('admin')->user();
         return view('parent.editParent')->with('wparent', $sp)->with('admin',$admin);
