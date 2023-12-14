@@ -20,6 +20,7 @@ use App\Models\UploadResource;
 use App\Models\ReviewC;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class StudentController extends Controller {
 
@@ -244,17 +245,13 @@ class StudentController extends Controller {
         //
     }
 
-    public function viewSubmission(Request $request, $id) {
+    public function viewSubmission(Request $request, $class) {
         $student = Student::find(session('student_id'));
-
-        $classId = $id;
-
+     
         $submissions = Submission::where('student_id', $student->id)
-            ->whereHas('assignment', function ($query) use ($id) {
-                $query->where('classt_id', $id);
-            })
-            ->with('assignment')
-            ->get();
+            ->whereHas('getAssignment', function ($query) use ($class) {
+                $query->where('classt_id', $class);
+            })->get();
 
         $submissionDetails = $submissions->map(function ($submission) {
             return [
@@ -264,54 +261,91 @@ class StudentController extends Controller {
                 'attachmentLink' => $submission->attachmentlink,
             ];
         });
-
-        return view('student.viewsubmission', compact('submissionDetails'));
+        //dd( $submissionDetails);
+        return view('student.viewsubmission', compact('submissionDetails','student'));
     }
 
-    public function viewAssignment(Request $request, $id) {
+    public function viewAssignment(Request $request, $class) {
         $student = Student::find(session('student_id'));
-
-        $classId = $id;
-        $class = ClassT::find($id);
-
-        $teacher = $class->teacher()->first();
-        $assignments = Assignment::where('classt_id', $id)->get();
-
-        $assignmentDetails = $assignments->map(function ($assignment) {
+        $assignments = Assignment::where('classt_id', $class)->get();
+        
+        $assignmentDetails = $assignments->map(function ($assignment) use ($student) {
+        
+            $submissions = Submission::where('student_id', $student->id)
+                ->where('assignment_id', $assignment->id)
+                ->get();
+            $isSubmitted = $submissions->isNotEmpty();
+            $isWithinDeadline = Carbon::now()->lt(Carbon::parse($assignment->endingDate));
+    
             return [
+                'assignmentId' => $assignment->id,
                 'assignmentType' => $assignment->title,
                 'startingDate' => $assignment->startingDate,
                 'endingDate' => $assignment->endingDate,
+                'isSubmitted' => $isSubmitted,
+                'isWithinDeadline' => $isWithinDeadline,
             ];
         });
-
-        return view('student.viewassignments', compact('student', 'class', 'assignmentDetails', 'teacher'));
+    
+        return view('student.viewassignments', compact('student', 'class', 'assignmentDetails'));
+    
     }
 
-    public function addSubmission(Request $request, $id) {
-        return view('student.addsubmission', compact(''));
+    public function addSubmission(Request $request, $assignment) {
+        $student = Student::find(session('student_id'));
+        $assignment=Assignment::find( $assignment);
+        return view('student.addsubmission', compact('student','assignment'));
     }
+    public function submitAssignment(Request $request)
+{
+    // Validate the form data
+    $request->validate([
+        'attachment' => 'required|file|mimes:pdf,doc,docx,xlsx,ppt,pptx,docm,dotx,dotm,xls,xlsm,xlsb,xltx,xltm,xlsm,png,bmp,jpeg,jpg',
+        'assignment_id' => 'required|exists:assignments,id',
+        'classt_id'=>'required',
+    ]);
 
-    public function viewResource(Request $request, $id) {
+    // Store the uploaded file
+    $attachmentPath = $request->file('attachment')->store('attachments', 'public');
+    $student = Student::find(session('student_id'));
+    $nsub=new Submission();
+    $nsub->fileType="word";
+    $nsub->attachmentlink="sdfsdfs";
+    $nsub->grade=0;
+    $nsub->timeOfSubmission=now();
+    $nsub->assignment_id=$request->input('assignment_id');
+    $nsub->student_id=$student->id;
+    $nsub->save();
+    // Submission::create([
+    //     'fileType' => $request->file('attachment')->getClientOriginalExtension(),
+    //     'attachmentlink' => "sdfsf",
+    //     'timeOfSubmission' => now(),
+    //     'assignment_id' => $request->input('assignment_id'),
+    //     'student_id' => $student->id, 
+    // ]);
+    
+
+    return redirect(route('student.viewassignments',['class'=>$request->classt_id]));
+}
+
+    public function viewResource(Request $request, $class) {
         $student = Student::find(session('student_id'));
 
-        $classId = $id;
+    
 
-        $resources = UploadResource::where('classt_id', $id)
-            ->with('teacher')
-            ->get();
+        $resources = UploadResource::where('classt_id', $class)->get();
 
 
         $resourceDetails = $resources->map(function ($resource) {
-            $teacherName = $resource->teacher->firstName . ' ' . $resource->teacher->lastName;
+            $teacherName = $resource->getTeacher->firstName . ' ' . $resource->getTeacher->lastName;
 
             return [
-                'attachment' => $resource->attachment,
+                'attachment' => $resource->attachement,
                 'teacherName' => $teacherName,
             ];
         });
 
-        return view('student.viewresources', compact('resourceDetails'));
+        return view('student.viewresources', compact('resourceDetails','student'));
     }
 
     public function viewClass(Request $request, $id) {
@@ -331,6 +365,7 @@ class StudentController extends Controller {
             'course' => $courseName,
             'teacher' => $class->getTeacher->firstName . " " . $class->getTeacher->lastName,
             'classDetails' => $classDetails,
+            'Time'=>$class->DayofWeek.":".$class->starttime."-".$class->endtime,
             // 'classReviews' => $classReviews,
             // 'attendance' => $classDetails->attendence,
             // 'averageGrade' => $classDetails->averageGrade,
