@@ -49,7 +49,7 @@
     <div class="row">
         <h4>Classes Taught</h4>
         @if ($teacherInfo->getClassT->count() > 0)
-            <table>
+            <table class="table table-bordered table-hover">
                 <tr>
                     <th>Class ID</th>
                     <th>Course Name</th>
@@ -71,7 +71,7 @@
     <div class="row">
         <h4>Certificates</h4>
         @if ($teacherInfo->getCertificate->count() > 0)
-            <table>
+            <table class="table table-bordered table-hover">
                 <tr>
                     <th>Certificate ID</th>
                     <th>Certificate Description</th>

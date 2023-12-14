@@ -86,7 +86,7 @@ class AdminController extends Controller {
 
             $totalCreditsShouldTaken = 0;
             $totalCreditsShouldTaken += $student->getDepartment->totalCredits;
-            if ($totalCreditsShouldTaken == $totalCredits && $student->isGraduated == false) {
+            if ($totalCreditsShouldTaken <= $totalCredits && $student->isGraduated == false) {
                // dd($student);
                 $student->isGraduated = true;
                 $alumni = new Alumni();
@@ -118,6 +118,13 @@ class AdminController extends Controller {
         $pusers = Pending::where('type', 'teacher')->get();
         return view('/admin/viewpendingusers', compact('pusers', 'admin'));
     }
+     
+    public function viewPendingparents(Request $request) {
+
+        $admin = Auth::guard('admin')->user();
+        $pusers = Pending::where('type', 'parent')->get();
+        return view('/admin/viewpendingusers', compact('pusers', 'admin'));
+    }
     public function viewPendingStudents(Request $request) {
 
         $admin = Auth::guard('admin')->user();
@@ -127,6 +134,9 @@ class AdminController extends Controller {
     public function addteachers($wteacher) {
         return redirect(route("admin.createteacher", ['wteacher' => $wteacher]));
     }
+    public function addparents($wparent) {
+        return redirect(route("admin.createparent", ['wparent' => $wparent]));
+    } 
     public function addstudents($wstudent) {
 
         return redirect(route("admin.createstudent", ['wstudent' => $wstudent]));

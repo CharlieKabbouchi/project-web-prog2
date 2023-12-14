@@ -32,11 +32,6 @@
                 <input type="email" class="form-control" id="email" name="email" value="{{ $teacher->getProfile->email }}" required>
             </div>
 
-            <div class="form-group">
-                <label for="image">Image:</label>
-                <input type="file" class="form-control" id="image" name="image">
-                <img src="{{ asset($teacher->image) }}" alt="Teacher Image" width="50">
-            </div>
 
             <div class="form-group">
                 <label for="phone">Phone:</label>

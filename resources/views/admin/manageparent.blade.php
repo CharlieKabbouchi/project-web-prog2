@@ -48,11 +48,11 @@
                             <td>{{ $parent->lastName }}</td>
                             <td>{{ $parent->email }}</td>
                             <td class="actions-column">
-                            <form method="get" action="{{ route('admin.editparent', ['parent' => $parent->id]) }}">
+                            <form method="get" action="{{ route('admin.editParent', ['parent' => $parent->id]) }}">
                                 @csrf
                                 <input type="submit" class="btn btn-primary" value="Edit">
                             </form>
-                            <form method="post" action="{{ route('admin.deleteparent',$parent->id) }}">
+                            <form method="post" action="{{ route('admin.deleteParent',$parent->id) }}">
                                 @csrf
                                  @method('POST')
                                 <input type="submit" class="btn btn-danger" value="Delete">
@@ -64,7 +64,7 @@
                 </tbody>
             </table>
             @if ($pparentsn>0)
-            <a class="btn btn-success" href='{{route('viewpendparent')}}'>Register Pending Parents</a>
+            <a class="btn btn-success" href='{{route('viewpendparents')}}'>Register Pending Parents</a>
           @endif
         </div>
     </div>

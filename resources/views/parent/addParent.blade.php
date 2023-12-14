@@ -3,7 +3,7 @@
 
 @section('content')
     <div class="row">
-        <form method="post" action="{{ route('admin.storeparent', ['parent' => $wparent->id]) }}" enctype="multipart/form-data">
+        <form method="post" action="{{ route('admin.storeparents', ['parent' => $wparent->id]) }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="firstName">First Name:</label>
@@ -24,11 +24,6 @@
             <div class="form-group">
                 <label for="email">Personal Email:</label>
                 <input type="email" class="form-control" id="email" name="email" value="{{ $wparent->email }}" required>
-            </div>
-
-            <div class="form-group">
-                <label for="image">Profile Image:</label>
-                <img src="{{ asset($wparent->image) }}" alt="Teacher Image" width="50">
             </div>
 
             <div class="form-group">

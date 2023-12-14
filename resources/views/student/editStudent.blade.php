@@ -44,11 +44,7 @@
                 <input type="email" class="form-control" id="email" name="email" value="{{ $wstudent->getProfile->email }}" required>
             </div>
 
-            <div class="form-group">
-                <label for="image">Profile Image:</label>
-                <input type="file" class="form-control" id="email" name="image" required>
-                <img src="{{ asset($wstudent->getProfile->image) }}" alt="Student Image" width="50">
-            </div>
+          
 
             <div class="form-group">
                 <label for="phone">Phone:</label>

@@ -67,7 +67,7 @@
         </div>
       
     <div class="row">
-        <table>
+        <table class="table">
         <tr>
             <th>Class ID</th>
             <th>Course Name</th>

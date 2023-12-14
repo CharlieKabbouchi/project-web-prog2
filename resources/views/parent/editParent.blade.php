@@ -3,43 +3,38 @@
 
 @section('content')
     <div class="row">
-        <form method="post" action="{{ route('admin.editparent', ['parent' => $wparent->id]) }}" enctype="multipart/form-data">
+        <form method="post" action="{{ route('admin.updateparents', ['parent' => $parent->id]) }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="firstName">First Name:</label>
-                <input type="text" class="form-control" id="firstName" name="firstName" value="{{ $wparent->firstName }}" required>
+                <input type="text" class="form-control" id="firstName" name="firstName" value="{{ $parent->firstName }}" required>
             </div>
 
             <div class="form-group">
                 <label for="lastName">Last Name:</label>
-                <input type="text" class="form-control" id="lastName" name="lastName" value="{{ $wparent->lastName }}" required>
+                <input type="text" class="form-control" id="lastName" name="lastName" value="{{ $parent->lastName }}" required>
             </div>
 
             <div class="form-group">
                 <label for="Gender">Gender:</label>
-                <input type="text" class="form-control" id="Gender" name="Gender" value="{{ $wparent->Gender }}" required>
+                <input type="text" class="form-control" id="Gender" name="Gender" value="{{ $parent->Gender }}" required>
             </div>
 
         
             <div class="form-group">
                 <label for="email">Personal Email:</label>
-                <input type="email" class="form-control" id="email" name="email" value="{{ $wparent->getProfile->email }}" required>
+                <input type="email" class="form-control" id="email" name="email" value="{{ $parent->getProfile->email }}" required>
             </div>
 
-            <div class="form-group">
-                <label for="image">Profile Image:</label>
-                <input type="file" name="image">
-                <img src="{{ asset($wparent->getProfile->image) }}" alt="Teacher Image" width="50">
-            </div>
 
             <div class="form-group">
                 <label for="phone">Phone:</label>
-                <input type="text" class="form-control" id="phone" name="phone" value="{{ $wparent->getProfile->phone }}" required>
+                <input type="text" class="form-control" id="phone" name="phone" value="{{ $parent->getProfile->phone }}" required>
             </div>
 
             <div class="form-group">
                 <label for="DOB">Date of Birth:</label>
-                <input type="date" class="form-control" id="DOB" name="DOB" value="{{ $wparent->getProfile->DOB}}" required>
+                <input type="date" class="form-control" id="DOB" name="DOB" value="{{ $parent->getProfile->dateOfBirth}}" required>
             </div>
 
             <button type="submit" class="btn btn-primary">Update Parent</button>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ClassT;
 use App\Models\SParent;
+use App\Models\Pending;
 use App\Models\Student;
 use App\Models\Profile;
 use Illuminate\Http\Request;
@@ -152,8 +153,11 @@ class SParentController extends Controller {
     /**
      * Show the form for creating a new resource.
      */
-    public function create() {
-        return redirect()->intended('/parent/addparent');
+    public function create($wparent) {
+        $admin = Auth::guard('admin')->user();
+        $wparent=Pending::findOrFail($wparent);
+        return view('parent.addParent', compact('admin','wparent'));
+      
     }
 
     /**
@@ -164,15 +168,29 @@ class SParentController extends Controller {
             'firstName' => 'required|string',
             'lastName' => 'required|string',
             'Gender' => 'required|string',
+            // 'salary' => 'required|integer',
+            'email' => 'required|email',
+            //'image' => 'required|image',//link
+           'phone'=>'required',
+           'DOB' =>'required'
         ]);
 
-        $sparent = new SParent();
-        $sparent->firstName = $request->firstName;
-        $sparent->lastName = $request->lastName;
-        $sparent->Gender = $request->Gender;
-        $sparent->save();
-
-        return redirect(route('sparent.index'));
+        $te = new SParent();
+        $te->firstName = $request->firstName;
+        $te->lastName = $request->lastName;
+        $te->Gender = $request->Gender;
+       //$te->salary = $request->salary;
+        $te->save();
+        $pending=Pending::where('email',$request->email)->where('phone',$request->phone);
+        $pending->delete();
+        $prf=new Profile();
+        $prf->phone=$request->phone;
+        $prf->email=$request->email;
+        $prf->image="NO IMAGE";
+        $prf->dateOfBirth=$request->DOB;
+        $prf->s_parent_id=$te->id;
+        $prf->save();
+        return redirect(route("admin.manageParents"));
     }
 
     /**
@@ -201,25 +219,31 @@ class SParentController extends Controller {
         // dd( $prf);
 
         $admin = Auth::guard('admin')->user();
-        return view('parent.editParent')->with('wparent', $sp)->with('admin',$admin);
+        return view('parent.editParent')->with('parent', $sp)->with('admin',$admin);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SParent $sParent) {
+    public function update(Request $request,  $parent) {
         $request->validate([
             'firstName' => 'required|string',
             'lastName' => 'required|string',
             'Gender' => 'required|string',
         ]);
 
-        $sp = SParent::findOrFail($sParent);
+        $sp = SParent::findOrFail($parent);
         $sp->firstName = $request->firstName;
         $sp->lastName = $request->lastName;
         $sp->Gender = $request->Gender;
+        $prf=$sp->getProfile;
+    $prf->phone=$request->phone;
+    $prf->email=$request->email;
+    $prf->dateOfBirth=$request->DOB;
+    $prf->save();
+   
         $sp->save();
-        return redirect(route('sparent.index'));
+        return redirect(route('admin.manageParents'));
     }
 
     /**

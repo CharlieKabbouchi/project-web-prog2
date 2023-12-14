@@ -22,7 +22,7 @@
                 <input type="text" class="form-control" id="class Teacher" name="class Teacher" value="{{$teacherInfo->firstName}} {{$teacherInfo->lastName}}" disabled>
             </div>
             <div class="form-group">
-                <label for="class Time">Department:</label>
+                <label for="class Time">Course:</label>
                 <input type="text" class="form-control" id="class department" name="class department" value="{{$sclass->getCourse->name}} " disabled>
             </div>
         </form>
