@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FirebaseManagement;
 use App\Http\Controllers\PendingController;
+use App\Models\Alumni;
 use App\Models\Semester;
 use App\Models\Teacher;
 
@@ -201,6 +202,7 @@ Route::prefix('student')->group(function () {
         Route::get('/manage/calendar', [StudentController::class, 'viewCalendar'])->name('student.viewCalendar');
         Route::get('/view/profile', [StudentController::class, 'viewProfile'])->name('student.viewprofile');
         Route::get('/edit/profile/{id}', [StudentController::class, 'editProfile'])->name('student.editprofile');
+        Route::put('/update/profile/{id}', [StudentController::class, 'updateProfile'])->name('student.updateprofile');
       
         Route::get('/view/class/{id}', [StudentController::class, 'viewClass'])->name('student.viewclass');
         Route::get('/view/resource/{class}', [StudentController::class, 'viewResource'])->name('student.viewresources');
@@ -233,6 +235,7 @@ Route::prefix('parent')->group(function () {
     Route::get('/login', [SParentController::class, 'showLoginForm'])->name('parent.login');
     Route::post('/login', [SParentController::class, 'login']);
 
+
     Route::middleware(['auth.parent'])->group(function () {
         // Route::get('/dashboard', function () {
         //     return 'Parent Dashboard';
@@ -240,7 +243,9 @@ Route::prefix('parent')->group(function () {
 
         Route::get('/dashboard', [SParentController::class, 'showDashboard'])->name('parent.dashboard');
         Route::get('/ShowClasses', [SParentController::class, 'show'])->name('parent.ShowClasses');
-        Route::get('/view/profile',[SParentController::class,'viewProfile'])->name('parent.viewprofile');    
+        Route::get('/view/profile',[SParentController::class,'viewProfile'])->name('parent.viewprofile'); 
+        Route::get('/edit/profile/{id}', [SParentController::class, 'editProfile'])->name('parent.editprofile');
+        Route::put('/update/profile/{id}', [SParentController::class, 'updateProfile'])->name('parent.updateprofile');   
         // Add other parent routes here
     });
 });
@@ -257,6 +262,8 @@ Route::prefix('alumni')->group(function () {
         Route::get('/dashboard', [AlumniController::class, 'showDashboard'])->name('alumni.dashboard');
         Route::post('/logout', [AlumniController::class, 'LogoutAlumni'])->name('alumni.logout');
         Route::get('/view/profile', [AlumniController::class,'viewProfile'])->name('viewprofile');
+        Route::get('/edit/profile/{id}', [AlumniController::class, 'editProfile'])->name('alumni.editprofile');
+        Route::put('/update/profile/{id}', [AlumniController::class, 'updateProfile'])->name('alumni.updateprofile');
 
         Route::get('/manage/Events', [AlumniController::class, 'manageEvents'])->name('alumni.manageEvents');
         Route::get('/manage/Events/edit/{event}', [AlumniController::class, 'showEdit'])->name('alumni.editEvent');
@@ -282,6 +289,8 @@ Route::prefix('teacher')->group(function () {
         // })->name('teacher.dashboard');
         Route::get('/dashboard', [TeacherController::class, 'showDashboard'])->name('teacher.dashboard');
         Route::get('/view/profile',[TeacherController::class,'viewProfile'])->name('teacher.viewprofile');
+        Route::get('/edit/profile/{id}', [TeacherController::class, 'editProfile'])->name('teacher.editprofile');
+        Route::put('/update/profile/{id}', [TeacherController::class, 'updateProfile'])->name('teacher.updateprofile');
         //Classes
         Route::get('/manage/classes', [TeacherController::class, 'manageClasses'])->name('teacher.manageClasses');
         Route::get('/manage/classes/create', [ClassTController::class, 'createT'])->name('teacher.createClass');

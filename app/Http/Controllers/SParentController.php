@@ -74,7 +74,14 @@ class SParentController extends Controller {
         return view('parent.viewprofile',compact('parent'));
     }
     
-    
+    public function editprofile($id) {
+        $parent = Auth::guard('parent')->user();
+        return view('parent.editprofile', compact('parent'));
+    }
+
+    public function updateProfile(Request $request, $id) {
+        return view('parent.viewprofile', compact('parent'));
+    }
 
 
 

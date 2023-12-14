@@ -253,4 +253,13 @@ class TeacherController extends Controller {
         $teacher = Auth::guard('teacher')->user();
         return view('teacher.viewprofile',compact('teacher'));
     }
+
+    public function editprofile($id) {
+        $teacher = Auth::guard('teacher')->user();
+        return view('teacher.editprofile', compact('teacher'));
+    }
+
+    public function updateProfile(Request $request, $id) {
+        return view('teacher.viewprofile', compact('teacher'));
+    }
 }

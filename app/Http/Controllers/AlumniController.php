@@ -84,6 +84,15 @@ class AlumniController extends Controller {
 
     }
 
+    public function editprofile($id) {
+        $alumni = Auth::guard('alumni')->user();
+        return view('alumni.editprofile', compact('alumni'));
+    }
+
+    public function updateProfile(Request $request, $id) {
+        return view('alumni.viewprofile', compact('alumni'));
+    }
+
     public function manageEvents(Request $request) {
         $alumniId = session('alumni_id');
         $alumni = Auth::guard('alumni')->user();

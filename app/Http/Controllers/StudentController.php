@@ -241,10 +241,15 @@ class StudentController extends Controller {
         return view('student.viewprofile',compact('student'));
     }
 
-    public function editProfile() {
-        //
+    public function editprofile($id) {
+        $student = Auth::guard('student')->user();
+        return view('student.editprofile', compact('student'));
     }
 
+    public function updateProfile(Request $request, $id) {
+        return view('student.viewprofile', compact('student'));
+    }
+    
     public function viewSubmission(Request $request, $class) {
         $student = Student::find(session('student_id'));
 
