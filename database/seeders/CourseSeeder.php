@@ -15,13 +15,25 @@ class CourseSeeder extends Seeder {
             [
                 [
                     'id' => 1,
-                    'name' => 'Maths',
+                    'name' => 'Data Structure',
                     'credits' => 3,
                 ],
                 [
 
                     'id' => 2,
-                    'name' => 'Physics',
+                    'name' => 'Web Programming 2',
+                    'credits' => 3,
+                ],
+                [
+
+                    'id' => 2,
+                    'name' => 'Anatomy',
+                    'credits' => 3,
+                ],
+                [
+
+                    'id' => 2,
+                    'name' => 'GYM',
                     'credits' => 3,
                 ],
             ]

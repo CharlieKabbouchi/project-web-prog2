@@ -38,7 +38,7 @@ class FirebaseController extends Controller {
     public function uploadImage(Request $request)
     {
         $this->validate($request, [
-            'image' => 'required|file|mimes:pdf,doc,docx,xlsx,ppt,pptx,docm,dotx,dotm,xls,xlsm,xlsb,xltx,xltm,xlsm,png,bmp,jpeg,jpg,csv',
+            'image' => 'required|file|mimes:pdf,doc,docx,xlsx,ppt,pptx,docm,dotx,dotm,xls,xlsm,xlsb,xltx,xltm,xlsm,png,bmp,jpeg,jpg,csv,gif',
         ]);
 
         $image = $request->file('image');
@@ -66,10 +66,10 @@ class FirebaseController extends Controller {
         $firebaseObject = $firebaseBucket->upload($fileContents, [
             'name' => $filePath,
         ]);
-
+        // dd($firebaseObject);
         // Get the public URL of the uploaded image from Firebase
-        $firebaseImageUrl = $firebaseObject->signedUrl(new \DateTime('+5 minutes'));
-
+        $firebaseImageUrl = $firebaseObject->signedUrl(new \DateTime('9999-12-31T23:59:59.999999Z'));
+        // dd($firebaseImageUrl);
         // You can save $firebaseImageUrl to your database if needed
 
         return response()->json(['success' => true, 'url' => $firebaseImageUrl,]);

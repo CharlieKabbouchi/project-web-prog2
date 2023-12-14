@@ -8,6 +8,6 @@
             <label for="description">Question Description:</label>
             <textarea class="form-control" id="description" name="description" rows="3"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Submit Q</button>
+        <button type="submit" class="btn btn-primary">Submit Question</button>
     </form>
 @endsection

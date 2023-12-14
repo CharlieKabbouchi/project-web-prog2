@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alumni;
 use App\Models\Assignment;
+use App\Models\Calendar;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\ClassT;
@@ -168,13 +170,16 @@ class StudentController extends Controller {
     }
 
     public function manageQandA() {
-        $student = Student::with('questions.getAnswer')->find(session('student_id'));
-
-        return view('student.manageQ&A', compact('student'));
+        $student = Student::find(session('student_id'));
+    
+        $questions = Question::with('getAnswer')->where('student_id', $student->id)->get();
+        // dd($questions);
+        return view('student.manageQ&A', compact('student', 'questions'));
     }
 
     public function addQuestion() {
-        return view('student.addQuestion');
+        $student = Student::find(session('student_id'));
+        return view('student.addQuestion', compact('student'));
     }
 
     public function storeQuestion(Request $request) {
@@ -184,15 +189,44 @@ class StudentController extends Controller {
         $question->student_id = session('student_id');
         $question->save();
 
-        return redirect()->route('student.manageQandA')->with('success', 'Question added successfully');
+        return redirect()->route('student.manageQ&A')->with('success', 'Question added successfully');
     }
 
     public function manageCalendar() {
-        return view('student.manageCalendar');
+        $student = Student::find(session('student_id'));
+        return view('student.manageCalendar', compact('student'));
     }
     public function viewCalendar() {
-        return view('student.viewCalendar');
+        $studentId = session('student_id');
+        $student = Student::find($studentId);
+        $enrolledClasses = $student->getClassT;
+        $classNames = [];
+    
+        foreach ($enrolledClasses as $class) {
+            $course = $class->getCourse;
+    
+            if ($course && $course->name) {
+                $classNames[] = $course->name;
+            }
+        }
+    
+        $events = Event::whereHas('getStudent', function ($query) use ($studentId) {
+            $query->where('student_id', $studentId);
+        })
+        ->get(['id', 'title', 'startingtime', 'endingtime', 'time'])
+        ->map(function ($event) use ($classNames) {
+            return [
+                'id' => $event->id,
+                'title' => $event->title,
+                'start' => $event->time . ' ' . $event->startingtime,
+                'end' => $event->time . ' ' . $event->endingtime,
+            ];
+        });
+        
+        // dd($classNames);
+        return view('student.viewCalendar', compact('student', 'events', 'enrolledClasses', 'classNames'));
     }
+    
 
     public function enrollClass() {
         $student = Student::find(session('student_id'));
@@ -372,7 +406,7 @@ class StudentController extends Controller {
             // 'assignmentGrade' => $classDetails->assignmentGrade,
         ];
 
-        // dd($student);
+        // dd($details);
 
         return view('student.viewclass', compact('details', 'student', 'classReviews')); // 'course'
     }
