@@ -54,22 +54,22 @@ class LoginSignUp extends Controller
     }
 
     public function signup (Request $request)
-    {
+    {  
         
-            $request->validate(['firstname'=>'required|min:2|max:15','lastname'=>'required|min:2|max:15','Gender'=>'required','type'=> 'required','email'=> 'unique:pendings|email','phone'=>'min:8|max:12','image'=>'required','type'=>'required','DOB'=>'required']);
+            $request->validate(['firstName'=>'required|min:2|max:15','lastName'=>'required|min:2|max:15','Gender'=>'required','email'=> 'unique:pendings|email','phone'=>'min:8|max:12','image'=>'required','type'=>'required','DOB'=>'required']);
             $nuser=new Pending();
-            $nuser->firstName=$request->firstname;
-            $nuser->lastName=$request->lastname;
+            $nuser->firstName=$request->firstName;
+            $nuser->lastName=$request->lastName;
             $nuser->Gender=$request->Gender;
             $nuser->type=$request->type;
             $nuser->email=$request->email;
             $nuser->phone=$request->phone;
             $nuser->DOB=$request->DOB;
-            $proimg=time().'-'.$request->file('image')->getClientOriginalName();
+            //$proimg=time().'-'.$request->file('image')->getClientOriginalName();//
             //onedrivestorage and get the link
-            $nuser->image=//link;
+            $nuser->image="jjjnj";//link;
             $nuser->save();
-            return redirect()->route('login');
+            return redirect()->route('/');
             
     }
 

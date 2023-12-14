@@ -50,27 +50,13 @@ Route::get('/home', function () {
 Route::get('/login',[LoginSignUp::class,'showLoginForm'])->name('login');
 Route::post('/login/validate',[LoginSignUp::class,'login'])->name('loginValidation');
 Route::get('/signup',[LoginSignUp::class,'showSignUpForm'])->name('signup');
-Route::post('/signup/create',[LoginSignUp::class,'signup'])->name('signupCreation');
-// Route::get('/login-signup/register', [AuthController::class, 'register'])->name('register');
-// Route::post('/login-signup/register', [AuthController::class, 'registerPost'])->name('register');
-// Route::get('/login-signup/login', [AuthController::class, 'login'])->name('login');
-// Route::post('/login-signup/login', [AuthController::class, 'loginPost'])->name('login');
-// Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-
-Route::get('/class_ts/create', [ClassTController::class, 'create'])->name('class_ts.create');
-Route::post('/class_ts', [ClassTController::class, 'store'])->name('class_ts.store');
-Route::get('/class_ts', [ClassTController::class, 'index'])->name('class_ts.index');
-Route::get('/class_ts/show', [ClassTController::class, 'show'])->name('class_ts.show');
-Route::get('/class_ts/{class_t}/edit', [ClassTController::class, 'edit'])->name('class_ts.edit');
-Route::put('/class_ts/{class_t}', [ClassTController::class, 'update'])->name('class_ts.update');
-Route::delete('/class_ts/{class_t}', [ClassTController::class, 'destroy'])->name('class_ts.destroy');
-
+Route::post('/signup/create',[LoginSignUp::class,'signup'])->name('user.signup');
 
 
 //Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
 
 
-Route::post('/logout',[AdminController::class, 'Logout'])->name('logout');
+
 
 
 // Admin Routes
@@ -84,9 +70,9 @@ Route::prefix('admin')->group(function () {
         //     return 'Admin Dashboard';
         // })->name('admin.dashboard');
         Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
+        Route::post('/logout',[AdminController::class, 'Logout'])->name('logout');
 
-
-        Route::get('/view/profile/{id}', [AdminController::class, 'viewprofile'])->name('viewprofile');
+        Route::get('/view/profile', [AdminController::class, 'viewprofile'])->name('viewprofile');
         Route::get('/add/department}', [AdminController::class, 'addDepartment'])->name('addDepartment');
         Route::get('/edit/profile/{id}', [AdminController::class, 'editprofile'])->name('editprofile');
         

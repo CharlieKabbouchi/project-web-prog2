@@ -29,7 +29,7 @@
                 </div>
                 <div class="card-body">
                     @if ($events->count() > 0)
-                        <table class="table table-bordered">
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th>Title</th>

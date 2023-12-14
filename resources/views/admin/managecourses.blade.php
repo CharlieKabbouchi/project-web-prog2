@@ -25,11 +25,11 @@
     <div class="row">
         <h4 class="page-title">Courses</h4>
     </div>
-    <a href='{{ route('admin.addCourse') }}'>Add New Courses</a>
+ 
 
     <div class="row">
         <div class="table-responsive">
-            <table class="table table-bordered table-striped" style="border-color: skyblue;">
+            <table class="table">
                 <thead>
                     <tr class="bg-primary">
                         <th>Name</th>
@@ -45,24 +45,25 @@
                             <td class="actions-column">
                                 <form method="get" action="{{ route('admin.viewCourse', ['course' => $course->id]) }}">
                                     @csrf
-                                    <input type="submit" class="btn btn-primary btn-rounded btn-login" value="View">
+                                    <input type="submit" class="btn btn-primary" value="View">
                                 </form>
 
                                 <form method="get" action="{{ route('admin.editCourse', ['course' => $course->id]) }}">
                                     @csrf
-                                    <input type="submit" class="btn btn-primary btn-rounded btn-login" value="Edit">
+                                    <input type="submit" class="btn btn-primary" value="Edit">
                                 </form>
 
                                 <form method="post" action="{{ route('admin.deleteCourse', ['course' => $course->id]) }}">
                                     @csrf
                                     @method('POST')
-                                    <input type="submit" class="btn btn-primary btn-rounded btn-login" value="Delete">
+                                    <input type="submit" class="btn btn-danger" value="Delete">
                                 </form>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
+            <a class="btn btn-success" href='{{ route('admin.addCourse') }}'>Add New Courses</a>
         </div>
     </div>
 @endsection('content')
