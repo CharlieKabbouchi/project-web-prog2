@@ -28,7 +28,7 @@
 
     <div class="row">
         <div class="table-responsive">
-            <table class="table table-bordered table-striped" style="border-color: skyblue;">
+            <table class="table">
                 <thead>
                     <tr class="bg-primary">
                         <th>Title</th>
@@ -52,7 +52,7 @@
                             <td class="actions-column">
                                 <form method="post" action="{{ route('student.enrollToEvent', ['eventId' => $event['id']]) }}">
                                     @csrf
-                                    <button type="submit" class="btn btn-primary btn-rounded btn-login">Enroll</button>
+                                    <button type="submit" class="btn btn-primary">Enroll</button>
                                 </form>
                             </td>
                         </tr>

@@ -15,16 +15,16 @@ class SemesterSeeder extends Seeder {
             [
                 [
                     'id' => 1,
-                    'yearBelongsTo' => 2023,
-                    'startingDate' => now(),
-                    'endingDate' => now()->addMonths(3),
+                    'yearBelongsTo' => 2023/2024,
+                    'startingDate' => '2023-9-19',
+                    'endingDate' => '2023-12-19',
                     'type' => 'Fall',
                 ],
                 [
                     'id' => 2,
-                    'yearBelongsTo' => 2023,
-                    'startingDate' => now()->addMonths(4),
-                    'endingDate' => now()->addMonths(6),
+                    'yearBelongsTo' => 2023/2024,
+                    'startingDate' => '2024-02-22',
+                    'endingDate' => '2024-05-23',
                     'type' => 'Spring',
                 ],
             ]

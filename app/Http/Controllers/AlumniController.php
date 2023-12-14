@@ -119,11 +119,11 @@ class AlumniController extends Controller {
             });
         // dd($events);
         $class = ClassT::all();
-        $student = Student::all();
-        $teacher = Teacher::all();
-        $calendar = Calendar::all();
+        // $student = Student::all();
+        // $teacher = Teacher::all();
+        // $calendar = Calendar::all();
     
-        return view('alumni.viewCalendar', compact('alumni', 'events', 'student', 'teacher', 'class', 'calendar'));
+        return view('alumni.viewCalendar', compact('alumni', 'events',  'class'));
     }
     
 

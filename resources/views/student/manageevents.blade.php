@@ -25,11 +25,11 @@
     <div class="row">
         <h4 class="page-title">Event applied To</h4>
     </div>
-    <a href="{{ route('student.showAllEvents') }}">Enroll to new event</a>
+
 
     <div class="row">
         <div class="table-responsive">
-            <table class="table table-bordered table-striped" style="border-color: skyblue;">
+            <table class="table">
                 <thead>
                     <tr class="bg-primary">
                         <th>Title</th>
@@ -53,13 +53,14 @@
                             <td class="actions-column">
                                 <form method="get" action="{{ route('student.viewEvent', ['id' => $event['id']]) }}">
                                     @csrf
-                                    <button type="submit" class="btn btn-primary btn-rounded btn-login">View Event</button>
+                                    <button type="submit" class="btn btn-primary">View Event</button>
                                 </form>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
+            <a href="{{ route('student.showAllEvents') }}" class="btn btn-success">Enroll to new event</a>
         </div>
     </div>
 @endsection('content')

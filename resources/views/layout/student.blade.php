@@ -156,13 +156,13 @@
 						</li>
                         <li class="nav-item">
 							<a  href="{{route('student.manageQ&A')}}">
-								<i class="flaticon-layers"></i>
+								<i class="flaticon-agenda-1"></i>
 								<p>Questions and Answers</p>
 							</a>
 						</li>
                         <li class="nav-item">
 							<a  href="{{route('student.viewCalendar')}}">
-								<i class="flaticon-layers"></i>
+								<i class="flaticon-agenda-1"></i>
 								<p>Calendar</p>
 							</a>
 						</li>
