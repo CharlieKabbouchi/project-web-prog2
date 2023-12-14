@@ -110,12 +110,12 @@
 							<div class="collapse in" id="collapseExample">
 								<ul class="nav">
 									<li>
-										<a href="{{route('viewprofile')}}">
+										<a href="{{route('admin.viewprofile')}}">
 											<span class="link-collapse">My Profile</span>
 										</a>
 									</li>
 									<li>
-										<a href="{{route('editprofile',['id'=>$admin->id])}}">
+										<a href="{{route('admin.editprofile',['id'=>$admin->id])}}">
 											<span class="link-collapse">Edit Profile</span>
 										</a>
 									</li>
@@ -126,7 +126,7 @@
 					</div>
 					<ul class="nav">
 
-						<li class="nav-item active">
+						<li class="nav-item">
 							<a href="{{route('admin.dashboard')}}">
 
 								<i class="flaticon-home"></i>

@@ -75,7 +75,7 @@ Route::prefix('admin')->group(function () {
 
         Route::get('/view/profile', [AdminController::class, 'viewprofile'])->name('admin.viewprofile');
         Route::get('/add/department}', [AdminController::class, 'addDepartment'])->name('addDepartment');
-        Route::get('/edit/profile/{id}', [AdminController::class, 'editprofile'])->name('editprofile');
+        Route::get('/edit/profile/{id}', [AdminController::class, 'editprofile'])->name('admin.editprofile');
         Route::put('/update/profile/{id}', [AdminController::class, 'updateProfile'])->name('admin.updateprofile');
         //Departments
         Route::get('/manage/departments', [AdminController::class, 'manageDepartments'])->name('admin.manageDepartments');

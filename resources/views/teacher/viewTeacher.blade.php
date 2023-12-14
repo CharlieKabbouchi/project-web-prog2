@@ -41,7 +41,7 @@
 
             <div class="form-group">
                 <label for="image">Image:</label>
-                <img src="{{ asset($teacherInfo->getProfile->image) }}" alt="Teacher Image" width="100">
+                <img src="{{ $teacherInfo->getProfile->image }}" alt="Teacher Image" width="100">
             </div>
         </form>
     </div>

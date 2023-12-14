@@ -6,24 +6,29 @@
         <form>
             <div class="form-group">
                 <label for="courseName">Course Name:</label>
-                <input type="text" class="form-control" id="courseName" name="courseName" value="{{ $sclass->getCourse->name }}" disabled>
+                <input type="text" class="form-control" id="courseName" name="courseName"
+                    value="{{ $sclass->getCourse->name }}" disabled>
             </div>
 
             <div class="form-group">
                 <label for="totalCredits">Total Credits:</label>
-                <input type="number" class="form-control" id="totalCredits" name="totalCredits" value="{{ $sclass->getCourse->credits }}" disabled>
-            </div> 
+                <input type="number" class="form-control" id="totalCredits" name="totalCredits"
+                    value="{{ $sclass->getCourse->credits }}" disabled>
+            </div>
             <div class="form-group">
                 <label for="class Time">Class Time:</label>
-                <input type="text" class="form-control" id="class time" name="class Time" value="{{$sclass->DayofWeek}}:{{ $sclass->starttime }}-{{ $sclass->endtime }} " disabled>
+                <input type="text" class="form-control" id="class time" name="class Time"
+                    value="{{ $sclass->DayofWeek }}:{{ $sclass->starttime }}-{{ $sclass->endtime }} " disabled>
             </div>
             <div class="form-group">
                 <label for="class Time">Teacher:</label>
-                <input type="text" class="form-control" id="class Teacher" name="class Teacher" value="{{$teacherInfo->firstName}} {{$teacherInfo->lastName}}" disabled>
+                <input type="text" class="form-control" id="class Teacher" name="class Teacher"
+                    value="{{ $teacherInfo->firstName }} {{ $teacherInfo->lastName }}" disabled>
             </div>
             <div class="form-group">
                 <label for="class Time">Course:</label>
-                <input type="text" class="form-control" id="class department" name="class department" value="{{$sclass->getCourse->name}} " disabled>
+                <input type="text" class="form-control" id="class department" name="class department"
+                    value="{{ $sclass->getCourse->name }} " disabled>
             </div>
         </form>
     </div>
@@ -71,47 +76,26 @@
     </div>
 
     <div class="row">
-        <h4>Students Enroll this CLass</h4>
-        @if ($students->count()>0)
-        <table>
-            <tr>
-                <th>Student Id
-                </th>
-                <th>Student First Name
-                </th>
-                <th>Student Last Name
-                </th>
-                <th>Average Grade</th>
-            </tr>
-            @foreach ($students as $student )
+        <h4>Students Enrolled this CLass</h4>
+        @if ($students->count() > 0)
+            <table>
                 <tr>
+                    <th>Student Id
+                    </th>
+                    <th>Student First Name
+                    </th>
+                    <th>Student Last Name
+                    </th>
                 </tr>
-            @endforeach
-       
-        </table>
-        @endif
-    </div>
+                @foreach ($students as $student)
+                    <tr>
+                        <td>{{ $student->id }}</td>
+                        <td>{{ $student->firstName }}</td>
+                        <td>{{ $student->lastName }}</td>
+                    </tr>
+                @endforeach
 
-    <div class="row">
-        <h4>Reviews</h4>
-        @if ($reviews->count()>0)
-        <table>
-            <tr>
-                <th>Student Id
-                </th>
-                <th>Student First Name
-                </th>
-                <th>Student Last Name
-                </th>
-                <th>Average Grade</th>
-            </tr>
-            @foreach ($students as $student )
-                <tr>
-                </tr>
-            @endforeach
-       
-        </table>
+            </table>
         @endif
-    
     </div>
 @endsection('content')
