@@ -75,7 +75,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/view/profile', [AdminController::class, 'viewprofile'])->name('viewprofile');
         Route::get('/add/department}', [AdminController::class, 'addDepartment'])->name('addDepartment');
         Route::get('/edit/profile/{id}', [AdminController::class, 'editprofile'])->name('editprofile');
-        
+        Route::put('/update/profile/{id}', [AdminController::class, 'updateProfile'])->name('admin.updateprofile');
         //Departments
         Route::get('/manage/departments', [AdminController::class, 'manageDepartments'])->name('admin.manageDepartments');
         Route::get('/manage/departments/view/{department}', [AdminController::class, 'viewDepartments'])->name('admin.viewDepartment');
@@ -199,7 +199,7 @@ Route::prefix('student')->group(function () {
         Route::get('/manage/class', [StudentController::class, 'manageClass'])->name('student.manageclass');
         Route::get('/manage/Q&A', [StudentController::class, 'manageQandA'])->name('student.manageQ&A');
         Route::get('/manage/calendar', [StudentController::class, 'viewCalendar'])->name('student.viewCalendar');
-        Route::get('/view/profile/{id}', [StudentController::class, 'viewProfile'])->name('student.viewprofile');
+        Route::get('/view/profile/', [StudentController::class, 'viewProfile'])->name('student.viewprofile');
         Route::get('/edit/profile/{id}', [StudentController::class, 'editProfile'])->name('student.editprofile');
       
         Route::get('/view/class/{id}', [StudentController::class, 'viewClass'])->name('student.viewclass');

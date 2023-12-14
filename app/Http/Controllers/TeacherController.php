@@ -178,7 +178,7 @@ class TeacherController extends Controller {
         $prf=new Profile();
         $prf->phone=$request->phone;
         $prf->email=$request->email;
-        $prf->image="sdf";
+        $prf->image="NO IMAGE";
         $prf->dateOfBirth=$request->DOB;
         $prf->teacher_id=$te->id;
         $prf->save();

@@ -2,6 +2,20 @@
 <html lang="en">
 
 <head>
+    @if (Session::has('success'))
+        <div class="alert alert-success" role="alert">
+            {{ Session::get('success') }}
+        </div>
+    @endif
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Login</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
@@ -52,8 +66,9 @@
                     </div>
                     <div class="form-group form-floating-label">
                         <label for="DOB">Date Of Birth</label>
-                        <input id="DOB" name="DOB" type="Date" class="form-control input-border-bottom"required>
-                      
+                        <input id="DOB" name="DOB" type="Date"
+                            class="form-control input-border-bottom"required>
+
                     </div>
                     <!-- Gender dropdown -->
                     <div class="form-group">
@@ -84,10 +99,7 @@
                             required>
                         <label for="phone" class="placeholder">Phone Number</label>
                     </div>
-                    <div class="form-group">
-                        <label for="image">Upload Profile Image:</label>
-                        <input type="file" class="form-control-file" id="image" name="image">
-                    </div>
+
                     <div class="form-group">
                         <input type="submit" class="btn btn-success" style="width:100%" value="Submit">
                     </div>
