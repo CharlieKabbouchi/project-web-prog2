@@ -199,7 +199,7 @@ Route::prefix('student')->group(function () {
         Route::get('/manage/events', [StudentController::class, 'manageEvent'])->name('student.manageevents');
         Route::get('/manage/class', [StudentController::class, 'manageClass'])->name('student.manageclass');
         Route::get('/manage/Q&A', [StudentController::class, 'manageQandA'])->name('student.manageQ&A');
-        Route::get('/manage/calendar', [StudentController::class, 'viewCalendar'])->name('student.viewCalendar');
+        Route::get('/View-Calendar', [StudentController::class, 'viewCalendar'])->name('student.viewCalendar');
         Route::get('/view/profile', [StudentController::class, 'viewProfile'])->name('student.viewprofile');
         Route::get('/edit/profile/{id}', [StudentController::class, 'editProfile'])->name('student.editprofile');
         Route::put('/update/profile/{id}', [StudentController::class, 'updateProfile'])->name('student.updateprofile');
@@ -240,7 +240,7 @@ Route::prefix('parent')->group(function () {
         // Route::get('/dashboard', function () {
         //     return 'Parent Dashboard';
         // })->name('parent.dashboard');
-
+        Route::post('/logout', [SParentController::class, 'Logout'])->name('parent.logout');
         Route::get('/dashboard', [SParentController::class, 'showDashboard'])->name('parent.dashboard');
         Route::get('/ShowClasses', [SParentController::class, 'show'])->name('parent.ShowClasses');
         Route::get('/view/profile',[SParentController::class,'viewProfile'])->name('parent.viewprofile'); 
@@ -273,7 +273,7 @@ Route::prefix('alumni')->group(function () {
         Route::post('/manage/Events/{event}', [AlumniController::class, 'deleteEvent'])->name('alumni.deleteEvent');
         Route::get('/manage/Q&A', [AlumniController::class, 'manageQA'])->name('alumni.manageQ&A');
         Route::post('/submitAnswer/{questionId}', [AlumniController::class, 'submitAnswer'])->name('alumni.submitAnswer');
-        Route::get('/manage/Calendar', [AlumniController::class, 'viewCalendar'])->name('alumni.viewCalendar');
+        Route::get('/View-Calendar', [AlumniController::class, 'viewCalendar'])->name('alumni.viewCalendar');
         // Add other alumni routes here
     });
 });
@@ -309,6 +309,8 @@ Route::prefix('teacher')->group(function () {
         //Students
         Route::get('/teacher/classes/{class}/students/{student}/edit', [TeacherController::class, 'editStudentGrades'])->name('editStudentGrades');
         Route::post('/teacher/classes/{class}/students/{student}/update', [TeacherController::class, 'storeStudentGrades'])->name('storeStudentGrades');
-
+     
+        Route::post('/logout', [TeacherController::class, 'Logout'])->name('teacher.logout');
+        Route::get('/View-Calendar', [TeacherController::class, 'viewCalendar'])->name('teacher.viewCalendar');
     });
 });

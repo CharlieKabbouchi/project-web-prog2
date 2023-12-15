@@ -38,7 +38,16 @@
 				{{-- <a href="{{route('admin.dashboard')}}" class="big-logo">
 					<img src="{{asset('assets/img/logoresponsive.png')}}" alt="logo img" class="logo-img">
 				</a> --}}
+				<div class="logo-header">
+					<!--
+						Tip 1: You can change the background color of the logo header using: data-background-color="black | dark | blue | purple | light-blue | green | orange | red"
+					-->
+					<a href="{{route('parent.dashboard')}}" class="big-logo">
+						<img src="{{asset('storage/images/c.png')}}" alt="logo img" class="logo-img">
+					</a>
+	
 				
+				</div>
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon">
 						<i class="la la-bars"></i>
@@ -75,7 +84,7 @@
 										<div class="u-img"><img src="{{$parent->getProfile->image}}" alt="image profile"></div>
 										<div class="u-text">
 											<h4>{{$parent->firstName}}</h4>
-                                            <form  method="post" action="{{route('logout')}}" >@csrf<input type='submit'class="btn btn-primary btn-rounded btn-login" value='Logout'></form>
+                                            <form  method="post" action="{{route('parent.logout')}}" >@csrf<input type='submit'class="btn btn-primary btn-rounded btn-login" value='Logout'></form>
 										</div>
 									</div>
 								</li>

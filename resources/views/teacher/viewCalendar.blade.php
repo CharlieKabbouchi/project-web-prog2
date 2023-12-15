@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>View Event Calendar</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-   <link rel="icon" href="{{asset('storage/images/c.png')}}" type="image/x-icon"/>
+    <link rel="icon" href="{{asset('storage/images/c.png')}}" type="image/x-icon"/>
 
     <!-- Fonts and icons -->
     <script src="{{asset('assets/js/plugin/webfont/webfont.min.js')}}"></script>
@@ -38,6 +38,9 @@
                 <!--
      Tip 1: You can change the background color of the logo header using: data-background-color="black | dark | blue | purple | light-blue | green | orange | red"
     -->
+    <a href="{{ route('teacher.dashboard') }}" class="big-logo">
+        <img src="{{ asset('storage/images/c.png') }}" alt="logo img" class="logo-img">
+    </a>
 
 
                 <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
@@ -72,16 +75,16 @@
                         
                         <li class="nav-item dropdown hidden-caret">
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"
-                                aria-expanded="false"> <img src="{{ $student->getProfile->image}}"
+                                aria-expanded="false"> <img src="{{ $teacher->getProfile->image}}"
                                     alt="image profile" width="36" class="img-circle"></a>
                             <ul class="dropdown-menu dropdown-user animated fadeIn">
                                 <li>
                                     <div class="user-box">
-                                        <div class="u-img"><img src="{{ $student->getProfile->image }}"
+                                        <div class="u-img"><img src="{{ $teacher->getProfile->image }}"
                                                 alt="image profile"></div>
                                         <div class="u-text">
-                                            <h4>{{ $student->firstName }}</h4>
-                                            <form method="post" action="{{ route('student.logout') }}">@csrf<input
+                                            <h4>{{ $teacher->firstName }}</h4>
+                                            <form method="post" action="{{ route('teacher.logout') }}">@csrf<input
                                                     type='submit'class="btn btn-primary btn-rounded btn-login"
                                                     value='Logout'></form>
                                         </div>
@@ -106,13 +109,13 @@
                 <div class="sidebar-content">
                     <div class="user">
                         <div class="photo">
-                            <img src="{{ $student->getProfile->image }}" alt="image profile">
+                            <img src="{{ $teacher->getProfile->image }}" alt="image profile">
                         </div>
                         <div class="info">
                             <a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
                                 <span>
-                                    {{ $student->firstName }}
-                                    <span class="user-level">Student</span>
+                                    {{ $teacher->firstName }}
+                                    <span class="user-level">Teacher</span>
                                     <span class="caret"></span>
                                 </span>
                             </a>
@@ -121,12 +124,12 @@
                             <div class="collapse in" id="collapseExample">
                                 <ul class="nav">
                                     <li>
-                                        <a href="{{route('student.viewprofile')}}">
+                                        <a href="{{route('teacher.viewprofile')}}">
                                             <span class="link-collapse">My Profile</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{route('student.editprofile',['id'=>$student->id])}}">
+                                        <a href="{{route('teacher.editprofile',['id'=>$teacher->id])}}">
                                             <span class="link-collapse">Edit Profile</span>
                                         </a>
                                     </li>
@@ -137,47 +140,37 @@
                     </div>
                     <ul class="nav">
                         <li class="nav-item">
-                            <a href="{{route('student.dashboard')}}">
+                            <a href="{{ route('teacher.dashboard') }}">
                                 <i class="flaticon-home"></i>
                                 <p>Dashboard</p>
-
                             </a>
                         </li>
                         <li class="nav-section">
                             <span class="sidebar-mini-icon">
                                 <i class="la la-ellipsis-h"></i>
                             </span>
-                            <h4 class="text-section">Manage</h4>
+                            <h4 class="text-section">
+                                <p>Manage</p>
+                            </h4>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('student.manageclass')}}">
-                                <i class="flaticon-home"></i>
+                            <a href="{{ route('teacher.manageClasses') }}">
+                                <i class="flaticon-agenda-1"></i>
                                 <p>Classes</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('student.manageevents')}}">
-                                <i class="flaticon-home"></i>
-                                <p>Events</p>
+                            <a href="{{ route('teacher.manageCertificates') }}">
+                                <i class="flaticon-layers"></i>
+                                <p>Certificates</p>
                             </a>
                         </li>
-
                         <li class="nav-item">
-                            <a href="{{route('student.manageQ&A')}}">
-                                <i class="flaticon-agenda-1"></i>
-                                <p>Questions and Answers</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a data-toggle="collapse" href="{{route('student.viewCalendar')}}">
-                                <i class="flaticon-agenda-1"></i>
+                            <a href="{{ route('teacher.viewCalendar') }}">
+                                <i class="flaticon-layers"></i>
                                 <p>Calendar</p>
                             </a>
-
                         </li>
-
-
                     </ul>
                 </div>
             </div>
@@ -235,20 +228,11 @@
             var m = date.getMonth();
             var y = date.getFullYear();
             var className = Array('fc-danger');
+
     
-            var eventsData = {!! json_encode($events->toArray()) !!};
-            var events = eventsData.map(function (event) {
-                return {
-                    id: event.id,
-                    title: event.title,
-                    start: event.start,
-                    end: event.end,
-                    className: className[Math.floor(Math.random() * className.length)]
-                };
-            });
-    
-            var classData = {!! json_encode($enrolledClasses->toArray()) !!};
+            var classData = {!! json_encode($classToTeach->toArray()) !!};
             var classNames = {!! json_encode($classNames) !!};
+            console.log(classData);
             // console.log(classNames);
     
             var classEvents = classData.map(function (classEvent, index) {
@@ -264,8 +248,7 @@
                 };
             });
     
-            var allEvents = events.concat(classEvents);
-    
+            
             $calendar = $('#calendar');
             $calendar.fullCalendar({
                 header: {
@@ -275,7 +258,7 @@
                 },
                 selectable: true,
                 selectHelper: true,
-                events: allEvents,
+                events: classEvents,
             });
         });
     </script>

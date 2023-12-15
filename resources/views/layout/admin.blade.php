@@ -36,9 +36,9 @@
 					Tip 1: You can change the background color of the logo header using: data-background-color="black | dark | blue | purple | light-blue | green | orange | red"
 				-->
 				<a href="{{route('admin.dashboard')}}" class="big-logo">
-					<img src="{{asset('assets/img/logoresponsive.png')}}" alt="logo img" class="logo-img">
+					<img src="{{asset('storage/images/c.png')}}" alt="logo img" class="logo-img">
 				</a>
-				
+
 			
 			</div>
 			<!-- End Logo Header -->

@@ -52,7 +52,16 @@
                 {{-- <a href="{{route('admin.dashboard')}}" class="big-logo">
 					<img src="{{asset('assets/img/logoresponsive.png')}}" alt="logo img" class="logo-img">
 				</a> --}}
-
+                <div class="logo-header">
+                    <!--
+                        Tip 1: You can change the background color of the logo header using: data-background-color="black | dark | blue | purple | light-blue | green | orange | red"
+                    -->
+                    <a href="{{route('alumni.dashboard')}}" class="big-logo">
+                        <img src="{{asset('storage/images/c.png')}}" alt="logo img" class="logo-img">
+                    </a>
+    
+                
+                </div>
                 <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
                     data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon">

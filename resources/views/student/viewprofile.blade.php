@@ -5,7 +5,7 @@
         <h4 class="page-title">User Profile</h4>
         <div class="row">
             <div class="card card-profile card-secondary">
-                <div class="card-header" style="background-image: url('../assets/img/blogpost.jpg')">
+                <div class="card-header" style="background-image: url({{asset('assets/img/blogpost.jpg')}})">
                     <div class="profile-picture">
                         <img src="{{ $student->getProfile->image }}" alt="Profile Picture">
                     </div>
