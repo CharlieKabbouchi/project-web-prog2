@@ -4,7 +4,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<title>Teacher Dashboard</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-	<link rel="icon" href="{{asset('assets/img/favicon.ico')}}" type="image/x-icon"/>
+	<link rel="icon" href="{{asset('storage/images/c.png')}}" type="image/x-icon"/>
 
 	<!-- Fonts and icons -->
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

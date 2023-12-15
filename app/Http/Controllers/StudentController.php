@@ -511,7 +511,7 @@ class StudentController extends Controller {
 
     public function Logout() {
         auth()->guard('student')->logout();
-        return redirect('/');
+        return redirect('/');;
     }
 
     public function login(Request $request) {

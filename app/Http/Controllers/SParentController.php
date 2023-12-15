@@ -33,7 +33,10 @@ class SParentController extends Controller {
 
         return back()->withErrors(['error' => 'Invalid login credentials']);
     }
-
+    public function Logout() {
+        auth()->guard('parent')->logout();
+        return redirect('/');
+    }
 
     public function showDashboard(Request $request) {
         $parent = SParent::find(session('parent_id'));

@@ -72,12 +72,12 @@
                         
                         <li class="nav-item dropdown hidden-caret">
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"
-                                aria-expanded="false"> <img src="{{ asset('assets/img/profile.jpg') }}"
+                                aria-expanded="false"> <img src="{{ $alumni->getProfile->image }}"
                                     alt="image profile" width="36" class="img-circle"></a>
                             <ul class="dropdown-menu dropdown-user animated fadeIn">
                                 <li>
                                     <div class="user-box">
-                                        <div class="u-img"><img src="{{ asset('assets/img/profile.jpg') }}"
+                                        <div class="u-img"><img src="{{ $alumni->getProfile->image }}"
                                                 alt="image profile"></div>
                                         <div class="u-text">
                                             <h4>{{ $alumni->getStudent->firstName }}</h4>
@@ -106,7 +106,7 @@
                 <div class="sidebar-content">
                     <div class="user">
                         <div class="photo">
-                            <img src="{{ asset('assets/img/profile.jpg') }}" alt="image profile">
+                            <img src="{{ $alumni->getProfile->image }}" alt="image profile">
                         </div>
                         <div class="info">
                             <a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
@@ -156,11 +156,10 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a data-toggle="collapse" href="{{route('alumni.manageQ&A')}}">
+                            <a href="{{route('alumni.manageQ&A')}}">
                                 <i class="flaticon-agenda-1"></i>
                                 <p>Questions and Answers</p>
                             </a>
-
                         </li>
 
                         <li class="nav-item">
@@ -168,7 +167,6 @@
                                 <i class="flaticon-agenda-1"></i>
                                 <p>Calendar</p>
                             </a>
-
                         </li>
 
 
@@ -218,10 +216,10 @@
     <script src="{{ asset('assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
     <!-- Fullcalendar -->
     <script src="{{ asset('assets/js/plugin/fullcalendar/fullcalendar.min.js') }}"></script>
-    <!-- Ready Pro JS -->
+    {{-- <!-- Ready Pro JS -->
     <script src="{{ asset('assets/js/ready.min.js') }}"></script>
     <!-- Ready Pro DEMO methods, don't include it in your project! -->
-    <script src="{{ asset('assets/js/setting-demo.js') }}"></script>
+    <script src="{{ asset('assets/js/setting-demo.js') }}"></script> --}}
     <script>
         $(document).ready(function() {
             var date = new Date();

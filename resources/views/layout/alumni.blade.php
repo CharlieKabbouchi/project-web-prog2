@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Alumni Dashboard</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-    <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}" type="image/x-icon" />
+    <link rel="icon" href="{{ asset('storage/images/c.png') }}" type="image/x-icon" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
@@ -172,13 +172,13 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('alumni.manageQ&A') }}">
-                                <i class="flaticon-layers"></i>
+                                <i class="flaticon-agenda-1"></i>
                                 <p>Questions and Answers</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('alumni.viewCalendar') }}">
-                                <i class="flaticon-layers"></i>
+                                <i class="flaticon-agenda-1"></i>
                                 <p>Calendar</p>
                             </a>
                         </li>
