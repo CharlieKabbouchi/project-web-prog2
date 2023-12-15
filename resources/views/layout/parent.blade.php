@@ -63,11 +63,7 @@
 					Tip 1: You can change the background color of the navbar header using: data-background-color="black | dark | blue | purple | light-blue | green | orange | red"
 				-->
 				<div class="container-fluid">
-					<div class="navbar-minimize">
-						<button class="btn btn-minimize btn-rounded">
-							<i class="la la-navicon"></i>
-						</button>
-					</div>
+				
 					
 					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
 						<li class="nav-item toggle-nav-search hidden-caret">

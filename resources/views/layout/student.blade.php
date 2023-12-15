@@ -35,8 +35,8 @@
 				<!--
 					Tip 1: You can change the background color of the logo header using: data-background-color="black | dark | blue | purple | light-blue | green | orange | red"
 				-->
-				<a href="{{route('admin.dashboard')}}" class="big-logo">
-					<img src="{{asset('assets/img/logoresponsive.png')}}" alt="logo img" class="logo-img">
+				<a href="{{route('student.dashboard')}}" class="big-logo">
+					<img src="{{asset('storage/images/c.png')}}" alt="logo img" class="logo-img">
 				</a>
 				
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,11 +54,7 @@
 					Tip 1: You can change the background color of the navbar header using: data-background-color="black | dark | blue | purple | light-blue | green | orange | red"
 				-->
 				<div class="container-fluid">
-					<div class="navbar-minimize">
-						<button class="btn btn-minimize btn-rounded">
-							<i class="la la-navicon"></i>
-						</button>
-					</div>
+				
 					
 					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
 						<li class="nav-item toggle-nav-search hidden-caret">
