@@ -1,6 +1,6 @@
 @extends('layout.admin')
 <title>Admin Class Details</title>
-
+ 
 @section('content')
     <div class="row">
         <form>
@@ -9,7 +9,7 @@
                 <input type="text" class="form-control" id="courseName" name="courseName"
                     value="{{ $sclass->getCourse->name }}" disabled>
             </div>
-
+ 
             <div class="form-group">
                 <label for="totalCredits">Total Credits:</label>
                 <input type="number" class="form-control" id="totalCredits" name="totalCredits"
@@ -32,7 +32,7 @@
             </div>
         </form>
     </div>
-
+ 
     <div class="row">
         <div class="col-sm-6 col-md-3">
             <div class="card card-stats card-primary card-round">
@@ -53,7 +53,7 @@
                 </div>
             </div>
         </div>
-
+ 
         <div class="col-sm-6 col-md-3">
             <div class="card card-stats card-primary card-round">
                 <div class="card-body">
@@ -74,7 +74,7 @@
             </div>
         </div>
     </div>
-
+ 
     <div class="row">
         <h4>Students Enrolled this CLass</h4>
         @if ($students->count() > 0)
@@ -94,8 +94,9 @@
                         <td>{{ $student->lastName }}</td>
                     </tr>
                 @endforeach
-
+ 
             </table>
         @endif
     </div>
 @endsection('content')
+ 
