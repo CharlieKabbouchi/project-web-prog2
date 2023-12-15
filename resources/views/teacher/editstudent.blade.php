@@ -28,6 +28,10 @@
                         <label for="assignmentGrade" class="form-label">Assignment Grade</label>
                         <input type="text" class="form-control" name="assignmentGrade" id="assignmentGrade" value="{{ old('assignmentGrade', $grades->assignmentGrade) }}">
                     </div>
+                    <div class="mb-3">
+                        <label for="Attendence" class="form-label">Attendance</label>
+                        <input type="text" class="form-control" name="attendence" id="attendence" value="{{ old('attendence', $grades->attendence) }}">
+                    </div>
 
                     <button type="submit" class="btn btn-primary">Update Grades</button>
                 </form>

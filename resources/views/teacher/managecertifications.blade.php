@@ -43,7 +43,7 @@
                             <td>{{ $teacher->id }}</td>
                             <td>
                                 @if ($certificate->graduationCertificateImage)
-                                    <img src="{{ asset('storage/' . $certificate->graduationCertificateImage) }}" alt="Certificate Image" style="max-width: 100px; max-height: 100px;">
+                                    <img src="{{$certificate->graduationCertificateImage}}" alt="Certificate Image" style="max-width: 100px; max-height: 100px;">
                                 @else
                                     No Image
                                 @endif
