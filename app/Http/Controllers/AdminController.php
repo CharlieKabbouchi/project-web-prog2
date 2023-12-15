@@ -92,6 +92,13 @@ class AdminController extends Controller {
                 $alumni = new Alumni();
                 $alumni->graduationYear = date('Y');
                 $alumni->student_id = $student->id;
+                $prf=new Profile();
+                $prf->dateOfBirth=$student->getProfile->dateOfBirth;
+                $prf->image=$student->getProfile->image;
+                $prf->phone=$student->getProfile->phone;
+                $prf->email=$student->getProfile->email;
+                $prf->alumni_id=$student->getProfile->alumni_id;
+                $prf->save();
                 $student->save();
                 $alumni->save();
             }

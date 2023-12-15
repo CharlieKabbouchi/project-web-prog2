@@ -54,102 +54,22 @@
 					Tip 1: You can change the background color of the navbar header using: data-background-color="black | dark | blue | purple | light-blue | green | orange | red"
 				-->
 				<div class="container-fluid">
-					<div class="navbar-minimize">
-						<button class="btn btn-minimize btn-rounded">
-							<i class="la la-navicon"></i>
-						</button>
-					</div>
-					<div class="collapse" id="search-nav">
-						<form class="navbar-left navbar-form nav-search ml-md-3 mr-md-3">
-							<div class="input-group">
-								<input type="text" placeholder="Search ..." class="form-control">
-								<div class="input-group-append">
-									<button type="submit" class="btn btn-search">
-										<i class="la la-search search-icon"></i>
-									</button>
-								</div>
-							</div>
-						</form>
-					</div>
+					
+					
 					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
 						<li class="nav-item toggle-nav-search hidden-caret">
 							<a class="nav-link" data-toggle="collapse" href="#search-nav" role="button" aria-expanded="false" aria-controls="search-nav">
 								<i class="flaticon-search-1"></i>
 							</a>
 						</li>
+						
+						
 						<li class="nav-item dropdown hidden-caret">
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class="flaticon-envelope-1"></i>
-							</a>
-							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<a class="dropdown-item" href="#">Action</a>
-								<a class="dropdown-item" href="#">Another action</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#">Something else here</a>
-							</div>
-						</li>
-						<li class="nav-item dropdown hidden-caret">
-							<a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class="flaticon-alarm"></i>
-								<span class="notification">3</span>
-							</a>
-							<ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
-								<li>
-									<div class="dropdown-title">You have 4 new notification</div>
-								</li>
-								<li>
-									<div class="notif-center">
-										<a href="#">
-											<div class="notif-icon notif-primary"> <i class="la la-user-plus"></i> </div>
-											<div class="notif-content">
-												<span class="block">
-													New user registered
-												</span>
-												<span class="time">5 minutes ago</span> 
-											</div>
-										</a>
-										<a href="#">
-											<div class="notif-icon notif-success"> <i class="la la-comment"></i> </div>
-											<div class="notif-content">
-												<span class="block">
-													Rahmad commented on Admin
-												</span>
-												<span class="time">12 minutes ago</span> 
-											</div>
-										</a>
-										<a href="#">
-											<div class="notif-img"> 
-												<img src="{{asset('assets/img/profile2.jpg')}}" alt="Img Profile">
-											</div>
-											<div class="notif-content">
-												<span class="block">
-													Reza send messages to you
-												</span>
-												<span class="time">12 minutes ago</span> 
-											</div>
-										</a>
-										<a href="#">
-											<div class="notif-icon notif-danger"> <i class="la la-heart"></i> </div>
-											<div class="notif-content">
-												<span class="block">
-													Farrah liked Admin
-												</span>
-												<span class="time">17 minutes ago</span> 
-											</div>
-										</a>
-									</div>
-								</li>
-								<li>
-									<a class="see-all" href="javascript:void(0);">See all notifications<i class="la la-angle-right"></i> </a>
-								</li>
-							</ul>
-						</li>
-						<li class="nav-item dropdown hidden-caret">
-							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="{{asset('assets/img/profile.jpg')}}" alt="image profile" width="36" class="img-circle"></a>
+							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="{{$teacher->getProfile->image}}" alt="image profile" width="36" class="img-circle"></a>
 							<ul class="dropdown-menu dropdown-user animated fadeIn">
 								<li>
 									<div class="user-box">
-										<div class="u-img"><img src="{{asset('assets/img/profile.jpg')}}" alt="image profile"></div>
+										<div class="u-img"><img src="{{$teacher->getProfile->image}}" alt="image profile"></div>
 										<div class="u-text">
 											<h4>{{$teacher->firstName}}</h4>
 											<p class="text-muted">{{$teacher->email}}</p><a href="" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
@@ -157,13 +77,6 @@
 									</div>
 								</li>
 								<li>
-									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="#">My Profile</a>
-									<a class="dropdown-item" href="#">My Balance</a>
-									<a class="dropdown-item" href="#">Inbox</a>
-									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="#">Account Setting</a>
-									<div class="dropdown-divider"></div>
 									<a class="dropdown-item" href="#">Logout</a>
 								</li>
 							</ul>
@@ -190,7 +103,7 @@
 				<div class="sidebar-content">
 					<div class="user">
 						<div class="photo">
-							<img src="{{asset('assets/img/profile.jpg')}}" alt="image profile">
+							<img src="{{$teacher->getProfile->image}}" alt="image profile">
 						</div>
 						<div class="info">
 							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
@@ -211,7 +124,7 @@
 										</a>
 									</li>
 									<li>
-										<a href="{{route('teacher.editprofile')}}">
+										<a href="{{route('teacher.editprofile',['id'=>$teacher->id])}}">
 											<span class="link-collapse">Edit Profile</span>
 										</a>
 									</li>
@@ -221,138 +134,35 @@
 						</div>
 					</div>
 					<ul class="nav">
-						<li class="nav-item active">
+						<li class="nav-item">
 							<a href="{{route('teacher.dashboard')}}">
 								<i class="flaticon-home"></i>
 								<p>Dashboard</p>
-								<span class="badge badge-count">5</span>
 							</a>
 						</li>
 						<li class="nav-section">
 							<span class="sidebar-mini-icon">
 								<i class="la la-ellipsis-h"></i>
 							</span>
-							<h4 class="text-section">Manage Assets</h4>
+							<h4 class="text-section"><p>Manage</p></h4>
 						</li>
 						<li class="nav-item">
 							<a  href="{{route('teacher.manageClasses')}}">
 								<i class="flaticon-layers"></i>
-								<p>My Classes</p>
+								<p>Classes</p>
 							</a>
                         </li>	
 						<li class="nav-item">
 							<a  href="{{route('teacher.manageCertificates')}}">
 								<i class="flaticon-layers"></i>
-								<p>My Certificates</p>
+								<p>Certificates</p>
 							</a>
-						</li>
-                   
-						<li class="nav-item">
-							<a data-toggle="collapse" href="">
-								<i class="flaticon-box"></i>
-								<p>Courses</p>
-								<span class="caret"></span>
-							</a>
-							
 						</li>
 						<li class="nav-item">
-							<a data-toggle="collapse" href="">
-								<i class="flaticon-placeholder"></i>
-								<p>Classes</p>
-								<span class="caret"></span>
+							<a  href="{{route('teacher.manageCertificates')}}">
+								<i class="flaticon-layers"></i>
+								<p>Calendar</p>
 							</a>
-							
-						</li>
-
-                        <li class="nav-section">
-							<span class="sidebar-mini-icon">
-								<i class="la la-ellipsis-h"></i>
-							</span>
-							<h4 class="text-section">Manage Users</h4>
-						</li>
-                        <li class="nav-item">
-							<a data-toggle="collapse" href="">
-								<i class="flaticon-placeholder"></i>
-								<p>Teachers</p>
-								<span class="caret"></span>
-							</a>
-							
-						</li>
-                        <li class="nav-item">
-							<a data-toggle="collapse" href="">
-								<i class="flaticon-placeholder"></i>
-								<p>Students</p>
-								<span class="caret"></span>
-							</a>
-							
-						</li>
-                        <li class="nav-item">
-							<a data-toggle="collapse" href="">
-								<i class="flaticon-placeholder"></i>
-								<p>Alumnis</p>
-								<span class="caret"></span>
-							</a>
-							
-						</li>
-                        <li class="nav-item">
-							<a data-toggle="collapse" href="">
-								<i class="flaticon-placeholder"></i>
-								<p>Parents</p>
-								<span class="caret"></span>
-							</a>
-							
-						</li>
-					
-						<li class="nav-item">
-							<a data-toggle="collapse" href="#submenu">
-								<i class="flaticon-mailbox"></i>
-								<p>Menu Levels</p>
-								<span class="caret"></span>
-							</a>
-							<div class="collapse" id="submenu">
-								<ul class="nav nav-collapse">
-									<li>
-										<a data-toggle="collapse" href="#subnav1">
-											<span class="sub-item">Level 1</span>
-											<span class="caret"></span>
-										</a>
-										<div class="collapse" id="subnav1">
-											<ul class="nav nav-collapse subnav">
-												<li>
-													<a href="#">
-														<span class="sub-item">Level 2</span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="sub-item">Level 2</span>
-													</a>
-												</li>
-											</ul>
-										</div>
-									</li>
-									<li>
-										<a data-toggle="collapse" href="#subnav2">
-											<span class="sub-item">Level 1</span>
-											<span class="caret"></span>
-										</a>
-										<div class="collapse" id="subnav2">
-											<ul class="nav nav-collapse subnav">
-												<li>
-													<a href="#">
-														<span class="sub-item">Level 2</span>
-													</a>
-												</li>
-											</ul>
-										</div>
-									</li>
-									<li>
-										<a href="#">
-											<span class="sub-item">Level 1</span>
-										</a>
-									</li>
-								</ul>
-							</div>
 						</li>
 					</ul>
 				</div>

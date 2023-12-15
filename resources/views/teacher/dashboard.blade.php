@@ -71,7 +71,7 @@
                             </div>
                             <div class="col-7 col-stats">
                                 <div class="numbers">
-                                    <p class="card-category">Uploaded Resources</p>
+                                    <p class="card-category">Your Resources</p>
                                     <h4 class="card-title">{{$totalUploadedResources}}</h4>
                                 </div>
                             </div>

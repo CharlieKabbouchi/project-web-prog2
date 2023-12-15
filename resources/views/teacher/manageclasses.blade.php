@@ -25,11 +25,9 @@
     <div class="row">
         <h4 class="page-title">Classes</h4>
     </div>
-    <a href='{{ route('teacher.createClass') }}'>Add New Class</a>
-
     <div class="row">
         <div class="table-responsive">
-            <table class="table table-bordered table-striped" style="border-color: skyblue;">
+            <table class="table" style="border-color: skyblue;">
                 <thead>
                     <tr class="bg-primary">
                         <th>Course</th>
@@ -51,7 +49,7 @@
                             <td class="actions-column">
                                 <form method="get" action="{{ route('teacher.showClass', ['class' => $class->id]) }}">
                                     @csrf
-                                    <button type="submit" class="btn btn-primary btn-rounded btn-login">View</button>
+                                    <button type="submit" class="btn btn-primary">View</button>
                                 </form>                                
                             </td>
                         </tr>
