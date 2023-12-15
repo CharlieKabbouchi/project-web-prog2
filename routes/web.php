@@ -304,7 +304,9 @@ Route::prefix('teacher')->group(function () {
         Route::get('/manage/classes/edit/{class}', [ClassTController::class, 'edit'])->name('teacher.editclass');
         Route::put('/manage/classes/update/{class}', [ClassTController::class, 'update'])->name('teacher.updateClass');
         Route::post('/manage/classes/delete/{class}', [ClassTController::class, 'destroy'])->name('teacher.deleteClass');
- 
+        Route::get('/teacher/class/{class_id}/resources', [TeacherController::class, 'displayResources'])->name('teacher.displayResources');
+        Route::get('/teacher/class/{class_id}/assignments', [TeacherController::class, 'displayAssignments'])->name('teacher.displayAssignments');
+
         //Certificates
         Route::get('/manage/certificates', [TeacherController::class, 'manageCertificates'])->name('teacher.manageCertificates');
         Route::get('/manage/certificates/create', [TeacherController::class, 'createC'])->name('teacher.createCertificate');
