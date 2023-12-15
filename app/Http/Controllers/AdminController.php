@@ -87,20 +87,21 @@ class AdminController extends Controller {
             $totalCreditsShouldTaken = 0;
             $totalCreditsShouldTaken += $student->getDepartment->totalCredits;
             if ($totalCreditsShouldTaken <= $totalCredits && $student->isGraduated == false) {
-               // dd($student);
+            //    dd($student->getProfile);
                 $student->isGraduated = true;
                 $alumni = new Alumni();
                 $alumni->graduationYear = date('Y');
                 $alumni->student_id = $student->id;
+                $alumni->save();
                 $prf=new Profile();
+                // dd($student->getProfile);
                 $prf->dateOfBirth=$student->getProfile->dateOfBirth;
                 $prf->image=$student->getProfile->image;
                 $prf->phone=$student->getProfile->phone;
                 $prf->email=$student->getProfile->email;
-                $prf->alumni_id=$student->getProfile->alumni_id;
+                $prf->alumni_id=$alumni->id;
                 $prf->save();
                 $student->save();
-                $alumni->save();
             }
         }
         $alumnis = Alumni::all();
