@@ -75,5 +75,15 @@
             @csrf
             <button type="submit" class="btn btn-primary ">Add Resource</button>
         </form>
+
+        <form method="get" action="{{ route('teacher.displayAssignments', ['class_id' => $classInfo['id']]) }}" style="margin-top: 10px;">
+            @csrf
+            <button type="submit" class="btn btn-primary">Display Assignments</button>
+        </form>
+        
+        <form method="get" action="{{ route('teacher.displayResources', ['class_id' => $classInfo['id']]) }}" style="margin-top: 10px;">
+            @csrf
+            <button type="submit" class="btn btn-primary">Display Resources</button>
+        </form>
     </div>
 @endsection('content')

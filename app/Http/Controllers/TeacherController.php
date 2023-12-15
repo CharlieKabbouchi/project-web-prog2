@@ -24,18 +24,16 @@ use App\Models\Assignment;
 use App\Models\StudentClassT;
 use App\Models\Submission;
 use App\Models\UploadResource;
-class TeacherController extends Controller
-{
+
+class TeacherController extends Controller {
     /**
      * Display a listing of the resource.
      */
-    public function showLoginForm()
-    {
+    public function showLoginForm() {
         return view('auth.teacher-login');
     }
 
-    public function login(Request $request)
-    {
+    public function login(Request $request) {
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('teacher')->attempt($credentials)) {
@@ -54,43 +52,44 @@ class TeacherController extends Controller
     public function showDashboard(Request $request) {
         $teacher = Teacher::find(session('teacher_id'));
         $totalClasses = $teacher->getClassT()->count();
- 
+
         $courses = $teacher->getClassT()->pluck('course_id')->unique();
         $departments = Department::whereIn('id', function ($query) use ($courses) {
-        $query->select('department_id')
-            ->from('department_courses')
-            ->whereIn('course_id', $courses);
+            $query->select('department_id')
+                ->from('department_courses')
+                ->whereIn('course_id', $courses);
         })->get();
         $totalDepartments = $departments->count();
- 
+
         $totalUploadedResources = $teacher->getUploadResource()->count();
- 
-        return view('teacher.dashboard', compact('teacher','totalClasses','totalDepartments',
-        'totalUploadedResources'));
+
+        return view('teacher.dashboard', compact(
+            'teacher',
+            'totalClasses',
+            'totalDepartments',
+            'totalUploadedResources'
+        ));
     }
 
-   
-    public function manageClasses()
-    {
+
+    public function manageClasses() {
         $teacher = Auth::guard('teacher')->user();
         $classes = $teacher->getClassT;
         return view('/teacher/manageclasses', compact('classes', 'teacher'));
     }
 
-    public function manageCertificates(Request $request)
-    {
+    public function manageCertificates(Request $request) {
         $teacher = Auth::guard('teacher')->user();
         $certificates = $teacher->getCertificate;
         return view('/teacher/managecertifications', compact('certificates', 'teacher'));
     }
 
-    public function editStudentGrades($class_id, $student_id)
-    {
+    public function editStudentGrades($class_id, $student_id) {
         $teacher = Teacher::find(session('teacher_id'));
         $grades = DB::table('student_class_t_s')
             ->where('classt_id', $class_id)
             ->where('student_id', $student_id)
-            ->select('averageGrade', 'quizGrade', 'assignmentGrade', 'projectGrade','attendence')
+            ->select('averageGrade', 'quizGrade', 'assignmentGrade', 'projectGrade', 'attendence')
             ->first();
 
         if ($grades) {
@@ -100,8 +99,7 @@ class TeacherController extends Controller
         }
     }
 
-    public function storeStudentGrades($class_id, $student_id, Request $request)
-    {
+    public function storeStudentGrades($class_id, $student_id, Request $request) {
         $request->validate([
             'averageGrade' => 'required|numeric',
             'quizGrade' => 'required|numeric',
@@ -117,7 +115,7 @@ class TeacherController extends Controller
                 'quizGrade' => $request->input('quizGrade'),
                 'projectGrade' => $request->input('projectGrade'),
                 'assignmentGrade' => $request->input('assignmentGrade'),
-                'attendence'=>$request->input('attendence'),
+                'attendence' => $request->input('attendence'),
             ]);
 
         if ($result) {
@@ -127,12 +125,11 @@ class TeacherController extends Controller
         }
     }
 
-  
-   
 
 
-    public function create($wteacher)
-    {
+
+
+    public function create($wteacher) {
         $admin = Auth::guard('admin')->user();
         $wteacher = Pending::findOrFail($wteacher);
         return view('teacher.addTeacher', compact('admin', 'wteacher'));
@@ -141,8 +138,7 @@ class TeacherController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
 
         $request->validate([
             'firstName' => 'required|string',
@@ -176,8 +172,7 @@ class TeacherController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, $teacher)
-    {
+    public function show(Request $request, $teacher) {
         $teacherInfo = Teacher::findOrFail($teacher);
         $adminId = $request->session()->get('admin_id');
         $adminId = session('admin_id');
@@ -190,8 +185,7 @@ class TeacherController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($teacher)
-    {
+    public function edit($teacher) {
         $teacher = Teacher::findOrFail($teacher);
         $admin = Auth::guard('admin')->user();
         return view('teacher.editTeacher', compact('teacher', 'admin'));
@@ -200,8 +194,7 @@ class TeacherController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $teacher)
-    {
+    public function update(Request $request, $teacher) {
         $request->validate([
             'firstName' => 'required|string',
             'lastName' => 'required|string',
@@ -232,21 +225,18 @@ class TeacherController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($teacher)
-    {
+    public function destroy($teacher) {
         $teacher = Teacher::findOrFail($teacher);
         $teacher->delete();
         return redirect(route("admin.manageTeachers"));
     }
 
-    public function viewprofile()
-    {
+    public function viewprofile() {
         $teacher = Auth::guard('teacher')->user();
         return view('teacher.viewprofile', compact('teacher'));
     }
 
-    public function editprofile($id)
-    {
+    public function editprofile($id) {
         $teacher = Auth::guard('teacher')->user();
         return view('teacher.editprofile', compact('teacher'));
     }
@@ -261,7 +251,7 @@ class TeacherController extends Controller
             'dateOfBirth' => 'nullable|date',
         ]);
 
-    
+
         $profile = Profile::where('teacher_id', $teacher->id)->first();
 
         // Update the profile information
@@ -307,48 +297,46 @@ class TeacherController extends Controller
         $profile->save();
 
         return view('teacher.viewprofile', compact('teacher'));
-     }
-     public function viewCalendar() {
+    }
+    public function viewCalendar() {
         $teacherId = session('teacher_id');
         $teacher = Teacher::find($teacherId);
         $classToTeach = $teacher->getClassT;
         $classNames = [];
-    
+
         foreach ($classToTeach as $class) {
             $course = $class->getCourse;
-    
+
             if ($course && $course->name) {
                 $classNames[] = $course->name;
             }
         }
-    
+
         return view('teacher.viewCalendar', compact('teacher', 'classToTeach', 'classNames'));
     }
 
-    public function createC()
-    {
+    public function createC() {
         $teacher = Auth::guard('teacher')->user();
         return view('teacher.addcertificate', compact('teacher'));
     }
 
-    public function storeC(Request $request)
-    {
+    public function storeC(Request $request) {
         $teacher = Auth::guard('teacher')->user();
         $request->validate([
             'certificateImage' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'description' => 'required',
         ]);
-       
+
         if ($request->hasFile('certificateImage')) {
             $certificate = new Certificate();
             $certificate->description = $request->description;
             $certificate->teacher_id = $teacher->id;
-           
+
             $image = $request->file('certificateImage');
             $fileContents = file_get_contents($image->getPathname());
             $imageName = $teacher->id . time() . '.' . $image->getClientOriginalExtension();
             $filePath = 'certificates/' . $imageName;
-          
+
             // Laravel Storage operations
             $laravelDisk = Storage::disk('gcs');
 
@@ -371,7 +359,7 @@ class TeacherController extends Controller
             ]);
             // Get the public URL of the uploaded image from Firebase
             $firebaseImageUrl = $firebaseObject->signedUrl(new \DateTime('9999-12-31T23:59:59.999999Z'));
-           
+
             // Save the Firebase image URL to the profile
             $certificate->graduationCertificateImage = $firebaseImageUrl;
             $certificate->save();
@@ -380,8 +368,7 @@ class TeacherController extends Controller
         }
     }
 
-    public function createA($classt_id)
-    {
+    public function createA($classt_id) {
         $teacher = Auth::guard('teacher')->user();
         return view('teacher.addassignment', compact('teacher', 'classt_id'));
     }
@@ -397,26 +384,24 @@ class TeacherController extends Controller
     //     $teacher = Auth::guard('teacher')->user();
     //     return view('teacher.addproject', compact('teacher','classt_id'));
     // }
-    public function createRe($classt_id)
-    {
+    public function createRe($classt_id) {
         $teacher = Auth::guard('teacher')->user();
-        return view('teacher.uploadresource', compact('teacher','classt_id'));
+        return view('teacher.uploadresource', compact('teacher', 'classt_id'));
     }
-    public function storeA(Request $request, $classt_id)
-    {
+    public function storeA(Request $request, $classt_id) {
         $teacher = Auth::guard('teacher')->user();
         $this->validate($request, [
             'startingDate' => 'required',
             'endingDate' => 'required',
-            'title'=>'required',
-           'attachment'=>'required|file|mimes:pdf,doc,docx,xlsx,ppt,pptx,docm,dotx,dotm,xls,xlsm,xlsb,xltx,xltm,xlsm,png,bmp,jpeg,jpg,csv,txt',
+            'title' => 'required',
+            'attachment' => 'required|file|mimes:pdf,doc,docx,xlsx,ppt,pptx,docm,dotx,dotm,xls,xlsm,xlsb,xltx,xltm,xlsm,png,bmp,jpeg,jpg,csv,txt',
         ]);
-     
+
         if ($request->hasFile('attachment')) {
-         
+
             $file = $request->file('attachment');
             $fileContents = file_get_contents($file->getPathname());
-            $filename = $teacher->id .time(). '.' . $file->getClientOriginalExtension();
+            $filename = $teacher->id . time() . '.' . $file->getClientOriginalExtension();
             $filePath = 'assignments/' . $filename;
 
             // Laravel Storage operations
@@ -443,8 +428,8 @@ class TeacherController extends Controller
             $fireleUrl = $firebaseObject->signedUrl(new \DateTime('9999-12-31T23:59:59.999999Z'));
 
             // Save the Firebase image URL to the profile
-          
-          
+
+
             // dd($firebaseImageUrl);
             $assignment = new Assignment();
             $assignment->title = $request->title;
@@ -455,131 +440,140 @@ class TeacherController extends Controller
             $assignment->classt_id = $classt_id;
             $assignment->save();
             return redirect()->route('teacher.manageClasses');
-         }
-     
+        }
     }
-    public function storeRe(Request $request, $classt_id)
-{
-    $teacher = Auth::guard('teacher')->user();
-    $this->validate($request, [
-        'attachment'=>'required|file|mimes:pdf,doc,docx,xlsx,ppt,pptx,docm,dotx,dotm,xls,xlsm,xlsb,xltx,xltm,xlsm,png,bmp,jpeg,jpg,csv,txt',
+    public function storeRe(Request $request, $classt_id) {
+        $teacher = Auth::guard('teacher')->user();
+        $this->validate($request, [
+            'attachment' => 'required|file|mimes:pdf,doc,docx,xlsx,ppt,pptx,docm,dotx,dotm,xls,xlsm,xlsb,xltx,xltm,xlsm,png,bmp,jpeg,jpg,csv,txt',
 
-    ]);
-   
-    if ($request->hasFile('attachment')) {
-    $resource = new UploadResource();
-   
-    $resource->teacher_id = $teacher->id;
-    $resource->classt_id = $classt_id;
-  
-    $file = $request->file('attachment');
-    $fileContents = file_get_contents($file->getPathname());
-    $filename = $teacher->id .time(). '.' . $file->getClientOriginalExtension();
-    $filePath = 'resources/' . $filename;
+        ]);
 
-    // Laravel Storage operations
-    $laravelDisk = Storage::disk('gcs');
+        if ($request->hasFile('attachment')) {
+            $resource = new UploadResource();
 
-    // Upload the image using Laravel Storage
-    $laravelDisk->put($filePath, $fileContents);
+            $resource->teacher_id = $teacher->id;
+            $resource->classt_id = $classt_id;
 
-    // Check if the uploaded image exists
-    $exists = $laravelDisk->exists($filePath);
+            $file = $request->file('attachment');
+            $fileContents = file_get_contents($file->getPathname());
+            $filename = $teacher->id . time() . '.' . $file->getClientOriginalExtension();
+            $filePath = 'resources/' . $filename;
 
-    // Get the last modified time of the uploaded image
-    $time = $laravelDisk->lastModified($filePath);
+            // Laravel Storage operations
+            $laravelDisk = Storage::disk('gcs');
 
-    // Firebase Storage operations
-    $firebaseStorage = Firebase::storage();
-    $firebaseBucket = $firebaseStorage->getBucket();
+            // Upload the image using Laravel Storage
+            $laravelDisk->put($filePath, $fileContents);
 
-    // Upload the image to Firebase Storage
-    $firebaseObject = $firebaseBucket->upload($fileContents, [
-        'name' => $filePath,
-    ]);
-    // Get the public URL of the uploaded image from Firebase
-    $fireleUrl = $firebaseObject->signedUrl(new \DateTime('9999-12-31T23:59:59.999999Z'));
-  
-    $resource->attachement = $fireleUrl;
-    $resource->save();
-    //dd($resource);
-    // Save the Firebase image URL to the pr
-    return redirect()->route('teacher.manageClasses');}
-}
+            // Check if the uploaded image exists
+            $exists = $laravelDisk->exists($filePath);
 
+            // Get the last modified time of the uploaded image
+            $time = $laravelDisk->lastModified($filePath);
 
+            // Firebase Storage operations
+            $firebaseStorage = Firebase::storage();
+            $firebaseBucket = $firebaseStorage->getBucket();
 
-public function viewClass($class){
+            // Upload the image to Firebase Storage
+            $firebaseObject = $firebaseBucket->upload($fileContents, [
+                'name' => $filePath,
+            ]);
+            // Get the public URL of the uploaded image from Firebase
+            $fireleUrl = $firebaseObject->signedUrl(new \DateTime('9999-12-31T23:59:59.999999Z'));
 
-    $teacher = Auth::guard('teacher')->user();
-
-    $class = ClassT::with([
-        'getStudents',
-        'getReviewC',
-        'getAssignment',
-        'getSemester',
-        'getCourse',
-    ])->where('id', $class)
-        ->where('teacher_id', $teacher->id)
-        ->first();
-
-    if (!$class) {
-        return abort(404);
+            $resource->attachement = $fireleUrl;
+            $resource->save();
+            //dd($resource);
+            // Save the Firebase image URL to the pr
+            return redirect()->route('teacher.manageClasses');
+        }
     }
 
-    $semester = $class->getSemester;
-    $course = $class->getCourse;
-    $classInfo = $class->toArray();
-    $students = $class->getStudents->toArray();
-    return view('teacher.viewClasses', compact('teacher', 'classInfo', 'students','course','semester','class'));
-}
-public function gradingStudent($studentId,$classId)
-{
-    $student = Student::find($studentId);
-    $teacher = Auth::guard('teacher')->user();
-    $submissions = $student->getSubmission()
-        ->whereHas('getAssignment', function ($query) use ($classId) {
-            $query->where('classt_id', $classId);
-        })
-        ->with('getAssignment', 'getAssignment.getTeacher', 'getAssignment.getClassT')
-        ->get();
-
-    return view('teacher.studentGrading', compact('teacher','student', 'submissions'));
-}
 
 
-public function putGrade($submissionId)
-{
-    $teacher = Auth::guard('teacher')->user();
-    $submission=Submission::findOrFail($submissionId);
-    return view('teacher.putGrade',compact('student','submission'));
-}
-public function saveGrade(Request $request)
-{
-    $this->validate($request, [
-        'grade'=>'required',
+    public function viewClass($class) {
 
-    ]);
-    $submission=Submission::findOrFail($request->submissionId);
-    $teacher = Auth::guard('teacher')->user();
-    $submission->grade=$request->grade;
-    $std_class=StudentClassT::where('student_id',$submission->student_id)->where('classt_id',$submission->getAssignment->classt_id);
-    if($submission->fileType=="quiz")
-    {
-        
+        $teacher = Auth::guard('teacher')->user();
 
+        $class = ClassT::with([
+            'getStudents',
+            'getReviewC',
+            'getAssignment',
+            'getSemester',
+            'getCourse',
+        ])->where('id', $class)
+            ->where('teacher_id', $teacher->id)
+            ->first();
+
+        if (!$class) {
+            return abort(404);
+        }
+
+        $semester = $class->getSemester;
+        $course = $class->getCourse;
+        $classInfo = $class->toArray();
+        $students = $class->getStudents->toArray();
+        return view('teacher.viewClasses', compact('teacher', 'classInfo', 'students', 'course', 'semester', 'class'));
     }
-    elseif($submission->fileType=="project"){
-        $std_class->projectGrade=$request->grade;
-        $std_class->averageGrade= ($std_class->quizGrade+$std_class->projectGrade+$std_class->assignmentGrade)/3;
-    }
-    else{
-        $std_class->assignmentGrade=$request->grade;
-        $std_class->averageGrade= ($std_class->quizGrade+$std_class->projectGrade+$std_class->assignmentGrade)/3;
+    public function gradingStudent($studentId, $classId) {
+        $student = Student::find($studentId);
+        $teacher = Auth::guard('teacher')->user();
+        $submissions = $student->getSubmission()
+            ->whereHas('getAssignment', function ($query) use ($classId) {
+                $query->where('classt_id', $classId);
+            })
+            ->with('getAssignment', 'getAssignment.getTeacher', 'getAssignment.getClassT')
+            ->get();
+
+        return view('teacher.studentGrading', compact('teacher', 'student', 'submissions'));
     }
 
-    $submission->save();
-    $std_class->save();
-    return redirect(route('teacher.studentgrading',['studentId'=>$submission->student_id,'classId'=>$submission->getAssignment->classt_id]));
-}
+
+    public function putGrade($submissionId) {
+        $teacher = Auth::guard('teacher')->user();
+        $submission = Submission::findOrFail($submissionId);
+        return view('teacher.putGrade', compact('student', 'submission'));
+    }
+    public function saveGrade(Request $request) {
+        $this->validate($request, [
+            'grade' => 'required',
+
+        ]);
+        $submission = Submission::findOrFail($request->submissionId);
+        $teacher = Auth::guard('teacher')->user();
+        $submission->grade = $request->grade;
+        $std_class = StudentClassT::where('student_id', $submission->student_id)->where('classt_id', $submission->getAssignment->classt_id);
+        if ($submission->fileType == "quiz") {
+        } elseif ($submission->fileType == "project") {
+            $std_class->projectGrade = $request->grade;
+            $std_class->averageGrade = ($std_class->quizGrade + $std_class->projectGrade + $std_class->assignmentGrade) / 3;
+        } else {
+            $std_class->assignmentGrade = $request->grade;
+            $std_class->averageGrade = ($std_class->quizGrade + $std_class->projectGrade + $std_class->assignmentGrade) / 3;
+        }
+
+        $submission->save();
+        $std_class->save();
+        return redirect(route('teacher.studentgrading', ['studentId' => $submission->student_id, 'classId' => $submission->getAssignment->classt_id]));
+    }
+
+
+
+    public function displayResources($class_id) {
+        $teacher = Teacher::find(session('teacher_id'));
+        $resources = UploadResource::where('classt_id', $class_id)->get();
+
+        // dd($resources);
+        return view('teacher.displayResources', compact('resources', 'teacher'));
+    }
+
+    public function displayAssignments($class_id) {
+        $teacher = Teacher::find(session('teacher_id'));
+        $assignments = Assignment::where('classt_id', $class_id)->get();
+
+        // dd($assignments);
+        return view('teacher.displayAssignments', compact('teacher', 'assignments'));
+    }
 }
