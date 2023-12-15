@@ -17,6 +17,9 @@
             box-sizing: border-box;
             font-family: sans-serif;
         }
+        body {
+            overflow: hidden;
+        }
 
         nav {
             display: -webkit-flex;
