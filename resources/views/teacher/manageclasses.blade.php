@@ -47,7 +47,7 @@
                             <td>{{ $class->DayofWeek }}</td>
                             <td>{{ $class->starttime }} - {{ $class->endtime }}</td>
                             <td class="actions-column">
-                                <form method="get" action="{{ route('teacher.showClass', ['class' => $class->id]) }}">
+                                <form method="get" action="{{ route('teacher.viewClass', ['class' => $class->id]) }}">
                                     @csrf
                                     <button type="submit" class="btn btn-primary">View</button>
                                 </form>                                

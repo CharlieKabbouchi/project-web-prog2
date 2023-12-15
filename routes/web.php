@@ -293,6 +293,11 @@ Route::prefix('teacher')->group(function () {
         Route::put('/update/profile/{id}', [TeacherController::class, 'updateProfile'])->name('teacher.updateprofile');
         //Classes
         Route::get('/manage/classes', [TeacherController::class, 'manageClasses'])->name('teacher.manageClasses');
+        Route::get('/manage/classes/{class}', [TeacherController::class, 'viewClass'])->name('teacher.viewClass');
+        Route::get('/manage/classes/resouce/create/{classt_id}', [TeacherController::class, 'createRe'])->name('teacher.createResource');
+        Route::post('/manage/classes/resouce/uploading/{classt_id}', [TeacherController::class, 'storeRe'])->name('teacher.uploadResource');
+        Route::get('/manage/classes/assignment/create/{classt_id}', [TeacherController::class, 'createA'])->name('teacher.createAssignment');
+        Route::post('/manage/classes/assignment/uploading/{classt_id}', [TeacherController::class, 'storeA'])->name('teacher.uploadAssignment');
         Route::get('/manage/classes/create', [ClassTController::class, 'createT'])->name('teacher.createClass');
         Route::post('/manage/classes/store', [ClassTController::class, 'storeT'])->name('teacher.storeClass');
         Route::get('/manage/classes/show/{class}', [ClassTController::class, 'showT'])->name('teacher.showClass');
