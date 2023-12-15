@@ -42,7 +42,7 @@
                         <td>{{ $submission['fileType'] }}</td>
                         <td>{{ $submission['grade'] }}</td>
                         <td>{{ $submission['timeOfSubmission'] }}</td>
-                        <td><a href="{{$submission['attachmentLink']}}" class="btn btn-primary">Download File</a></td>   
+                        <td><a href="{{$submission['attachmentLink']}}" target="_blank" class="btn btn-primary">Download File</a></td>   
                         </tr>
                     @endforeach
                 </tbody>
