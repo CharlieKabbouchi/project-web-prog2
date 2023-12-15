@@ -10,10 +10,8 @@
                     <tr>
                         <th>Assignment ID</th>
                         <th>Title</th>
-                        <th>Description</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Submitted By</th>
+                        <th>Assignment</th>
+                       
                     </tr>
                 </thead>
                 <tbody>
@@ -21,9 +19,7 @@
                         <tr>
                             <td>{{ $assignment->id }}</td>
                             <td>{{ $assignment->title }}</td>
-                            <td>{{ $assignment->description }}</td>
-                            <td>{{ $assignment->startingDate }}</td>
-                            <td>{{ $assignment->endingDate }}</td>
+                         
                             <td>
                                 @foreach ($assignment->getSubmission as $submission)
                                     {{ $submission->getStudent->firstName }} {{ $submission->getStudent->lastName }} <br>

@@ -67,7 +67,7 @@ class LoginSignUp extends Controller
             $nuser->DOB=$request->DOB;
             $nuser->image="Change Image";
             $nuser->save();
-            return redirect()->route('home');
+            return redirect('/');
             
     }
 

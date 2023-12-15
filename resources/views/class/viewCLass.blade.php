@@ -76,9 +76,9 @@
     </div>
  
     <div class="row">
-        <h4>Students Enrolled this CLass</h4>
+        <h4>Students Enrolled this Class</h4>
         @if ($students->count() > 0)
-            <table>
+            <table class="table">
                 <tr>
                     <th>Student Id
                     </th>

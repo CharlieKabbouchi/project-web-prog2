@@ -25,11 +25,11 @@
     <div class="row">
         <h4 class="page-title">Certificates</h4>
     </div>
-    <a href='{{ route('teacher.createCertificate') }}'>Add New Certificate</a>
+
 
     <div class="row">
         <div class="table-responsive">
-            <table class="table table-bordered table-striped" style="border-color: skyblue;">
+            <table class="table">
                 <thead>
                     <tr class="bg-primary">
                         <th>ID</th>
@@ -53,6 +53,7 @@
                     @endforeach
                 </tbody>
             </table>
+            <a href='{{ route('teacher.createCertificate') }}' class="btn btn-success">Add New Certificate</a>
         </div>
     </div>
 @endsection('content')

@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <div class="user-profile text-center">
                         <div class="name">{{ $teacher->firstName }} {{ $teacher->lastName }}</div>
-                        <div class="job">Administrator</div>
+                        <div class="job">Teacher</div>
                     </div>
                 </div>
 
